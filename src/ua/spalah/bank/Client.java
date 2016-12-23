@@ -41,7 +41,7 @@ public class Client {
 
     }
 
-    @Override
+    @Override //from idea
     public String toString() {
         return "Client{" +
                 "clientName='" + clientName + '\'' +
@@ -51,7 +51,7 @@ public class Client {
                 '}';
     }
 
-    @Override
+    @Override //from idea
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -62,7 +62,7 @@ public class Client {
         return sex.equals(client.sex);
     }
 
-    @Override
+    @Override //from idea
     public int hashCode() {
         int result = clientName.hashCode();
         result = 31 * result + sex.hashCode();
