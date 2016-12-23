@@ -6,9 +6,9 @@ package ua.spalah.bank;
 public class CheckingAccount extends Account {
 
     private double overdraft;
-    public CheckingAccount(double balance) {
-        super(balance);
-    }
+//    public CheckingAccount(double balance) {
+//        super(balance);
+//    }
 
     public CheckingAccount(double balance, double overdraft) {
         super(balance);
@@ -16,8 +16,11 @@ public class CheckingAccount extends Account {
     }
 
     @Override
-    public double getMoney() {
-        return 0;
+    public void takeMoney(double sum) {
+        // работает-нет.. не на ви жу!!!
+        if (super.getBalance() > sum || (super.getBalance()) > (sum + overdraft)){
+            changeBalance(super.getBalance(sum));
+        }
     }
 
     @Override

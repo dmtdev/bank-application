@@ -12,12 +12,19 @@ public abstract class Account {
     public double getBalance(){
         return balance;
     }
+    public double getBalance(double sum){
+        return balance;
+    }
+
+    public void changeBalance(double balance) {
+        this.balance = balance;
+    }
 
     public void addMoney(double sum){
 
     }
 
-    abstract public double getMoney();
+    abstract public void takeMoney(double sum);
 
 
 }

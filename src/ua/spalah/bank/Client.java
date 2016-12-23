@@ -15,7 +15,7 @@ public class Client {
 
     public Client(String clientName, String sex) {
         this.clientName = clientName;
-        this.sex = sex;
+        this.sex = sex; // TODO: enum? may be..
     }
 
 

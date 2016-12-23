@@ -9,8 +9,10 @@ public class SavingAccount extends Account {
     }
 
     @Override
-    public double getMoney() {
-        return 0;
+    public void takeMoney(double sum) {
+        if (super.getBalance() > sum) {
+            changeBalance(super.getBalance(sum));
+        }
     }
 
     @Override
