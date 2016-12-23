@@ -18,8 +18,9 @@ public class Bank {
     }
     public String getClient(String clientName){
         for (Client client : clients){
-            // TODO: add client search..
+            // TODO: add client search, fix return
         }
         return new Client("","").toString();
     }
+
 }
