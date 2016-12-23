@@ -15,6 +15,7 @@ public class Bank {
     }
     public List getClients(){
         return new ArrayList(clients);
+        // TODO: Make deep clone
     }
     public String getClient(String clientName){
         for (Client client : clients){
@@ -22,5 +23,4 @@ public class Bank {
         }
         return new Client("","").toString();
     }
-
 }

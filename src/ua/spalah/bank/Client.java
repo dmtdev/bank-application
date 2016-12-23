@@ -29,6 +29,7 @@ public class Client {
 
     public List<Account> getAccountList() {
         return new ArrayList(accountList);
+        // TODO: Make deep clone
     }
 
     public Account getActiveAccount() {
@@ -67,4 +68,17 @@ public class Client {
         result = 31 * result + sex.hashCode();
         return result;
     }
+    @Override
+    protected Client clone() {
+        Client clone = null;
+        try{
+            clone = (Client) super.clone();
+
+        }catch(CloneNotSupportedException e){
+            throw new RuntimeException(e);
+        }
+        return clone;
+    }
+
+
 }
