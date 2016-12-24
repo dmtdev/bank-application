@@ -9,13 +9,13 @@ import java.util.List;
 public class Client {
 
     private String clientName;
-    private String sex;
+    private String sex; // TODO: read more about enum
     private List<Account> accountList = new ArrayList<>();
     private Account activeAccount;
 
     public Client(String clientName, String sex) {
         this.clientName = clientName;
-        this.sex = sex; // TODO: enum? may be..
+        this.sex = sex;
     }
 
 

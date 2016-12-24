@@ -11,8 +11,13 @@ public class SavingAccount extends Account {
     @Override
     public void takeMoney(double sum) {
         if (super.getBalance() > sum) {
-            changeBalance(super.getBalance(sum));
+            changeBalance(sum);
         }
+    }
+
+    @Override
+    public boolean checkBalance() {
+        return false;
     }
 
     @Override

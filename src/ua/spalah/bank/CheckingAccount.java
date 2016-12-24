@@ -19,8 +19,13 @@ public class CheckingAccount extends Account {
     public void takeMoney(double sum) {
         // работает-нет.. не на ви жу!!!
         if (super.getBalance() > sum || (super.getBalance()) > (sum + overdraft)){
-            changeBalance(super.getBalance(sum));
+            changeBalance(sum);
         }
+    }
+
+    @Override
+    public boolean checkBalance() {
+        return false;
     }
 
     @Override
