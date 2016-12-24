@@ -23,10 +23,13 @@ public class CheckingAccount extends Account {
         }
     }
 
-    @Override
-    public boolean checkBalance() {
-        return false;
-    }
+//    @Override
+//    public boolean checkBalance() {
+//        if (super.getBalance()>0){
+//            return true;
+//        }
+//        return false;
+//    }
 
     @Override
     public String toString() {
