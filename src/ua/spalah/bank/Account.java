@@ -7,6 +7,9 @@ package ua.spalah.bank;
 public abstract class Account {
     private double balance;
 
+
+    abstract public void takeMoney(double sum);
+
     public Account(double balance) {
         this.balance = balance;
     }
@@ -17,15 +20,23 @@ public abstract class Account {
         return balance;
     }
 
-    public void changeBalance(double balance) {
-        this.balance = balance;
-    }
+    public double changeBalance(double balance) {
+        // and for what this..
+         return this.balance += balance;
+   }
 
     public void addMoney(double sum){
-
+        // TODO: abstract? check overdraft?...
+        if (sum>0){
+            balance += sum;
+        }
     }
 
-    abstract public void takeMoney(double sum);
-
+    public boolean checkBalance(){
+        if (balance>0){
+            return true;
+        }
+        return false;
+    }
 
 }
