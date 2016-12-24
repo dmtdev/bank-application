@@ -2,7 +2,6 @@ package ua.spalah.bank;
 
 /**
  * Created by root on 23.12.2016.
- *
  */
 public abstract class Account {
     private double balance;
