@@ -11,6 +11,9 @@ public class Bank {
     private List<Client> clients = new ArrayList<>();
 
     public void addClient(Client client) {
+        for (Client cl: clients) {
+
+        }
         clients.add(client);
     }
     public List getClients(){

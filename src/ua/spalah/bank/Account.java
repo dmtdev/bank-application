@@ -2,7 +2,8 @@ package ua.spalah.bank;
 
 /**
  * Created by root on 23.12.2016.
- **************
+ *===============================
+ *===============================
  */
 public abstract class Account {
     private double balance;
@@ -16,9 +17,9 @@ public abstract class Account {
     public double getBalance(){
         return balance;
     }
-    public double getBalance(double sum){
-        return balance;
-    }
+//    public double getBalance(double sum){
+//        return balance;
+//    }
 
     public double changeBalance(double balance) {
         // and for what this..
