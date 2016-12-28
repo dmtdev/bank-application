@@ -14,9 +14,13 @@ public class Client {
     private Account activeAccount;
 
     public Client(String clientName, String sex) {
+        for (getClients() : Client client){
+/// хочу проверить уникальность клиента по имени...
+        }
         this.clientName = clientName;
         this.sex = sex;
     }
+
 
 
     public String getClientName() {
