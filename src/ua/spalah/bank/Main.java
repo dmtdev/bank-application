@@ -3,6 +3,10 @@ package ua.spalah.bank;
 import ua.spalah.bank.accounts.CheckingAccount;
 import ua.spalah.bank.accounts.SavingAccount;
 import ua.spalah.bank.accounts.Sex;
+import ua.spalah.bank.listeners.ClientRegistrationListener;
+import ua.spalah.bank.listeners.EmailNotificationListener;
+import ua.spalah.bank.listeners.PrintClientListener;
+import ua.spalah.bank.listeners.RegistrationLoggerListener;
 
 import java.util.Scanner;
 
@@ -12,6 +16,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Bank bank = new Bank();
+        bank.addListener(new PrintClientListener());
+        bank.addListener(new EmailNotificationListener());
+        bank.addListener(new RegistrationLoggerListener());
         Client kostya = new Client("Kostya", Sex.MALE);
         Client vasya = new Client("Vasya", Sex.FEMALE);
         Client vasya2 = new Client("Kostya", Sex.MALE);

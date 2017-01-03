@@ -18,7 +18,6 @@ public class Bank {
         listeners.add(listener);
     }
 
-
     public void addClient(Client client) {
         clients.add(client);
         for (ClientRegistrationListener listener: listeners) {
