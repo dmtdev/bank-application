@@ -18,8 +18,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void transfer(Account fromAccount, Account toAccount, double amount) {
-
-
+    public void transfer(Account fromAccount, Account toAccount, double amount){
+        if(fromAccount.getBalance()>=amount){
+            toAccount.deposit(amount);
+            fromAccount.withdraw(amount);
+        }
     }
 }

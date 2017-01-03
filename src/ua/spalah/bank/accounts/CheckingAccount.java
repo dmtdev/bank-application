@@ -14,9 +14,9 @@ public class CheckingAccount extends Account {
     }
 
     @Override
-    public void withdraw(double momey) {
-        if (super.getBalance() >= momey + overdraft){
-            super.setBalance(super.getBalance()-momey);
+    public void withdraw(double money) {
+        if (super.getBalance()+ overdraft >= money){
+            super.setBalance(super.getBalance()-money);
         }
     }
 
