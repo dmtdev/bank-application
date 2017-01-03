@@ -23,10 +23,6 @@ public abstract class Account {
         this.balance = balance;
     }
 
-    public double changeBalance(double balance) {
-        return this.balance += balance;
-    }
-
     public void deposit(double money) {
         if (money <= 0) {
             System.out.println("You want to add no money!");

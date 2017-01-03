@@ -68,7 +68,7 @@ public class Client {
                 "clientName='" + clientName + '\'' +
                 ", sex='" + sex + '\'' +
                 ", accountList=" + accountList +
-                ", activeAccount=" + activeAccount +
+                ", activeAccount=" + activeAccount.toString() +
                 '}';
     }
 
