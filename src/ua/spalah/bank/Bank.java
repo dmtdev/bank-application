@@ -1,6 +1,7 @@
 package ua.spalah.bank;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -14,13 +15,14 @@ public class Bank {
         clients.add(client);
     }
     public List getClients(){
-        return new ArrayList(clients);
-        // TODO: Make deep clone
+        return  Collections.unmodifiableList(clients);
     }
     public String getClient(String clientName){
-        for (Client client : clients){
-            // TODO: add client search, fix return
+        for (Client client : clients) {
+            if (client.getClientName().equals(clientName)) {
+                return client.toString();
+            }
         }
-        return new Client("","").toString();
+        return "client not found";
     }
 }
