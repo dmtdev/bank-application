@@ -1,6 +1,10 @@
 package ua.spalah.bank;
 
+import ua.spalah.bank.accounts.Account;
+import ua.spalah.bank.accounts.Sex;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -9,49 +13,66 @@ import java.util.List;
 public class Client {
 
     private String clientName;
-    private String sex; // TODO: read more about enum
+    private Sex sex;
     private List<Account> accountList = new ArrayList<>();
     private Account activeAccount;
 
-    public Client(String clientName, String sex) {
+    public Client(String clientName, Sex sex) {
         this.clientName = clientName;
         this.sex = sex;
     }
 
+    public void addAccount(Account account){
+        if (accountList.size()==0){
+            // Так же лучше должно быть? На случай если с перед активацией со счетом нужно что-то еще сделать..
+            setActiveAccount(account);
+        }
+        accountList.add(account);
+    }
 
     public String getClientName() {
         return clientName;
     }
 
-    public String getSex() {
+    public Sex getSex() {
         return sex;
     }
 
     public List<Account> getAccountList() {
-        return new ArrayList(accountList);
-        // TODO: Make deep clone
+        return Collections.unmodifiableList(accountList);
     }
 
     public Account getActiveAccount() {
         return activeAccount;
-        // TODO: clone() ?....
     }
 
-    public void activeAccount(Account account) {
-
+    public void setActiveAccount(Account activeAccount) {
+        this.activeAccount = activeAccount;
     }
 
-    @Override //from idea
+    public double getTotalBalance() {
+        double totalBalance = 0;
+        for (Account account : accountList) {
+            totalBalance += account.getBalance();
+        }
+        return totalBalance;
+    }
+
+//    public void activeAccount(Account account) {
+//        activeAccount = account;
+//    }
+
+    @Override
     public String toString() {
         return "Client{" +
                 "clientName='" + clientName + '\'' +
                 ", sex='" + sex + '\'' +
                 ", accountList=" + accountList +
-                ", activeAccount=" + activeAccount +
+                ", activeAccount=" + activeAccount.toString() +
                 '}';
     }
 
-    @Override //from idea
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -62,23 +83,10 @@ public class Client {
         return sex.equals(client.sex);
     }
 
-    @Override //from idea
+    @Override
     public int hashCode() {
         int result = clientName.hashCode();
         result = 31 * result + sex.hashCode();
         return result;
     }
-    @Override
-    protected Client clone() {
-        Client clone = null;
-        try{
-            clone = (Client) super.clone();
-
-        }catch(CloneNotSupportedException e){
-            throw new RuntimeException(e);
-        }
-        return clone;
-    }
-
-
 }
