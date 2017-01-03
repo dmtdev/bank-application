@@ -12,7 +12,7 @@ import java.util.List;
 public class Bank {
 
     private List<Client> clients = new ArrayList<>();
-    private List<ClientRegistrationListener> listeners;
+    private List<ClientRegistrationListener> listeners = new ArrayList<>();
 
     public void addListener(ClientRegistrationListener listener){
         listeners.add(listener);

@@ -19,6 +19,7 @@ public class Main {
         bank.addListener(new PrintClientListener());
         bank.addListener(new EmailNotificationListener());
         bank.addListener(new RegistrationLoggerListener());
+
         Client kostya = new Client("Kostya", Sex.MALE);
         Client vasya = new Client("Vasya", Sex.FEMALE);
         Client vasya2 = new Client("Kostya", Sex.MALE);
@@ -28,7 +29,8 @@ public class Main {
         kostya.addAccount(ck);
         kostya.setActiveAccount(ck);
         bank.addClient(kostya);
-        //bank.addClient(vasya);
+        vasya2.addAccount(new SavingAccount(500));
+        bank.addClient(vasya2);
         Scanner sc = new Scanner(System.in);
         System.out.println("Type client's name: ");
         String name = sc.nextLine();
