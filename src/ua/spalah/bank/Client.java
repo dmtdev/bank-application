@@ -1,7 +1,6 @@
 package ua.spalah.bank;
 
 import ua.spalah.bank.accounts.Account;
-import ua.spalah.bank.accounts.Sex;
 
 import java.util.ArrayList;
 import java.util.Collections;
