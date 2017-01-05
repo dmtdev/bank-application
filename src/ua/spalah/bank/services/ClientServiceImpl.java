@@ -41,4 +41,9 @@ public class ClientServiceImpl implements ClientService {
             }
         }
     }
+<<<<<<<<< Temporary merge branch 1
 }
+
+=========
+}
+>>>>>>>>> Temporary merge branch 2
