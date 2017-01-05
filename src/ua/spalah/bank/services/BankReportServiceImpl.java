@@ -30,7 +30,7 @@ public class BankReportServiceImpl implements BankReportService {
         double sum = 0;
         List<Client> clientList = bank.getClients();
         for (Client client : clientList) {
-            sum += ((Client) client).getTotalBalance();
+            sum += client.getTotalBalance();
         }
         return sum;
     }
