@@ -4,13 +4,12 @@ import ua.spalah.bank.accounts.Account;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
  * Created by root on 23.12.2016.
  */
-public class Client implements Comparable<Client> {
+public class Client {
 
     private String clientName;
     private Sex sex;
@@ -89,15 +88,4 @@ public class Client implements Comparable<Client> {
         return result;
     }
 
-
-    @Override
-    public int compareTo(Client c) throws NullPointerException {
-        try {
-            return this.getClientName().compareTo(c.getClientName());
-        }
-        catch (Exception e){
-            System.out.println(e.fillInStackTrace());
-        }
-        return -1;
-    }
 }

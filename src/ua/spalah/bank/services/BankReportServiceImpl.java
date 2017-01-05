@@ -56,9 +56,6 @@ public class BankReportServiceImpl implements BankReportService {
                             }
                         }
         );
-        // or?..
-        Collections.sort(clientList);
-
         return clientList;
     }
 }
