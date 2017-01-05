@@ -9,19 +9,13 @@ import java.util.List;
 /**
  * Created by root on 03.01.2017.
  */
-public class ClientServiceImpl implements ClientService{
+public class ClientServiceImpl implements ClientService {
     @Override
     public Client findClientByName(Bank bank, String name) {
-
-        Client result;
-        List clientList = new ArrayList<>();
-        clientList = bank.getClients();
-        //Почему не дает использовать Client client..
-        for (Object client : clientList) {
-            if (client instanceof Client) {
-                if(((Client) client).getClientName().equals(name)){
-                    return (Client) client;
-                }
+        List<Client> clientList = bank.getClients();
+        for (Client client : clientList) {
+            if (client.getClientName().equals(name)) {
+                return client;
             }
         }
         return null;
@@ -40,16 +34,11 @@ public class ClientServiceImpl implements ClientService{
 
     @Override
     public void deleteClient(Bank bank, Client client) {
-        List clientList = new ArrayList<>();
-        clientList = bank.getClients();
-        //Почему не дает использовать Client client..
-        for (Object cl : clientList) {
-            if (cl instanceof Client) {
-                if(((Client) cl).equals(client)){
-                    clientList.remove(cl);
-                }
+        List<Client> clientList = bank.getClients();
+        for (Client cl : clientList) {
+            if (cl.equals(client)) {
+                clientList.remove(cl);
             }
         }
-     }
+    }
 }
-/*11*/
