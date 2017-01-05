@@ -21,9 +21,8 @@ public class Client {
         this.sex = sex;
     }
 
-    public void addAccount(Account account){
-        if (accountList.size()==0){
-            // Так же лучше должно быть? На случай если с перед активацией со счетом нужно что-то еще сделать..
+    public void addAccount(Account account) {
+        if (accountList.size() == 0) {
             setActiveAccount(account);
         }
         accountList.add(account);
@@ -88,4 +87,5 @@ public class Client {
         result = 31 * result + sex.hashCode();
         return result;
     }
+
 }
