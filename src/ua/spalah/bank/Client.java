@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by root on 23.12.2016.
  */
-public class Client implements Comparable<Client>{
+public class Client implements Comparable<Client> {
 
     private String clientName;
     private Sex sex;
@@ -22,8 +22,8 @@ public class Client implements Comparable<Client>{
         this.sex = sex;
     }
 
-    public void addAccount(Account account){
-        if (accountList.size()==0){
+    public void addAccount(Account account) {
+        if (accountList.size() == 0) {
             setActiveAccount(account);
         }
         accountList.add(account);
@@ -91,7 +91,13 @@ public class Client implements Comparable<Client>{
 
 
     @Override
-    public int compareTo(Client c) {
-        return  this.getClientName().compareTo(c.getClientName());
+    public int compareTo(Client c) throws NullPointerException {
+        try {
+            return this.getClientName().compareTo(c.getClientName());
+        }
+        catch (Exception e){
+            System.out.println(e.fillInStackTrace());
+        }
+        return -1;
     }
 }
