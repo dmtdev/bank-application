@@ -1,6 +1,7 @@
 package ua.spalah.bank.services;
 
 import ua.spalah.bank.*;
+import ua.spalah.bank.Client;
 
 import java.util.*;
 
