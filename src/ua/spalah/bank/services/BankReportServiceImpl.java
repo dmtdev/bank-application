@@ -2,9 +2,7 @@ package ua.spalah.bank.services;
 
 import ua.spalah.bank.*;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by root on 03.01.2017.
@@ -50,6 +48,7 @@ public class BankReportServiceImpl implements BankReportService {
     @Override
     public List<Client> getClientsSortedByName(Bank bank) {
         List<Client> clientList = bank.getClients();
+
         clientList.sort(new Comparator<Client>() {
                             @Override
                             public int compare(Client o1, Client o2) {
@@ -57,6 +56,9 @@ public class BankReportServiceImpl implements BankReportService {
                             }
                         }
         );
+        // or?..
+        Collections.sort(clientList);
+
         return clientList;
     }
 }

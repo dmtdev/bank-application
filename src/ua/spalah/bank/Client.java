@@ -4,12 +4,13 @@ import ua.spalah.bank.accounts.Account;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Created by root on 23.12.2016.
  */
-public class Client {
+public class Client implements Comparable<Client>{
 
     private String clientName;
     private Sex sex;
@@ -23,7 +24,6 @@ public class Client {
 
     public void addAccount(Account account){
         if (accountList.size()==0){
-            // Так же лучше должно быть? На случай если с перед активацией со счетом нужно что-то еще сделать..
             setActiveAccount(account);
         }
         accountList.add(account);
@@ -87,5 +87,11 @@ public class Client {
         int result = clientName.hashCode();
         result = 31 * result + sex.hashCode();
         return result;
+    }
+
+
+    @Override
+    public int compareTo(Client c) {
+        return  this.getClientName().compareTo(c.getClientName());
     }
 }
