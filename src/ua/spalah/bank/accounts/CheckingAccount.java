@@ -7,16 +7,15 @@ public class CheckingAccount extends Account {
 
     private double overdraft;
 
-
     public CheckingAccount(double balance, double overdraft) {
         super(balance);
         this.overdraft = overdraft;
     }
 
     @Override
-    public void withdraw(double momey) {
-        if (super.getBalance() >= momey + overdraft){
-            super.setBalance(super.getBalance()-momey);
+    public void withdraw(double money) {
+        if (super.getBalance()+ overdraft >= money){
+            super.setBalance(super.getBalance()-money);
         }
     }
 

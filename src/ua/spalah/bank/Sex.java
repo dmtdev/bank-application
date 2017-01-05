@@ -1,4 +1,4 @@
-package ua.spalah.bank.accounts;
+package ua.spalah.bank;
 
 /**
  * Created by root on 03.01.2017.
