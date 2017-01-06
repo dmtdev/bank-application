@@ -48,8 +48,13 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client saveClient(Bank bank, Client client) {
-        bank.getClients().add(client);
-        return client;
+        if(client==null){
+            throw new NullPointerException();
+        }
+        else {
+            bank.getClients().add(client);
+            return client;
+        }
     }
 
     @Override

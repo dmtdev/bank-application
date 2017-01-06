@@ -1,17 +1,11 @@
 package ua.spalah.bank;
 
-import ua.spalah.bank.model.CheckingAccount;
-import ua.spalah.bank.model.SavingAccount;
-import ua.spalah.bank.listeners.EmailNotificationListener;
-import ua.spalah.bank.listeners.PrintClientListener;
-import ua.spalah.bank.listeners.RegistrationLoggerListener;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.Client;
-import ua.spalah.bank.services.BankService;
 import ua.spalah.bank.services.impl.BankServiceImpl;
 import ua.spalah.bank.services.impl.ClientServiceImpl;
 
-import java.util.Scanner;
+
 
 /**
  * Created by Kostya on 23.12.2016.
