@@ -1,6 +1,5 @@
 package ua.spalah.bank.services.impl;
 
-import ua.spalah.bank.listeners.ClientRegistrationListener;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.services.BankService;
@@ -19,19 +18,4 @@ public class BankServiceImpl implements BankService {
         }
         return "client not found";
     }
-
-    @Override
-    public void addClient(Bank bank, Client client) {
-        bank.getClients().add(client);
-        for (ClientRegistrationListener listener : bank.getListeners()) {
-            listener.onClientAdded(client);
-        }
-    }
-
-    @Override
-    public void addListener(Bank bank, ClientRegistrationListener listener) {
-        bank.getListeners().add(listener);
-    }
-
-
 }

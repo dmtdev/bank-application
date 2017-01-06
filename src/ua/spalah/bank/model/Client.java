@@ -3,7 +3,6 @@ package ua.spalah.bank.model;
 import ua.spalah.bank.Sex;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

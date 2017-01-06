@@ -9,6 +9,6 @@ import ua.spalah.bank.model.Client;
  */
 public interface BankService {
     String getClientInfo(Bank bank, String clientName);
-    void addClient(Bank bank,Client client);
-    public void addListener(Bank bank,ClientRegistrationListener listener);
+//    void addClient(Bank bank,Client client);
+//    void addListener(Bank bank,ClientRegistrationListener listener);
 }

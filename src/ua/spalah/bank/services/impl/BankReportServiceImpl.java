@@ -25,25 +25,26 @@ public class BankReportServiceImpl implements BankReportService {
         return count;
     }
 
+    // TODO: 06.01.2017 Fix this
     @Override
-    public double getTotalAccountSum(Bank bank) {
+    public double getTotalAccountSum(Bank bank, Client client) {
         double sum = 0;
-        List<Client> clientList = bank.getClients();
-        for (Client client : clientList) {
-            sum += client.getTotalBalance();
-        }
+//        List<Client> clientList = bank.getClients();
+//        for (Client client : clientList) {
+//            sum += client.getTotalBalance();
+//        }
         return sum;
     }
 
 
     @Override
-    public double getBankCreditSum(Bank bank) {
+    public double getBankCreditSum(Bank bank,Client client) {
         double sum = 0;
-        List<Client> clientList = bank.getClients();
-        for (Client client : clientList) {
-            if (client.getTotalBalance() < 0)
-                sum += client.getTotalBalance();
-        }
+//        List<Client> clientList = bank.getClients();
+//        for (Client client : clientList) {
+//            if (client.getTotalBalance() < 0)
+//                sum += client.getTotalBalance();
+//        }
         return sum;
     }
 
