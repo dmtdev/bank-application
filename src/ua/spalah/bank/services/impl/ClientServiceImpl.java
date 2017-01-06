@@ -46,11 +46,9 @@ public class ClientServiceImpl implements ClientService {
         return bank.getClients();
     }
 
-    // TODO: 06.01.2017
     @Override
     public Client saveClient(Bank bank, Client client) {
-        //bank.addClient(client);
-
+        bank.getClients().add(client);
         return client;
     }
 

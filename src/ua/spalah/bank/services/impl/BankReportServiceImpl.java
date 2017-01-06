@@ -37,10 +37,11 @@ public class BankReportServiceImpl implements BankReportService {
     }
 
 
+    // TODO: 06.01.2017 Fix this
     @Override
     public double getBankCreditSum(Bank bank,Client client) {
         double sum = 0;
-//        List<Client> clientList = bank.getClients();
+        List<Client> clientList = bank.getClients();
 //        for (Client client : clientList) {
 //            if (client.getTotalBalance() < 0)
 //                sum += client.getTotalBalance();
