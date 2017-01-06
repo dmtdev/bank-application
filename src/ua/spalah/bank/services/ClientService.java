@@ -1,5 +1,6 @@
 package ua.spalah.bank.services;
 
+import ua.spalah.bank.model.Account;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.Client;
 
@@ -13,4 +14,6 @@ public interface ClientService {
     List<Client> findAllClients(Bank bank);
     Client saveClient(Bank bank, Client client);
     void deleteClient(Bank bank, Client client);
+    void addAccount(Client client, Account account);
+    double getTotalBalance(Client client);
 }

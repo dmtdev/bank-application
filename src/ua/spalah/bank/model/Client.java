@@ -21,13 +21,6 @@ public class Client  {
         this.sex = sex;
     }
 
-    public void addAccount(Account account) {
-        if (accountList.size() == 0) {
-            setActiveAccount(account);
-        }
-        accountList.add(account);
-    }
-
     public String getClientName() {
         return clientName;
     }
@@ -37,7 +30,8 @@ public class Client  {
     }
 
     public List<Account> getAccountList() {
-        return Collections.unmodifiableList(accountList);
+        return accountList;
+        //return Collections.unmodifiableList(accountList);
     }
 
     public Account getActiveAccount() {
@@ -48,17 +42,6 @@ public class Client  {
         this.activeAccount = activeAccount;
     }
 
-    public double getTotalBalance() {
-        double totalBalance = 0;
-        for (Account account : accountList) {
-            totalBalance += account.getBalance();
-        }
-        return totalBalance;
-    }
-
-//    public void activeAccount(Account account) {
-//        activeAccount = account;
-//    }
 
     @Override
     public String toString() {
@@ -69,8 +52,6 @@ public class Client  {
                 ", activeAccount=" + activeAccount.toString() +
                 '}';
     }
-
-
 
     @Override
     public boolean equals(Object o) {
