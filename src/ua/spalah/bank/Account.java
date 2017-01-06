@@ -6,7 +6,6 @@ package ua.spalah.bank;
 public interface Account {
 
         AccountType getType();
-
         double getBalance();
         void setBalance(double balance);
 
