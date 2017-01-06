@@ -1,6 +1,6 @@
 package ua.spalah.bank.services;
 
-import ua.spalah.bank.model.Account;
+import ua.spalah.bank.Account;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.Client;
 

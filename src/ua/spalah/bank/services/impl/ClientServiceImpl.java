@@ -1,6 +1,6 @@
 package ua.spalah.bank.services.impl;
 
-import ua.spalah.bank.model.Account;
+import ua.spalah.bank.Account;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.services.ClientService;
@@ -46,9 +46,11 @@ public class ClientServiceImpl implements ClientService {
         return bank.getClients();
     }
 
+    // TODO: 06.01.2017
     @Override
     public Client saveClient(Bank bank, Client client) {
-        bank.addClient(client);
+        //bank.addClient(client);
+
         return client;
     }
 
