@@ -1,4 +1,4 @@
-package ua.spalah.bank.accounts;
+package ua.spalah.bank.model;
 
 /**
  * Created by root on 23.12.2016.

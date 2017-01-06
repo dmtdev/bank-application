@@ -1,6 +1,6 @@
-package ua.spalah.bank;
+package ua.spalah.bank.model;
 
-import ua.spalah.bank.accounts.Account;
+import ua.spalah.bank.Sex;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by root on 23.12.2016.
  */
-public class Client {
+public class Client  {
 
     private String clientName;
     private Sex sex;
@@ -69,6 +69,8 @@ public class Client {
                 ", activeAccount=" + activeAccount.toString() +
                 '}';
     }
+
+
 
     @Override
     public boolean equals(Object o) {

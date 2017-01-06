@@ -1,7 +1,8 @@
-package ua.spalah.bank.services;
+package ua.spalah.bank.services.impl;
 
-import ua.spalah.bank.*;
-import ua.spalah.bank.Client;
+import ua.spalah.bank.model.Bank;
+import ua.spalah.bank.model.Client;
+import ua.spalah.bank.services.BankReportService;
 
 import java.util.*;
 

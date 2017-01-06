@@ -1,4 +1,4 @@
-package ua.spalah.bank;
+package ua.spalah.bank.model;
 
 import ua.spalah.bank.listeners.ClientRegistrationListener;
 

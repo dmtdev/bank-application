@@ -1,6 +1,7 @@
-package ua.spalah.bank.services;
+package ua.spalah.bank.services.impl;
 
-import ua.spalah.bank.accounts.Account;
+import ua.spalah.bank.model.Account;
+import ua.spalah.bank.services.AccountService;
 
 /**
  * Created by root on 03.01.2017.
