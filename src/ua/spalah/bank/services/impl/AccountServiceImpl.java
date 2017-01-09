@@ -48,23 +48,24 @@ public class AccountServiceImpl implements AccountService {
                         account.setBalance(account.getBalance() - amount);
                     }
                 }
-                if (account.getBalance()>0){}
             }
         }
 
     }
-
-    // TODO: 06.01.2017 FIX THIS!
     @Override
     public void transfer(Account fromAccount, Account toAccount, double amount) throws NotEnoughFundsException {
         if (fromAccount == null || toAccount == null) {
             throw new NullPointerException();
         } else {
-            if (fromAccount.getBalance() >= amount) {
-                toAccount.setBalance(amount);
-                fromAccount.setBalance(fromAccount.getBalance() - amount);
+            if (amount < 0) {
+                throw new NullPointerException();
             } else {
-                throw new NotEnoughFundsException();
+                if (fromAccount.getBalance() >= amount) {
+                    toAccount.setBalance(amount);
+                    fromAccount.setBalance(fromAccount.getBalance() - amount);
+                } else {
+                    throw new NotEnoughFundsException();
+                }
             }
         }
     }
