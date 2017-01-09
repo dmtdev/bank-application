@@ -1,7 +1,6 @@
 package ua.spalah.bank.services;
 
 import ua.spalah.bank.Account;
-import ua.spalah.bank.extensions.AmountIsNegativeException;
 import ua.spalah.bank.extensions.NotEnoughFundsException;
 
 /**
