@@ -13,12 +13,12 @@ import ua.spalah.bank.services.AccountService;
  */
 public class AccountServiceImpl implements AccountService {
     @Override
-    public void deposit(Account account, double amount) throws AmountIsNegativeException {
+    public void deposit(Account account, double amount) throws IllegalArgumentException {
         if (account == null) {
             throw new NullPointerException();
         } else {
             if (amount < 0) {
-                throw new AmountIsNegativeException();
+                throw new IllegalArgumentException();
             } else {
                 account.setBalance(account.getBalance() + amount);
             }
@@ -26,12 +26,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void withdraw(Account account, double amount) throws AmountIsNegativeException, NotEnoughFundsException {
+    public void withdraw(Account account, double amount) throws IllegalArgumentException, NotEnoughFundsException {
         if (account == null) {
             throw new NullPointerException();
         } else {
             if (amount < 0) {
-                throw new AmountIsNegativeException();
+                throw new IllegalArgumentException();
             } else {
                 AccountType accountType = account.getType();
                 if (accountType == AccountType.CHECKING) {
@@ -53,12 +53,12 @@ public class AccountServiceImpl implements AccountService {
 
     }
     @Override
-    public void transfer(Account fromAccount, Account toAccount, double amount) throws AmountIsNegativeException, NotEnoughFundsException {
+    public void transfer(Account fromAccount, Account toAccount, double amount) throws IllegalArgumentException, NotEnoughFundsException {
         if (fromAccount == null || toAccount == null) {
             throw new NullPointerException();
         } else {
             if (amount < 0) {
-                throw new AmountIsNegativeException();
+                throw new IllegalArgumentException();
             } else {
                 withdraw(fromAccount, amount);
                 deposit(toAccount, amount);
