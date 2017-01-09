@@ -1,5 +1,6 @@
 package ua.spalah.bank.services.impl;
 
+import ua.spalah.bank.extensions.ClientNotFoundException;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.services.BankService;
@@ -9,13 +10,13 @@ import ua.spalah.bank.services.BankService;
  */
 public class BankServiceImpl implements BankService {
     @Override
-    public String getClientInfo(Bank bank, String clientName) {
+    public String getClientInfo(Bank bank, String clientName) throws ClientNotFoundException {
 
         for (Client client : bank.getClients()) {
             if (client.getClientName().equals(clientName)) {
                 return client.toString();
             }
         }
-        return "client not found";
+        throw new ClientNotFoundException();
     }
 }

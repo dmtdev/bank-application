@@ -1,6 +1,7 @@
 package ua.spalah.bank.services.impl;
 
 import ua.spalah.bank.Account;
+import ua.spalah.bank.extensions.ClientNotFoundException;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.services.ClientService;
@@ -15,43 +16,59 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void addAccount(Client client, Account account) {
-        if (client.getAccountList().size() == 0) {
-            client.setActiveAccount(account);
+        if (account == null || client == null) {
+            throw new NullPointerException();
+        } else {
+            if (client.getAccountList().size() == 0) {
+                client.setActiveAccount(account);
+            }
+            client.getAccountList().add(account);
         }
-        client.getAccountList().add(account);
     }
 
     @Override
     public double getTotalBalance(Client client) {
-        double totalBalance = 0;
-        for (Account account : client.getAccountList()) {
-            totalBalance += account.getBalance();
+        if (client == null) {
+            throw new NullPointerException();
+        } else {
+            double totalBalance = 0;
+            for (Account account : client.getAccountList()) {
+                totalBalance += account.getBalance();
+            }
+            return totalBalance;
         }
-        return totalBalance;
     }
 
     @Override
-    public Client findClientByName(Bank bank, String name) {
-        List<Client> clientList = bank.getClients();
-        for (Client client : clientList) {
-            if (client.getClientName().equals(name)) {
-                return client;
+    public Client findClientByName(Bank bank, String name) throws ClientNotFoundException {
+        if (bank == null) {
+            throw new NullPointerException();
+        } else {
+            List<Client> clientList = bank.getClients();
+            for (Client client : clientList) {
+                if (client.getClientName().equals(name)) {
+                    return client;
+                }
             }
         }
-        return null;
+        throw new ClientNotFoundException();
+        //return null;
     }
 
     @Override
     public List<Client> findAllClients(Bank bank) {
-        return bank.getClients();
+        if (bank == null) {
+            throw new NullPointerException();
+        } else {
+            return bank.getClients();
+        }
     }
 
     @Override
     public Client saveClient(Bank bank, Client client) {
-        if(client==null){
+        if (client == null || bank == null) {
             throw new NullPointerException();
-        }
-        else {
+        } else {
             bank.getClients().add(client);
             return client;
         }
@@ -59,10 +76,14 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void deleteClient(Bank bank, Client client) {
-        List<Client> clientList = bank.getClients();
-        for (Client cl : clientList) {
-            if (cl.equals(client)) {
-                clientList.remove(cl);
+        if (client == null || bank == null) {
+            throw new NullPointerException();
+        } else {
+            List<Client> clientList = bank.getClients();
+            for (Client cl : clientList) {
+                if (cl.equals(client)) {
+                    clientList.remove(cl);
+                }
             }
         }
     }
