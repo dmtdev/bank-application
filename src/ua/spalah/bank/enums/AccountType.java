@@ -1,4 +1,4 @@
-package ua.spalah.bank;
+package ua.spalah.bank.enums;
 
 /**
  * Created by root on 06.01.2017.

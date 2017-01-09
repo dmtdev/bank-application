@@ -1,5 +1,7 @@
 package ua.spalah.bank;
 
+import ua.spalah.bank.enums.AccountType;
+
 /**
  * Created by root on 06.01.2017.
  */

@@ -1,7 +1,7 @@
 package ua.spalah.bank.model;
 
 import ua.spalah.bank.Account;
-import ua.spalah.bank.AccountType;
+import ua.spalah.bank.enums.AccountType;
 
 /**
  * Created by root on 23.12.2016.

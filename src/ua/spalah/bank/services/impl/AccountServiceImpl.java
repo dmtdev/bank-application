@@ -1,11 +1,9 @@
 package ua.spalah.bank.services.impl;
 
 import ua.spalah.bank.Account;
-import ua.spalah.bank.AccountType;
-import ua.spalah.bank.extensions.AmountIsNegativeException;
+import ua.spalah.bank.enums.AccountType;
 import ua.spalah.bank.extensions.NotEnoughFundsException;
 import ua.spalah.bank.model.CheckingAccount;
-import ua.spalah.bank.model.SavingAccount;
 import ua.spalah.bank.services.AccountService;
 
 /**

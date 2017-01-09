@@ -1,5 +1,6 @@
 package ua.spalah.bank;
 
+import ua.spalah.bank.enums.Sex;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.services.impl.BankServiceImpl;
@@ -17,7 +18,7 @@ public class Main {
         Bank bank = new Bank();
 
         ClientServiceImpl clientService = new ClientServiceImpl();
-        Client cl1 = new Client("First Client",Sex.MALE);
+        Client cl1 = new Client("First Client", Sex.MALE);
         Client cl2 = new Client("Second Client",Sex.MALE);
         Client cl3 = new Client("Third Client",Sex.FEMALE);
 
