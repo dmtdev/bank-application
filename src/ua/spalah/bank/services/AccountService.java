@@ -10,5 +10,5 @@ import ua.spalah.bank.extensions.NotEnoughFundsException;
 public interface AccountService {
     void deposit(Account account, double amount) throws AmountIsNegativeException;
     void withdraw(Account account, double amount) throws AmountIsNegativeException, NotEnoughFundsException;
-    void transfer(Account fromAccount, Account toAccount, double amount) throws NotEnoughFundsException;
+    void transfer(Account fromAccount, Account toAccount, double amount) throws NotEnoughFundsException, AmountIsNegativeException;
 }
