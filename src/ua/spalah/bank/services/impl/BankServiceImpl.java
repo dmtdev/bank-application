@@ -17,6 +17,6 @@ public class BankServiceImpl implements BankService {
                 return client.toString();
             }
         }
-        throw new ClientNotFoundException();
+        throw new ClientNotFoundException("Client Not Found");
     }
 }

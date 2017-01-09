@@ -51,7 +51,7 @@ public class ClientServiceImpl implements ClientService {
                 }
             }
         }
-        throw new ClientNotFoundException();
+        throw new ClientNotFoundException("Client Not Found");
         //return null;
     }
 

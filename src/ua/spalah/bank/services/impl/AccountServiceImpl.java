@@ -39,7 +39,7 @@ public class AccountServiceImpl implements AccountService {
                         // add overdraft and balance check?..
                         account.setBalance(account.getBalance() - amount);
                     } else {
-                        throw new NotEnoughFundsException();
+                        throw new NotEnoughFundsException("Not Enough Funds");
                     }
                 } else if (accountType == AccountType.SAVING) {
                     if (account.getBalance() >= amount) {
