@@ -1,7 +1,10 @@
-package ua.spalah.bank.services;
+package ua.spalah.bank.services.impl;
 
-import ua.spalah.bank.*;
-import ua.spalah.bank.Client;
+import ua.spalah.bank.Account;
+import ua.spalah.bank.model.Bank;
+import ua.spalah.bank.model.CheckingAccount;
+import ua.spalah.bank.model.Client;
+import ua.spalah.bank.services.BankReportService;
 
 import java.util.*;
 
@@ -25,23 +28,32 @@ public class BankReportServiceImpl implements BankReportService {
     }
 
     @Override
-    public double getTotalAccountSum(Bank bank) {
+    public double getTotalAccountSum(Bank bank, Client client) {
         double sum = 0;
         List<Client> clientList = bank.getClients();
-        for (Client client : clientList) {
-            sum += client.getTotalBalance();
+        for (Client cl : clientList) {
+            List<Account> accounts = cl.getAccountList();
+            for (Account account : accounts) {
+                sum += account.getBalance();
+                //овердрафт это же не деньги клиета?
+            }
         }
         return sum;
     }
-
-
     @Override
-    public double getBankCreditSum(Bank bank) {
+    public double getBankCreditSum(Bank bank, Client client) {
         double sum = 0;
         List<Client> clientList = bank.getClients();
-        for (Client client : clientList) {
-            if (client.getTotalBalance() < 0)
-                sum += client.getTotalBalance();
+        for (Client cl : clientList) {
+            List<Account> accounts = cl.getAccountList();
+            for (Account account : accounts) {
+                if (account instanceof CheckingAccount) {
+                    //это же сколько клиенты лолжны банку?
+                    if (account.getBalance() < 0) {
+                        sum += account.getBalance();
+                    }
+                }
+            }
         }
         return sum;
     }

@@ -1,46 +1,34 @@
 package ua.spalah.bank;
 
-import ua.spalah.bank.accounts.CheckingAccount;
-import ua.spalah.bank.accounts.SavingAccount;
-import ua.spalah.bank.listeners.EmailNotificationListener;
-import ua.spalah.bank.listeners.PrintClientListener;
-import ua.spalah.bank.listeners.RegistrationLoggerListener;
+import ua.spalah.bank.enums.Sex;
+import ua.spalah.bank.model.Bank;
+import ua.spalah.bank.model.Client;
+import ua.spalah.bank.services.impl.BankServiceImpl;
+import ua.spalah.bank.services.impl.ClientServiceImpl;
 
-import java.util.Scanner;
+
 
 /**
  * Created by Kostya on 23.12.2016.
  */
 public class Main {
     public static void main(String[] args) {
-        //c2
-        //c3
-        //c4
-        Bank bank = new Bank();
-        bank.addListener(new PrintClientListener());
-        bank.addListener(new EmailNotificationListener());
-        bank.addListener(new RegistrationLoggerListener());
 
-        Client kostya = new Client("Kostya", Sex.MALE);
-        Client vasya = new Client("Vasya", Sex.FEMALE);
-        Client vasya2 = new Client("Kostya", Sex.MALE);
-        SavingAccount sv = new SavingAccount(1000);
-        CheckingAccount ck = new CheckingAccount(450, 200);
-        kostya.addAccount(sv);
-        kostya.addAccount(ck);
-        kostya.setActiveAccount(ck);
-        bank.addClient(kostya);
-        vasya2.addAccount(new SavingAccount(500));
-        bank.addClient(vasya2);
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Type client's name: ");
-        String name = sc.nextLine();
-        System.out.println(bank.getClientInfo(name));
-        System.out.println(kostya.equals(vasya2));
-        System.out.println(kostya.hashCode());
-        System.out.println(vasya2.hashCode());
-        ck.withdraw(800);
-        System.out.println(ck.getBalance());
-        System.out.println(Sex.MALE.getSalutation());
+        BankServiceImpl bankService = new BankServiceImpl();
+        Bank bank = new Bank();
+
+        ClientServiceImpl clientService = new ClientServiceImpl();
+        Client cl1 = new Client("First Client", Sex.MALE);
+        Client cl2 = new Client("Second Client",Sex.MALE);
+        Client cl3 = new Client("Third Client",Sex.FEMALE);
+
+//        bankService.addListener(bank,new PrintClientListener());
+//        bankService.addListener(bank,new EmailNotificationListener());
+//        bankService.addListener(bank,new RegistrationLoggerListener());
+
+        clientService.saveClient(bank,cl1);
+        clientService.saveClient(bank,cl2);
+        clientService.saveClient(bank,cl3);
+
     }
 }

@@ -1,6 +1,6 @@
 package ua.spalah.bank.listeners;
 
-import ua.spalah.bank.Client;
+import ua.spalah.bank.model.Client;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

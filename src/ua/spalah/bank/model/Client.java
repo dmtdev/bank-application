@@ -1,15 +1,14 @@
-package ua.spalah.bank;
+package ua.spalah.bank.model;
 
-import ua.spalah.bank.accounts.Account;
-
+import ua.spalah.bank.Account;
+import ua.spalah.bank.enums.Sex;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by root on 23.12.2016.
  */
-public class Client {
+public class Client  {
 
     private String clientName;
     private Sex sex;
@@ -21,13 +20,6 @@ public class Client {
         this.sex = sex;
     }
 
-    public void addAccount(Account account) {
-        if (accountList.size() == 0) {
-            setActiveAccount(account);
-        }
-        accountList.add(account);
-    }
-
     public String getClientName() {
         return clientName;
     }
@@ -37,7 +29,8 @@ public class Client {
     }
 
     public List<Account> getAccountList() {
-        return Collections.unmodifiableList(accountList);
+        return accountList;
+        //return Collections.unmodifiableList(accountList);
     }
 
     public Account getActiveAccount() {
@@ -48,17 +41,6 @@ public class Client {
         this.activeAccount = activeAccount;
     }
 
-    public double getTotalBalance() {
-        double totalBalance = 0;
-        for (Account account : accountList) {
-            totalBalance += account.getBalance();
-        }
-        return totalBalance;
-    }
-
-//    public void activeAccount(Account account) {
-//        activeAccount = account;
-//    }
 
     @Override
     public String toString() {
