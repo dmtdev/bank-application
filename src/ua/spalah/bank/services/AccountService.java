@@ -1,7 +1,6 @@
 package ua.spalah.bank.services;
 
-import ua.spalah.bank.Account;
-import ua.spalah.bank.extensions.NotEnoughFundsException;
+import ua.spalah.bank.exceptions.NotEnoughFundsException;
 
 /**
  * Created by root on 03.01.2017.

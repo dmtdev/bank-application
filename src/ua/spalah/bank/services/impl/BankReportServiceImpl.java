@@ -1,10 +1,10 @@
 package ua.spalah.bank.services.impl;
 
-import ua.spalah.bank.Account;
+import ua.spalah.bank.services.Account;
+import ua.spalah.bank.services.BankReportService;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.model.Client;
-import ua.spalah.bank.services.BankReportService;
 
 import java.util.*;
 

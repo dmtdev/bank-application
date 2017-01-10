@@ -1,6 +1,6 @@
-package ua.spalah.bank;
+package ua.spalah.bank.services;
 
-import ua.spalah.bank.enums.AccountType;
+import ua.spalah.bank.model.enums.AccountType;
 
 /**
  * Created by root on 06.01.2017.

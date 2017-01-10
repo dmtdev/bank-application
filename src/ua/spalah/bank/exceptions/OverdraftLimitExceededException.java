@@ -1,4 +1,4 @@
-package ua.spalah.bank.extensions;
+package ua.spalah.bank.exceptions;
 
 /**
  * Created by root on 06.01.2017.

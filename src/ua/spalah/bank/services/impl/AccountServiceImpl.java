@@ -1,8 +1,8 @@
 package ua.spalah.bank.services.impl;
 
-import ua.spalah.bank.Account;
-import ua.spalah.bank.enums.AccountType;
-import ua.spalah.bank.extensions.NotEnoughFundsException;
+import ua.spalah.bank.services.Account;
+import ua.spalah.bank.model.enums.AccountType;
+import ua.spalah.bank.exceptions.NotEnoughFundsException;
 import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.services.AccountService;
 
@@ -33,8 +33,9 @@ public class AccountServiceImpl implements AccountService {
             } else {
                 AccountType accountType = account.getType();
                 if (accountType == AccountType.CHECKING) {
-                    if ((account.getBalance() + ((CheckingAccount) account).getOverdraft()) >= amount) {
-                        // add overdraft and balance check?..
+                    CheckingAccount checkingAccount = (CheckingAccount) account;
+                    if ((account.getBalance() + ( checkingAccount.getOverdraft()) >= amount)) {
+                    //if ((account.getBalance() + checkingAccount.getOverdraft()) >= amount) {
                         account.setBalance(account.getBalance() - amount);
                     } else {
                         throw new NotEnoughFundsException("Not Enough Funds");

@@ -1,7 +1,6 @@
 package ua.spalah.bank.services;
 
-import ua.spalah.bank.Account;
-import ua.spalah.bank.extensions.ClientNotFoundException;
+import ua.spalah.bank.exceptions.ClientNotFoundException;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.Client;
 

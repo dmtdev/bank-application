@@ -1,6 +1,6 @@
 package ua.spalah.bank;
 
-import ua.spalah.bank.enums.Sex;
+import ua.spalah.bank.model.enums.Sex;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.services.impl.BankServiceImpl;

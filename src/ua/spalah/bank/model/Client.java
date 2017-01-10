@@ -1,7 +1,7 @@
 package ua.spalah.bank.model;
 
-import ua.spalah.bank.Account;
-import ua.spalah.bank.enums.Sex;
+import ua.spalah.bank.services.Account;
+import ua.spalah.bank.model.enums.Sex;
 import java.util.ArrayList;
 import java.util.List;
 
