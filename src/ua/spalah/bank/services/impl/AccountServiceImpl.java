@@ -33,8 +33,6 @@ public class AccountServiceImpl implements AccountService {
             } else {
                 AccountType accountType = account.getType();
                 if (accountType == AccountType.CHECKING) {
-                    account = (CheckingAccount) account;
-                    // why getOversdraft() need cast after (CheckingAccount)..
                     if ((account.getBalance() + ((CheckingAccount) account).getOverdraft()) >= amount) {
                         // add overdraft and balance check?..
                         account.setBalance(account.getBalance() - amount);
@@ -55,12 +53,8 @@ public class AccountServiceImpl implements AccountService {
         if (fromAccount == null || toAccount == null) {
             throw new NullPointerException();
         } else {
-            if (amount < 0) {
-                throw new IllegalArgumentException();
-            } else {
                 withdraw(fromAccount, amount);
                 deposit(toAccount, amount);
-            }
         }
     }
 }
