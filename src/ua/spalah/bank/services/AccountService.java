@@ -6,7 +6,7 @@ import ua.spalah.bank.exceptions.NotEnoughFundsException;
  * Created by root on 03.01.2017.
  */
 public interface AccountService {
-    void deposit(Account account, double amount) throws IllegalArgumentException;
-    void withdraw(Account account, double amount) throws IllegalArgumentException, NotEnoughFundsException;
-    void transfer(Account fromAccount, Account toAccount, double amount) throws NotEnoughFundsException, IllegalArgumentException;
+    void deposit(Account account, double amount) ;
+    void withdraw(Account account, double amount) throws  NotEnoughFundsException;
+    void transfer(Account fromAccount, Account toAccount, double amount) throws NotEnoughFundsException;
 }

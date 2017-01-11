@@ -11,32 +11,25 @@ import ua.spalah.bank.services.AccountService;
  */
 public class AccountServiceImpl implements AccountService {
     @Override
-    public void deposit(Account account, double amount) throws IllegalArgumentException {
-        if (account == null) {
-            throw new NullPointerException();
-        } else {
+    public void deposit(Account account, double amount) {
+
             if (amount < 0) {
                 throw new IllegalArgumentException();
             } else {
                 account.setBalance(account.getBalance() + amount);
             }
-        }
+
     }
 
     @Override
-    public void withdraw(Account account, double amount) throws IllegalArgumentException, NotEnoughFundsException {
-        if (account == null) {
-            throw new NullPointerException();
-        } else {
+    public void withdraw(Account account, double amount)throws NotEnoughFundsException { // TODO: 11.01.2017 Fix this
             if (amount < 0) {
                 throw new IllegalArgumentException();
             } else {
                 AccountType accountType = account.getType();
                 if (accountType == AccountType.CHECKING) {
                     account = (CheckingAccount) account;
-                    // why getOversdraft() need cast after (CheckingAccount)..
                     if ((account.getBalance() + ((CheckingAccount) account).getOverdraft()) >= amount) {
-                        // add overdraft and balance check?..
                         account.setBalance(account.getBalance() - amount);
                     } else {
                         throw new NotEnoughFundsException("Not Enough Funds");
@@ -47,20 +40,12 @@ public class AccountServiceImpl implements AccountService {
                     }
                 }
             }
-        }
 
     }
     @Override
-    public void transfer(Account fromAccount, Account toAccount, double amount) throws IllegalArgumentException, NotEnoughFundsException {
-        if (fromAccount == null || toAccount == null) {
-            throw new NullPointerException();
-        } else {
-            if (amount < 0) {
-                throw new IllegalArgumentException();
-            } else {
-                withdraw(fromAccount, amount);
-                deposit(toAccount, amount);
-            }
+    public void transfer(Account fromAccount, Account toAccount, double amount) throws NotEnoughFundsException {
+               withdraw(fromAccount, amount);
+               deposit(toAccount, amount);
         }
-    }
+
 }
