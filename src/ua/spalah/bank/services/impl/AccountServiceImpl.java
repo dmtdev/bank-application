@@ -28,19 +28,19 @@ public class AccountServiceImpl implements AccountService {
             throw new IllegalArgumentException();
         } else {
             AccountType accountType = account.getType();
-            if (accountType == AccountType.CHECKING) {
-                if ((account.getBalance() + ((CheckingAccount) account).getOverdraft()) >= amount) {
-                    account.setBalance(account.getBalance() - amount);
+                if (accountType == AccountType.CHECKING) {
+                    if ((account.getBalance() + ((CheckingAccount) account).getOverdraft()) >= amount) {
+                        account.setBalance(account.getBalance() - amount);
+                    } else {
+                        throw new OverdraftLimitExceededException("Overdraft limit exceeded");
+                    }
+                } else if (accountType == AccountType.SAVING) {
+                    if (account.getBalance() >= amount) {
+                        account.setBalance(account.getBalance() - amount);
+                    } else {
+                        throw new NotEnoughFundsException("Not Enough Funds");
+                    }
                 } else {
-                    throw new OverdraftLimitExceededException("Overdraft limit exceeded");
-                }
-            } else if (accountType == AccountType.SAVING) {
-                if (account.getBalance() >= amount) {
-                    account.setBalance(account.getBalance() - amount);
-                } else {
-                    throw new NotEnoughFundsException("Not Enough Funds");
-                }
-            } else {
                 throw new IllegalArgumentException("Unknown account type");
             }
         }
