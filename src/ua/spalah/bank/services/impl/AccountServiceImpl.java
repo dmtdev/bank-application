@@ -33,9 +33,10 @@ public class AccountServiceImpl implements AccountService {
             } else {
                 AccountType accountType = account.getType();
                 if (accountType == AccountType.CHECKING) {
-                    CheckingAccount checkingAccount = (CheckingAccount) account;
-                    if ((account.getBalance() + ( checkingAccount.getOverdraft()) >= amount)) {
-                    //if ((account.getBalance() + checkingAccount.getOverdraft()) >= amount) {
+                    account = (CheckingAccount) account;
+                    // why getOversdraft() need cast after (CheckingAccount)..
+                    if ((account.getBalance() + ((CheckingAccount) account).getOverdraft()) >= amount) {
+                        // add overdraft and balance check?..
                         account.setBalance(account.getBalance() - amount);
                     } else {
                         throw new NotEnoughFundsException("Not Enough Funds");
@@ -54,8 +55,12 @@ public class AccountServiceImpl implements AccountService {
         if (fromAccount == null || toAccount == null) {
             throw new NullPointerException();
         } else {
+            if (amount < 0) {
+                throw new IllegalArgumentException();
+            } else {
                 withdraw(fromAccount, amount);
                 deposit(toAccount, amount);
+            }
         }
     }
 }
