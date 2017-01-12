@@ -71,7 +71,7 @@ public class BankCommander {
                 new DepositCommand(clientService),
                 new WithdrawCommand(clientService),
                 new TransferCommand(),
-                new AddClientCommand(clientService, accountService),
+                new AddClientCommand(clientService, accountService),//ready
                 new RemoveClientCommand(clientService),//ready
                 new GetBankInfoCommand(bankReportService),//ready
                 new ShowMemuCommand(),//ready
