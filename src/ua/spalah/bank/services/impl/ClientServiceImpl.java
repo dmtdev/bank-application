@@ -71,11 +71,11 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void deleteClient(Bank bank, Client client) {
-
             List<Client> clientList = bank.getClients();
             for (Client cl : clientList) {
                 if (cl.equals(client)) {
                     clientList.remove(cl);
+                    break;
                 }
             }
         }

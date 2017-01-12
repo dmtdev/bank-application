@@ -1,5 +1,6 @@
 package ua.spalah.bank.commands;
 
+import ua.spalah.bank.exceptions.CurrentClientNotSetException;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.model.Client;
@@ -63,16 +64,16 @@ public class BankCommander {
         clientService.addAccount(cl3, new CheckingAccount(10000, 500));
 
         commands = new Command[]{
-                new FindClientCommand(clientService),
+                new FindClientCommand(clientService), //ready
                 new GetAccountsCommand(),
                 new DepositCommand(),
                 new WithdrawCommand(),
                 new TransferCommand(),
                 new AddClientCommand(),
-                new RemoveClientCommand(),
-                new GetBankInfoCommand(bankReportService),
-                new ShowMemuCommand(),
-                new ExitCommand()
+                new RemoveClientCommand(clientService),
+                new GetBankInfoCommand(bankReportService),//ready
+                new ShowMemuCommand(),//ready
+                new ExitCommand()//ready
         };
         currentBank = bank;
         // здесь проводим инициализацию банка начальными данными
@@ -83,22 +84,23 @@ public class BankCommander {
         for (int i = 0; i < commands.length; i++) {
             System.out.println((i + 1) + ". " + commands[i].printCommandInfo());
         }
-        System.out.println("Enter command number (1-10)");
     }
 
     public void run() {
         init();
         while (true) {
+            System.out.println("Enter command number (1-10)");
             Scanner scanner = new Scanner(System.in);
             try {
                 int command = Integer.parseInt(scanner.nextLine());
                 commands[command - 1].execute();
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Wrong command number!");
-            } catch (InputMismatchException e) {
+                System.out.println("Wrong command number");
+            } catch (NumberFormatException e) {
                 System.out.println("This is not a number");
+            } catch (CurrentClientNotSetException e) {
+                System.out.println(e.getMessage());
             }
-            //catch ()
         }
         // запускаем наше приложение
         // выводим в цикле доступные команды

@@ -23,11 +23,12 @@ public class FindClientCommand implements Command {
         Scanner scanner = new Scanner(System.in);
         try{
             BankCommander.currentClient = clientService.findClientByName(BankCommander.currentBank,scanner.nextLine());
+            System.out.println("Current client set to:");
+            System.out.println(BankCommander.currentClient.getClientName());
         } catch (ClientNotFoundException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("Current client set to:");
-        System.out.println(BankCommander.currentClient.getClientName());
+
 
     }
 
