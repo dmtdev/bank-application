@@ -45,7 +45,6 @@ public class BankReportServiceImpl implements BankReportService {
             List<Account> accounts = cl.getAccountList();
             for (Account account : accounts) {
                 sum += account.getBalance();
-                //овердрафт это же не деньги клиета?
             }
         }
         return sum;
@@ -73,7 +72,6 @@ public class BankReportServiceImpl implements BankReportService {
             List<Account> accounts = cl.getAccountList();
             for (Account account : accounts) {
                 if (account instanceof CheckingAccount) {
-                    //это же сколько клиенты лолжны банку?
                     if (account.getBalance() < 0) {
                         sum += account.getBalance();
                     }

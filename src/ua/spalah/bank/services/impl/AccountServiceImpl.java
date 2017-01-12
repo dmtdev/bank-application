@@ -25,24 +25,24 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void withdraw(Account account, double amount) throws NotEnoughFundsException{
+    public void withdraw(Account account, double amount) throws NotEnoughFundsException {
         if (amount < 0) {
             throw new IllegalArgumentException();
         } else {
             AccountType accountType = account.getType();
-                if (accountType == AccountType.CHECKING) {
-                    if ((account.getBalance() + ((CheckingAccount) account).getOverdraft()) >= amount) {
-                        account.setBalance(account.getBalance() - amount);
-                    } else {
-                        throw new OverdraftLimitExceededException("Overdraft limit exceeded");
-                    }
-                } else if (accountType == AccountType.SAVING) {
-                    if (account.getBalance() >= amount) {
-                        account.setBalance(account.getBalance() - amount);
-                    } else {
-                        throw new NotEnoughFundsException("Not Enough Funds");
-                    }
+            if (accountType == AccountType.CHECKING) {
+                if ((account.getBalance() + ((CheckingAccount) account).getOverdraft()) >= amount) {
+                    account.setBalance(account.getBalance() - amount);
                 } else {
+                    throw new OverdraftLimitExceededException("Overdraft limit exceeded");
+                }
+            } else if (accountType == AccountType.SAVING) {
+                if (account.getBalance() >= amount) {
+                    account.setBalance(account.getBalance() - amount);
+                } else {
+                    throw new NotEnoughFundsException("Not Enough Funds");
+                }
+            } else {
                 throw new IllegalArgumentException("Unknown account type");
             }
         }
@@ -56,11 +56,17 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public String toString()
+
+    {
+        return "";
+    }
+    @Override
     public void getAccountsInfo(Client client) {
         List<Account> accountList = client.getAccountList();
         System.out.println(client.getClientName()+" accounts:");
         for (Account account: accountList){
-            System.out.println("Account type:"+((account.getType()==AccountType.CHECKING)?"Checking account":"Saving account"));
+            System.out.println("Account type: "+((account.getType()==AccountType.CHECKING)?"Checking account":"Saving account"));
             System.out.println("Balance: "+account.getBalance());
             if(account.getType()==AccountType.CHECKING)
             {
