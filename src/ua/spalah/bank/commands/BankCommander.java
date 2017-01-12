@@ -7,8 +7,10 @@ import ua.spalah.bank.model.SavingAccount;
 import ua.spalah.bank.model.enums.AccountType;
 import ua.spalah.bank.model.enums.Sex;
 import ua.spalah.bank.services.AccountService;
+import ua.spalah.bank.services.BankReportService;
 import ua.spalah.bank.services.ClientService;
 import ua.spalah.bank.services.impl.AccountServiceImpl;
+import ua.spalah.bank.services.impl.BankReportServiceImpl;
 import ua.spalah.bank.services.impl.ClientServiceImpl;
 
 import java.util.InputMismatchException;
@@ -37,6 +39,7 @@ public class BankCommander {
         Bank bank = new Bank();
         ClientService clientService = new ClientServiceImpl();
         AccountService accountService = new AccountServiceImpl();
+        BankReportService bankReportService = new BankReportServiceImpl();
 
         Client cl0 = new Client("Dima", Sex.MALE);
         Client cl1 = new Client("Misha", Sex.MALE);
@@ -67,7 +70,7 @@ public class BankCommander {
                 new TransferCommand(),
                 new AddClientCommand(),
                 new RemoveClientCommand(),
-                new GetBankInfoCommand(),
+                new GetBankInfoCommand(bankReportService),
                 new ShowMemuCommand(),
                 new ExitCommand()
         };

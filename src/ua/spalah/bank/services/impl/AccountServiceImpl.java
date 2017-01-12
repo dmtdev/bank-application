@@ -19,7 +19,6 @@ public class AccountServiceImpl implements AccountService {
         } else {
             account.setBalance(account.getBalance() + amount);
         }
-
     }
 
     @Override
