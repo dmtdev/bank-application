@@ -7,5 +7,5 @@ public interface Command {
     // взаимодействует с клиетом читая его ввод с консоли и печатая ему ответы
     void execute();
     // выводит информацию о команде в консоль
-    void printCommandInfo();
+    String printCommandInfo();
 }
