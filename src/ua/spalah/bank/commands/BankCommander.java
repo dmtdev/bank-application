@@ -46,11 +46,13 @@ public class BankCommander {
         Client cl1 = new Client("Misha", Sex.MALE);
         Client cl2 = new Client("Masha", Sex.FEMALE);
         Client cl3 = new Client("Kostya", Sex.MALE);
+        Client cl4 = new Client("Vasya", Sex.MALE);
 
         clientService.saveClient(bank, cl0);
         clientService.saveClient(bank, cl1);
         clientService.saveClient(bank, cl2);
         clientService.saveClient(bank, cl3);
+        clientService.saveClient(bank, cl4);
 
         clientService.addAccount(cl0, new SavingAccount(100));
         clientService.addAccount(cl0, new CheckingAccount(100, 50));
@@ -65,12 +67,12 @@ public class BankCommander {
 
         commands = new Command[]{
                 new FindClientCommand(clientService), //ready
-                new GetAccountsCommand(),
-                new DepositCommand(),
-                new WithdrawCommand(),
+                new GetAccountsCommand(accountService),//ready
+                new DepositCommand(clientService),
+                new WithdrawCommand(clientService),
                 new TransferCommand(),
                 new AddClientCommand(),
-                new RemoveClientCommand(clientService),
+                new RemoveClientCommand(clientService),//ready
                 new GetBankInfoCommand(bankReportService),//ready
                 new ShowMemuCommand(),//ready
                 new ExitCommand()//ready
