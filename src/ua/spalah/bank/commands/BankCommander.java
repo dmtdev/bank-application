@@ -1,5 +1,6 @@
 package ua.spalah.bank.commands;
 
+import ua.spalah.bank.exceptions.ClientNotFoundException;
 import ua.spalah.bank.exceptions.CurrentClientNotSetException;
 import ua.spalah.bank.exceptions.NotEnoughFundsException;
 import ua.spalah.bank.model.Bank;
@@ -28,6 +29,12 @@ public class BankCommander {
 
     // Список команд которые мы можем выполнять
     private static Command[] commands;
+
+    //Может добавить getter для commands или сделать commands public, чтобы можно было вызвать одну из другой
+    //Например при старте программы сразу вызывается GetAccounts, вывести сообщение и передать управление FindClientCommand
+    public static Command[] getCommands() {
+        return commands;
+    }
 
     public BankCommander() {
         init();
@@ -71,7 +78,7 @@ public class BankCommander {
                 new SetActiveAccount(clientService, accountService),
                 new DepositCommand(accountService), //ready
                 new WithdrawCommand(accountService), //ready
-                new TransferCommand(accountService),
+                new TransferCommand(clientService,accountService),
                 new AddClientCommand(clientService, accountService),//ready
                 new RemoveClientCommand(clientService),//ready
                 new GetBankInfoCommand(bankReportService),//ready
@@ -96,6 +103,7 @@ public class BankCommander {
             Scanner scanner = new Scanner(System.in);
             try {
                 int command = Integer.parseInt(scanner.nextLine());
+                System.out.println("> " + commands[command - 1].printCommandInfo());
                 commands[command - 1].execute();
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Wrong command number");
@@ -103,7 +111,7 @@ public class BankCommander {
                 System.out.println("Wrong account number");
             } catch (NumberFormatException e) {
                 System.out.println("This is not a number");
-            } catch (CurrentClientNotSetException | NotEnoughFundsException e) {
+            } catch (CurrentClientNotSetException | NotEnoughFundsException | ClientNotFoundException e) {
                 System.out.println(e.getMessage());
             }
         }

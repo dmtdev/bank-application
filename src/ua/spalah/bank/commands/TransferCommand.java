@@ -1,6 +1,13 @@
 package ua.spalah.bank.commands;
 
+import ua.spalah.bank.exceptions.ClientNotFoundException;
+import ua.spalah.bank.exceptions.CurrentClientNotSetException;
+import ua.spalah.bank.exceptions.NotEnoughFundsException;
+import ua.spalah.bank.model.Client;
 import ua.spalah.bank.services.AccountService;
+import ua.spalah.bank.services.ClientService;
+
+import java.util.Scanner;
 
 /**
  * Created by root on 12.01.2017.
@@ -8,13 +15,26 @@ import ua.spalah.bank.services.AccountService;
 public class TransferCommand implements Command {
 
     private AccountService accountService;
-    public TransferCommand(AccountService accountService) {
+    private ClientService clientService;
+
+    public TransferCommand(ClientService clientService, AccountService accountService) {
         this.accountService = accountService;
+        this.clientService = clientService;
     }
 
-    @Override
-    public void execute() {
 
+    @Override
+    public void execute() throws CurrentClientNotSetException, ClientNotFoundException, NotEnoughFundsException {
+        if (BankCommander.currentClient == null) {
+            throw new CurrentClientNotSetException();
+        }
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter client name for transit operation:");
+        Client client = clientService.findClientByName(BankCommander.currentBank,scanner.nextLine());
+        System.out.println("Enter transfer sum:");
+        double sum = Double.parseDouble(scanner.nextLine());
+        accountService.transfer(BankCommander.currentClient.getActiveAccount(),client.getActiveAccount(),sum);
+        System.out.println("$"+sum+" send from "+BankCommander.currentClient.getClientName()+" to "+client.getClientName());
     }
 
     @Override
