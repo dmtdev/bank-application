@@ -46,8 +46,8 @@ public class AddClientCommand implements Command {
                     checkClientData.sex = (sex.equals("m") ? Sex.MALE : Sex.FEMALE);
                 }
             } else {
-                Pattern pattern = Pattern.compile("^[0-9]{1,10}:[0-9]{1,10}$");
-                System.out.println("Enter first client account like \"1000:0\"(balance:overdraft(overdraft = 0 if you want create Saving account))");
+                Pattern pattern = Pattern.compile("^[0-9]{0,10}.[0-9]{0,2}:[0-9]{0,10}.[0-9]{0,2}$");
+                System.out.println("Enter first client account like \"100.01:10\"(balance:overdraft(overdraft = 0 if you want create Saving account))");
                 String userInput = scanner.nextLine().trim();
                 Matcher matcher = pattern.matcher(userInput);
                 if (matcher.matches()) {
@@ -81,15 +81,6 @@ public class AddClientCommand implements Command {
         String name;
         Sex sex;
         Account account;
-
-        @Override
-        public String toString() {
-            return "CheckClientData{" +
-                    "name='" + name + '\'' +
-                    ", sex=" + sex +
-                    ", account=" + account +
-                    '}';
-        }
 
         public boolean checkData() {
             if (name != null && sex != null && account != null) {

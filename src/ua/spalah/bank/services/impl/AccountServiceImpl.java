@@ -34,13 +34,13 @@ public class AccountServiceImpl implements AccountService {
                 if ((account.getBalance() + ((CheckingAccount) account).getOverdraft()) >= amount) {
                     account.setBalance(account.getBalance() - amount);
                 } else {
-                    throw new OverdraftLimitExceededException("Overdraft limit exceeded");
+                    throw new OverdraftLimitExceededException(((CheckingAccount) account).getOverdraft());
                 }
             } else if (accountType == AccountType.SAVING) {
                 if (account.getBalance() >= amount) {
                     account.setBalance(account.getBalance() - amount);
                 } else {
-                    throw new NotEnoughFundsException("Not Enough Funds");
+                    throw new NotEnoughFundsException(account.getBalance());
                 }
             } else {
                 throw new IllegalArgumentException("Unknown account type");

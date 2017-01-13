@@ -19,7 +19,7 @@ public class GetAccountsCommand implements Command {
     @Override
     public void execute() throws CurrentClientNotSetException {
         if (BankCommander.currentClient == null) {
-            throw new CurrentClientNotSetException("Current client not set.  Please find client by name to set new current client.");
+            throw new CurrentClientNotSetException();
         }
         accountService.getAccountsInfo(BankCommander.currentClient);
     }

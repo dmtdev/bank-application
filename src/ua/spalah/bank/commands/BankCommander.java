@@ -1,11 +1,11 @@
 package ua.spalah.bank.commands;
 
 import ua.spalah.bank.exceptions.CurrentClientNotSetException;
+import ua.spalah.bank.exceptions.NotEnoughFundsException;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.model.SavingAccount;
-import ua.spalah.bank.model.enums.AccountType;
 import ua.spalah.bank.model.enums.Sex;
 import ua.spalah.bank.services.AccountService;
 import ua.spalah.bank.services.BankReportService;
@@ -14,7 +14,6 @@ import ua.spalah.bank.services.impl.AccountServiceImpl;
 import ua.spalah.bank.services.impl.BankReportServiceImpl;
 import ua.spalah.bank.services.impl.ClientServiceImpl;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -68,9 +67,11 @@ public class BankCommander {
         commands = new Command[]{
                 new FindClientCommand(clientService), //ready
                 new GetAccountsCommand(accountService),//ready
-                new DepositCommand(clientService),
-                new WithdrawCommand(clientService),
-                new TransferCommand(),
+                new AddAccountCommand(clientService),//ready
+                new SetActiveAccount(clientService),
+                new DepositCommand(accountService), //ready
+                new WithdrawCommand(accountService), //ready
+                new TransferCommand(accountService),
                 new AddClientCommand(clientService, accountService),//ready
                 new RemoveClientCommand(clientService),//ready
                 new GetBankInfoCommand(bankReportService),//ready
@@ -100,7 +101,7 @@ public class BankCommander {
                 System.out.println("Wrong command number");
             } catch (NumberFormatException e) {
                 System.out.println("This is not a number");
-            } catch (CurrentClientNotSetException e) {
+            } catch (CurrentClientNotSetException | NotEnoughFundsException e) {
                 System.out.println(e.getMessage());
             }
         }
