@@ -30,8 +30,6 @@ public class BankCommander {
     // Список команд которые мы можем выполнять
     private static Command[] commands;
 
-    //Может добавить getter для commands или сделать commands public, чтобы можно было вызвать одну из другой
-    //Например при старте программы сразу вызывается GetAccounts, вывести сообщение и передать управление FindClientCommand
     public static Command[] getCommands() {
         return commands;
     }
@@ -75,7 +73,7 @@ public class BankCommander {
                 new FindClientCommand(clientService), //ready
                 new GetAccountsCommand(accountService),//ready
                 new AddAccountCommand(clientService),//ready
-                new SetActiveAccount(clientService, accountService),
+                new SetActiveAccountCommander(clientService, accountService),
                 new DepositCommand(accountService), //ready
                 new WithdrawCommand(accountService), //ready
                 new TransferCommand(clientService,accountService),
@@ -97,7 +95,6 @@ public class BankCommander {
     }
 
     public void run() {
-        init();
         while (true) {
             System.out.println("Enter command number (1-10)");
             Scanner scanner = new Scanner(System.in);

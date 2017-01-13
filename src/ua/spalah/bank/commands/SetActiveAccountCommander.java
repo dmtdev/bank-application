@@ -10,12 +10,12 @@ import java.util.Scanner;
 /**
  * Created by root on 13.01.2017.
  */
-public class SetActiveAccount implements Command {
+public class SetActiveAccountCommander implements Command {
 
     private ClientService clientService;
     private AccountService accountService;
 
-    public SetActiveAccount(ClientService clientService, AccountService accountService) {
+    public SetActiveAccountCommander(ClientService clientService, AccountService accountService) {
         this.clientService = clientService;
         this.accountService = accountService;
     }
