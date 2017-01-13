@@ -19,4 +19,13 @@ public class BankServiceImpl implements BankService {
         }
         throw new ClientNotFoundException(clientName);
     }
+    public Client getClientByName(Bank bank, String clientName) throws ClientNotFoundException {
+
+        for (Client client : bank.getClients()) {
+            if (client.getClientName().equals(clientName)) {
+                return client;
+            }
+        }
+        throw new ClientNotFoundException(clientName);
+    }
 }

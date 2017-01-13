@@ -34,6 +34,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Account getAccountById(Client client, int id) {
+            return client.getAccountList().get((id));
+     }
+
+    @Override
     public Client findClientByName(Bank bank, String name) throws ClientNotFoundException {
         List<Client> clientList = bank.getClients();
         for (Client client : clientList) {

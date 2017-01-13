@@ -68,7 +68,7 @@ public class BankCommander {
                 new FindClientCommand(clientService), //ready
                 new GetAccountsCommand(accountService),//ready
                 new AddAccountCommand(clientService),//ready
-                new SetActiveAccount(clientService),
+                new SetActiveAccount(clientService, accountService),
                 new DepositCommand(accountService), //ready
                 new WithdrawCommand(accountService), //ready
                 new TransferCommand(accountService),
@@ -99,6 +99,8 @@ public class BankCommander {
                 commands[command - 1].execute();
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Wrong command number");
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Wrong account number");
             } catch (NumberFormatException e) {
                 System.out.println("This is not a number");
             } catch (CurrentClientNotSetException | NotEnoughFundsException e) {

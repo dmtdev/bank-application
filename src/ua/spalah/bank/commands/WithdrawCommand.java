@@ -23,7 +23,7 @@ public class WithdrawCommand implements Command {
             throw new CurrentClientNotSetException();
         }
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter deposit sum for "+BankCommander.currentClient.getClientName()+ ":");
+        System.out.println("Enter withdraw sum for "+BankCommander.currentClient.getClientName()+ ":");
         accountService.withdraw(BankCommander.currentClient.getActiveAccount(),Double.parseDouble(scanner.nextLine()));
     }
 
