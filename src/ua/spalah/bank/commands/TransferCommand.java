@@ -26,7 +26,7 @@ public class TransferCommand implements Command {
     @Override
     public void execute() {
         if (BankCommander.currentClient == null) {
-            System.out.println(new CurrentClientNotSetException().getMessage());
+            System.out.println("Current client not set. Please find client by name to set current client.");
             return;
         }
         Scanner scanner = new Scanner(System.in);

@@ -27,7 +27,7 @@ public class AddAccountCommand implements Command {
     public void execute()  {
         if(BankCommander.currentClient==null)
         {
-            System.out.println(new CurrentClientNotSetException().getMessage());
+            System.out.println("Current client not set. Please find client by name to set current client.");
             return;
         }
         Pattern pattern = Pattern.compile("^[0-9]{0,10}.[0-9]{0,2}:[0-9]{0,10}.[0-9]{0,2}$");
