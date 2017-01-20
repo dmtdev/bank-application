@@ -41,6 +41,12 @@ public class AddClientCommand implements Command {
                 if (sex.equals("m") || sex.equals("f")) {
                     checkClientData.sex = (sex.equals("m") ? Sex.MALE : Sex.FEMALE);
                 }
+            } else if (checkClientData.email == null) {
+
+            } else if (checkClientData.tel == null) {
+
+            } else if (checkClientData.city == null) {
+
             } else {
                 Pattern pattern = Pattern.compile("^[0-9]{0,10}.[0-9]{0,2}:[0-9]{0,10}.[0-9]{0,2}$");
                 System.out.println("Enter first client account like \"100.01:10\"(balance:overdraft(overdraft = 0 if you want create Saving account))");
@@ -75,11 +81,14 @@ public class AddClientCommand implements Command {
 
     private class CheckClientData {
         String name;
+        String email;
+        String tel;
+        String city;
         Sex sex;
         Account account;
 
         public boolean checkData() {
-            if (name != null && sex != null && account != null) {
+            if (name != null && sex != null && account != null && email != null && tel != null && city != null) {
                 return true;
             }
             return false;

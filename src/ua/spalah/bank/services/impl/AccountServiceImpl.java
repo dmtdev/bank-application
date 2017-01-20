@@ -25,7 +25,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void withdraw(Account account, double amount) throws NotEnoughFundsException {
+    public void withdraw(Account account, double amount) {
         if (amount < 0) {
             throw new IllegalArgumentException();
         } else {
@@ -34,13 +34,13 @@ public class AccountServiceImpl implements AccountService {
                 if ((account.getBalance() + ((CheckingAccount) account).getOverdraft()) >= amount) {
                     account.setBalance(account.getBalance() - amount);
                 } else {
-                    throw new OverdraftLimitExceededException(((CheckingAccount) account).getOverdraft());
+                    System.out.println(new OverdraftLimitExceededException(((CheckingAccount) account).getOverdraft()));
                 }
             } else if (accountType == AccountType.SAVING) {
                 if (account.getBalance() >= amount) {
                     account.setBalance(account.getBalance() - amount);
                 } else {
-                    throw new NotEnoughFundsException(account.getBalance());
+                    System.out.println(new NotEnoughFundsException(account.getBalance()).getMessage());
                 }
             } else {
                 throw new IllegalArgumentException("Unknown account type");
@@ -50,7 +50,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void transfer(Account fromAccount, Account toAccount, double amount) throws NotEnoughFundsException {
+    public void transfer(Account fromAccount, Account toAccount, double amount){
         withdraw(fromAccount, amount);
         deposit(toAccount, amount);
     }

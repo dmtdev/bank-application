@@ -94,4 +94,9 @@ public class BankReportServiceImpl implements BankReportService {
         );
         return clientList;
     }
+
+    @Override
+    public Map<String, List<Client>> getClientsByCity(Bank bank) {
+        return null;
+    }
 }

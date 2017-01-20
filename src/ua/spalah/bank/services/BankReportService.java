@@ -4,6 +4,7 @@ import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.Client;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Dmitry on 10.01.2017.
@@ -17,4 +18,5 @@ import java.util.List;
         double getBankCreditSum(Bank bank); // возвращает сумму отрицательных балансов по всем счетам
         double getBankCreditSum(Bank bank, Client client); // возвращает сумму отрицательных балансов по всем счетам
         List<Client> getClientsSortedByName(Bank bank); // Возвращает список клиентов отсортированных по имени
+        Map<String, List<Client>> getClientsByCity(Bank bank);
     }

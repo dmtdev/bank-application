@@ -12,12 +12,48 @@ public class Client  {
 
     private String clientName;
     private Sex sex;
+    private String email;
+    private String tel;
+
+    private String city;
     private List<Account> accountList = new ArrayList<>();
     private Account activeAccount;
 
     public Client(String clientName, Sex sex) {
         this.clientName = clientName;
         this.sex = sex;
+    }
+
+    public Client(String clientName, Sex sex, String email, String tel, String city) {
+        this.clientName = clientName;
+        this.sex = sex;
+        this.email = email;
+        this.tel = tel;
+        this.city = city;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public String getCity() {
+        return city ;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getClientName() {
@@ -60,14 +96,19 @@ public class Client  {
         Client client = (Client) o;
 
         if (!clientName.equals(client.clientName)) return false;
-        return sex.equals(client.sex);
+        if (sex != client.sex) return false;
+        if (!email.equals(client.email)) return false;
+        if (!tel.equals(client.tel)) return false;
+        return city.equals(client.city);
     }
 
     @Override
     public int hashCode() {
         int result = clientName.hashCode();
         result = 31 * result + sex.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + tel.hashCode();
+        result = 31 * result + city.hashCode();
         return result;
     }
-
 }
