@@ -66,7 +66,6 @@ public class Client  {
 
     public List<Account> getAccountList() {
         return accountList;
-        //return Collections.unmodifiableList(accountList);
     }
 
     public Account getActiveAccount() {
@@ -82,9 +81,11 @@ public class Client  {
     public String toString() {
         return "Client{" +
                 "clientName='" + clientName + '\'' +
-                ", sex='" + sex + '\'' +
-                ", accountList=" + accountList +
-                ", activeAccount=" + activeAccount.toString() +
+                ", sex=" + sex +
+                ", email='" + email + '\'' +
+                ", tel='" + tel + '\'' +
+                ", city='" + city + '\'' +
+                ", activeAccount=" + activeAccount +
                 '}';
     }
 

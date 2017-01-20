@@ -42,11 +42,25 @@ public class AddClientCommand implements Command {
                     checkClientData.sex = (sex.equals("m") ? Sex.MALE : Sex.FEMALE);
                 }
             } else if (checkClientData.email == null) {
+                System.out.println("Enter Client email:");
+                String email = scanner.nextLine().trim();
+                if (email.matches("^[a-z0-9-.]{1,250}@[a-z0-9.-]{1,250}.[a-z]{2,4}$si")) {
+                    checkClientData.email = email;
+                }
 
             } else if (checkClientData.tel == null) {
-
+                System.out.println("Enter Client phone number(+380123456789):");
+                String tel = scanner.nextLine().trim();
+                // регексп для отмазки.. не учитываем, что не во всех номерах междунарожного формата 12 цифр..
+                if (tel.matches("^+[0-9]{12}$")) {
+                    checkClientData.tel = tel;
+                }
             } else if (checkClientData.city == null) {
-
+                System.out.println("Enter Client city:");
+                String city = scanner.nextLine().trim();
+                if (city.length() > 1) {
+                    checkClientData.city = city;
+                }
             } else {
                 Pattern pattern = Pattern.compile("^[0-9]{0,10}.[0-9]{0,2}:[0-9]{0,10}.[0-9]{0,2}$");
                 System.out.println("Enter first client account like \"100.01:10\"(balance:overdraft(overdraft = 0 if you want create Saving account))");
@@ -56,7 +70,7 @@ public class AddClientCommand implements Command {
                     String[] accountData = userInput.split(":");
                     double balance = Double.parseDouble(accountData[0]);
                     double overdraft = Double.parseDouble(accountData[1]);
-                    Client client = new Client(checkClientData.name, checkClientData.sex);
+                    Client client = new Client(checkClientData.name, checkClientData.sex,checkClientData.email,checkClientData.tel,checkClientData.city);
                     clientService.saveClient(BankCommander.currentBank, client);
                     BankCommander.currentClient = client;
                     Account account;
