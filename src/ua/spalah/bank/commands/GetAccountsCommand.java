@@ -1,9 +1,7 @@
 package ua.spalah.bank.commands;
 
-import ua.spalah.bank.exceptions.CurrentClientNotSetException;
 import ua.spalah.bank.services.AccountService;
-import ua.spalah.bank.services.BankService;
-import ua.spalah.bank.services.ClientService;
+
 
 /**
  * Created by root on 12.01.2017.

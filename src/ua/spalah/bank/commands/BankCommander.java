@@ -1,8 +1,5 @@
 package ua.spalah.bank.commands;
 
-import ua.spalah.bank.exceptions.ClientNotFoundException;
-import ua.spalah.bank.exceptions.CurrentClientNotSetException;
-import ua.spalah.bank.exceptions.NotEnoughFundsException;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.model.Client;
@@ -109,9 +106,6 @@ public class BankCommander {
             } catch (NumberFormatException e) {
                 System.out.println("This is not a number");
            }
-//          catch (CurrentClientNotSetException | NotEnoughFundsException | ClientNotFoundException e) {
-//                System.out.println(e.getMessage());
-//          }
         }
         // запускаем наше приложение
         // выводим в цикле доступные команды

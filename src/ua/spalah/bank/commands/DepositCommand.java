@@ -1,6 +1,5 @@
 package ua.spalah.bank.commands;
 
-import ua.spalah.bank.exceptions.CurrentClientNotSetException;
 import ua.spalah.bank.services.AccountService;
 
 import java.util.Scanner;

@@ -1,7 +1,5 @@
 package ua.spalah.bank.commands;
 
-import ua.spalah.bank.exceptions.CurrentClientNotSetException;
-import ua.spalah.bank.exceptions.NotEnoughFundsException;
 import ua.spalah.bank.services.AccountService;
 import ua.spalah.bank.services.ClientService;
 
