@@ -9,7 +9,7 @@ import ua.spalah.bank.exceptions.NotEnoughFundsException;
  */
 public interface Command {
     // взаимодействует с клиетом читая его ввод с консоли и печатая ему ответы
-    void execute() throws CurrentClientNotSetException, NotEnoughFundsException, ClientNotFoundException;
+    void execute();
     // выводит информацию о команде в консоль
-    String printCommandInfo();
+    String getCommandInfo();
 }

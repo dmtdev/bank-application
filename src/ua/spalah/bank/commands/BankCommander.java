@@ -50,13 +50,13 @@ public class BankCommander {
         Client cl1 = new Client("Misha", Sex.MALE);
         Client cl2 = new Client("Masha", Sex.FEMALE);
         Client cl3 = new Client("Kostya", Sex.MALE);
-        Client cl4 = new Client("Vasya", Sex.MALE);
+//        Client cl4 = new Client("Vasya", Sex.MALE);
 
         clientService.saveClient(bank, cl0);
         clientService.saveClient(bank, cl1);
         clientService.saveClient(bank, cl2);
         clientService.saveClient(bank, cl3);
-        clientService.saveClient(bank, cl4);
+//        clientService.saveClient(bank, cl4);
 
         clientService.addAccount(cl0, new SavingAccount(100));
         clientService.addAccount(cl0, new CheckingAccount(100, 50));
@@ -80,7 +80,7 @@ public class BankCommander {
                 new AddClientCommand(clientService, accountService),//ready
                 new RemoveClientCommand(clientService),//ready
                 new GetBankInfoCommand(bankReportService),//ready
-                new ShowMemuCommand(),//ready
+                new ShowMenuCommand(),//ready
                 new ExitCommand()//ready
         };
         currentBank = bank;
@@ -90,7 +90,7 @@ public class BankCommander {
 
     public static void showMenu() {
         for (int i = 0; i < commands.length; i++) {
-            System.out.println((i + 1) + ". " + commands[i].printCommandInfo());
+            System.out.println((i + 1) + ". " + commands[i].getCommandInfo());
         }
     }
 
@@ -100,7 +100,7 @@ public class BankCommander {
             Scanner scanner = new Scanner(System.in);
             try {
                 int command = Integer.parseInt(scanner.nextLine());
-                System.out.println("> " + commands[command - 1].printCommandInfo());
+                System.out.println("> " + commands[command - 1].getCommandInfo());
                 commands[command - 1].execute();
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Wrong command number");
@@ -108,9 +108,10 @@ public class BankCommander {
                 System.out.println("Wrong account number");
             } catch (NumberFormatException e) {
                 System.out.println("This is not a number");
-            } catch (CurrentClientNotSetException | NotEnoughFundsException | ClientNotFoundException e) {
-                System.out.println(e.getMessage());
-            }
+           }
+//          catch (CurrentClientNotSetException | NotEnoughFundsException | ClientNotFoundException e) {
+//                System.out.println(e.getMessage());
+//          }
         }
         // запускаем наше приложение
         // выводим в цикле доступные команды

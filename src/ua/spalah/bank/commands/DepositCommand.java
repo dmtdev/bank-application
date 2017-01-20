@@ -16,10 +16,11 @@ public class DepositCommand implements Command {
     }
 
     @Override
-    public void execute() throws CurrentClientNotSetException {
+    public void execute(){
         if(BankCommander.currentClient==null)
         {
-            throw new CurrentClientNotSetException();
+            System.out.println(new CurrentClientNotSetException().getMessage());
+            return;
         }
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter deposit sum for "+BankCommander.currentClient.getClientName()+ ":");
@@ -27,7 +28,7 @@ public class DepositCommand implements Command {
     }
 
     @Override
-    public String printCommandInfo() {
+    public String getCommandInfo() {
         return "Deposit";
     }
 }

@@ -24,7 +24,7 @@ public class GetBankInfoCommand implements Command {
 
 
     @Override
-    public String printCommandInfo() {
+    public String getCommandInfo() {
         return "Get Bank Info";
     }
 }

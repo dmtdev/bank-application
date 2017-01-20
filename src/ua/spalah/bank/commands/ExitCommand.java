@@ -11,7 +11,7 @@ public class ExitCommand implements Command {
     }
 
     @Override
-    public String printCommandInfo() {
+    public String getCommandInfo() {
         return "Exit";
     }
 }

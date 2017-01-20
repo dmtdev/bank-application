@@ -17,15 +17,16 @@ public class GetAccountsCommand implements Command {
     }
 
     @Override
-    public void execute() throws CurrentClientNotSetException {
+    public void execute()  {
         if (BankCommander.currentClient == null) {
-            throw new CurrentClientNotSetException();
+            System.out.println(new CurrentClientNotSetException().getMessage());
+            return;
         }
         accountService.getAccountsInfo(BankCommander.currentClient);
     }
 
     @Override
-    public String printCommandInfo() {
+    public String getCommandInfo() {
         return "Get Accounts";
     }
 }

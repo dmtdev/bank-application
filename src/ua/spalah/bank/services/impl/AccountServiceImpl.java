@@ -69,17 +69,6 @@ public class AccountServiceImpl implements AccountService {
 
         for (int i = 0; i < accountList.size(); i++) {
             Account account = accountList.get(i);
-//            System.out.println((i+1)+". Account type: "+((account.getType()==AccountType.CHECKING)?"Checking account":"Saving account"));
-//            System.out.println("Balance: "+account.getBalance());
-//            if(account.getType()==AccountType.CHECKING)
-//            {
-//                System.out.println("Overdraft: "+((CheckingAccount)account).getOverdraft());
-//            }
-//            if(client.getActiveAccount()==account)
-//            {
-//                System.out.println("Active account");
-//            }
-//            System.out.println("==============");
             System.out.println((i + 1) + ". " + account.toString() + " " + (client.getActiveAccount() == account ? ",Active account" : ""));
         }
     }

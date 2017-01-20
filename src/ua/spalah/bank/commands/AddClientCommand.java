@@ -73,7 +73,7 @@ public class AddClientCommand implements Command {
     }
 
     @Override
-    public String printCommandInfo() {
+    public String getCommandInfo() {
         return "Add Client";
     }
 

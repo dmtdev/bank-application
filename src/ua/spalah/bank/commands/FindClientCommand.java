@@ -33,7 +33,7 @@ public class FindClientCommand implements Command {
     }
 
     @Override
-    public String printCommandInfo() {
+    public String getCommandInfo() {
         return "Find Client";
     }
 }

@@ -5,6 +5,6 @@ package ua.spalah.bank.exceptions;
  */
 public class CurrentClientNotSetException extends BankException {
     public CurrentClientNotSetException() {
-        super("Current client not set.  Please find client by name to set new current client.");
+        super("Current client not set. Please find client by name to set current client.");
     }
 }

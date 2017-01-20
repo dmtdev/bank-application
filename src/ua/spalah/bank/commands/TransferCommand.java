@@ -24,21 +24,32 @@ public class TransferCommand implements Command {
 
 
     @Override
-    public void execute() throws CurrentClientNotSetException, ClientNotFoundException, NotEnoughFundsException {
+    public void execute() {
         if (BankCommander.currentClient == null) {
-            throw new CurrentClientNotSetException();
+            System.out.println(new CurrentClientNotSetException().getMessage());
+            return;
         }
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter client name for transit operation:");
-        Client client = clientService.findClientByName(BankCommander.currentBank,scanner.nextLine());
+        Client client = null;
+        try {
+            client = clientService.findClientByName(BankCommander.currentBank, scanner.nextLine());
+        } catch (ClientNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("Enter transfer sum:");
         double sum = Double.parseDouble(scanner.nextLine());
-        accountService.transfer(BankCommander.currentClient.getActiveAccount(),client.getActiveAccount(),sum);
-        System.out.println("$"+sum+" send from "+BankCommander.currentClient.getClientName()+" to "+client.getClientName());
+        try {
+            accountService.transfer(BankCommander.currentClient.getActiveAccount(), client.getActiveAccount(), sum);
+        } catch (NotEnoughFundsException e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println("$" + sum + " send from " + BankCommander.currentClient.getClientName() + " to " + client.getClientName());
+
     }
 
     @Override
-    public String printCommandInfo() {
+    public String getCommandInfo() {
         return "Transfer";
     }
 }

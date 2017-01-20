@@ -21,9 +21,10 @@ public class SetActiveAccountCommander implements Command {
     }
 
     @Override
-    public void execute() throws CurrentClientNotSetException{
+    public void execute() {
         if (BankCommander.currentClient == null) {
-            throw new CurrentClientNotSetException();
+            System.out.println(new CurrentClientNotSetException().getMessage());
+            return;
         }
         accountService.getAccountsInfo(BankCommander.currentClient);
         System.out.println("Enter account number to set active account:");
@@ -34,7 +35,7 @@ public class SetActiveAccountCommander implements Command {
     }
 
     @Override
-    public String printCommandInfo() {
+    public String getCommandInfo() {
         return "Set Active Account";
     }
 }

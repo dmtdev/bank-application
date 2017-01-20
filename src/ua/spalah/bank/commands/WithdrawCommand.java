@@ -18,17 +18,24 @@ public class WithdrawCommand implements Command {
     }
 
     @Override
-    public void execute() throws CurrentClientNotSetException, NotEnoughFundsException {
+    public void execute()   {
         if (BankCommander.currentClient == null) {
-            throw new CurrentClientNotSetException();
+            System.out.println(new CurrentClientNotSetException().getMessage());
+            return;
         }
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter withdraw sum for "+BankCommander.currentClient.getClientName()+ ":");
-        accountService.withdraw(BankCommander.currentClient.getActiveAccount(),Double.parseDouble(scanner.nextLine()));
+        try {
+            accountService.withdraw(BankCommander.currentClient.getActiveAccount(), Double.parseDouble(scanner.nextLine()));
+        }
+        catch (NotEnoughFundsException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
-    public String printCommandInfo() {
+    public String getCommandInfo() {
         return "Withdraw";
     }
 }

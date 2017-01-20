@@ -24,10 +24,11 @@ public class AddAccountCommand implements Command {
     }
 
     @Override
-    public void execute() throws CurrentClientNotSetException, NotEnoughFundsException {
+    public void execute()  {
         if(BankCommander.currentClient==null)
         {
-            throw new CurrentClientNotSetException();
+            System.out.println(new CurrentClientNotSetException().getMessage());
+            return;
         }
         Pattern pattern = Pattern.compile("^[0-9]{0,10}.[0-9]{0,2}:[0-9]{0,10}.[0-9]{0,2}$");
         System.out.println("Enter client account like \"100.01:10\"(balance:overdraft(overdraft = 0 if you want create Saving account))");
@@ -50,7 +51,7 @@ public class AddAccountCommand implements Command {
     }
 
     @Override
-    public String printCommandInfo() {
+    public String getCommandInfo() {
         return "Add Account";
     }
 }

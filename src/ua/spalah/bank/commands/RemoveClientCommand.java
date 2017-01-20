@@ -34,7 +34,7 @@ public class RemoveClientCommand implements Command {
     }
 
     @Override
-    public String printCommandInfo() {
+    public String getCommandInfo() {
         return "Remove Client";
     }
 }
