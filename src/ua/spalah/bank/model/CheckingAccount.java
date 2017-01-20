@@ -1,8 +1,6 @@
 package ua.spalah.bank.model;
 
 import ua.spalah.bank.model.enums.AccountType;
-//import ua.spalah.bank.
-import java.util.List;
 
 /**
  * Created by root on 23.12.2016.
@@ -11,13 +9,10 @@ public class CheckingAccount extends SavingAccount {
 
     private double overdraft;
 
-    public CheckingAccount(double balans, AccountType accountType) {
-        super(balans, accountType);
-
-    }
-    public CheckingAccount(double balans, AccountType accountType, double overdraft) {
-        super(balans, accountType);
-        this.overdraft=overdraft;
+    public CheckingAccount(double balans, double overdraft) {
+        super(balans);
+        super.setAccountType(AccountType.CHECKING);
+        this.overdraft = overdraft;
     }
 
     public void setOverdraft(double overdraft) {
@@ -30,13 +25,6 @@ public class CheckingAccount extends SavingAccount {
 
     @Override
     public String toString() {
-        return "CheckingAccount <-> balance: " + getBalance()+ ", overdraft: " + overdraft;
+        return "CheckingAccount <-> balance: " + getBalance() + ", overdraft: " + overdraft;
     }
-
-
-
-    /**
-     * Created by root on 03.01.2017.
-     */
-
 }

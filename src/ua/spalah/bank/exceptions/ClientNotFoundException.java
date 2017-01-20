@@ -6,6 +6,6 @@ package ua.spalah.bank.exceptions;
 public class ClientNotFoundException extends BankException {
 
     public ClientNotFoundException(String s) {
-        super(s);
+        super("Client " + s + " Not Found");
     }
 }

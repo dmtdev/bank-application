@@ -16,4 +16,5 @@ public interface ClientService {
     void deleteClient(Bank bank, Client client);
     void addAccount(Client client, Account account);
     double getTotalBalance(Client client);
+    Account getAccountById(Client client,int id);
 }

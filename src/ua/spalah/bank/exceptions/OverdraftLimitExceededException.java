@@ -7,4 +7,8 @@ public class OverdraftLimitExceededException extends NotEnoughFundsException {
     public OverdraftLimitExceededException(String s) {
         super(s);
     }
+
+    public OverdraftLimitExceededException(double available) {
+        super("You exceeded your overdraft only $"+available);
+    }
 }

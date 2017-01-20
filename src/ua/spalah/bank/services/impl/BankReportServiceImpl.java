@@ -28,27 +28,50 @@ public class BankReportServiceImpl implements BankReportService {
     }
 
     @Override
-    public double getTotalAccountSum(Bank bank, Client client) {
+    public double getTotalAccountSum(Bank bank,Client client) {
+        double sum = 0;
+        List<Account> accounts = client.getAccountList();
+        for (Account account : accounts) {
+            sum += account.getBalance();
+        }
+        return sum;
+    }
+
+    @Override
+    public double getTotalAccountSum(Bank bank) {
         double sum = 0;
         List<Client> clientList = bank.getClients();
         for (Client cl : clientList) {
             List<Account> accounts = cl.getAccountList();
             for (Account account : accounts) {
                 sum += account.getBalance();
-                //овердрафт это же не деньги клиета?
             }
         }
         return sum;
     }
+
     @Override
-    public double getBankCreditSum(Bank bank, Client client) {
+    public double getBankCreditSum(Bank bank,Client client) {
+        double sum=0;
+        List<Account> accounts = client.getAccountList();
+        for (Account account : accounts) {
+            if (account instanceof CheckingAccount) {
+                if (account.getBalance() < 0) {
+                    sum += account.getBalance();
+                }
+            }
+        }
+        return sum;
+    }
+
+    @Override
+    public double getBankCreditSum(Bank bank) {
         double sum = 0;
         List<Client> clientList = bank.getClients();
         for (Client cl : clientList) {
             List<Account> accounts = cl.getAccountList();
             for (Account account : accounts) {
                 if (account instanceof CheckingAccount) {
-                    //это же сколько клиенты лолжны банку?
                     if (account.getBalance() < 0) {
                         sum += account.getBalance();
                     }

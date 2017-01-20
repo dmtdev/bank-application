@@ -11,8 +11,12 @@ public class SavingAccount implements Account {
     private double balans;
     private AccountType accountType;
 
-    public SavingAccount(double balans, AccountType accountType) {
+    public SavingAccount(double balans) {
         this.balans = balans;
+        this.accountType = AccountType.SAVING;
+    }
+
+    public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
     }
 
@@ -31,16 +35,6 @@ public class SavingAccount implements Account {
     }
 
 
-    //    public SavingAccount(double balance) {
-//        super(balance);
-//    }
-//
-//    @Override
-//    public void withdraw(double momey) {
-//        if (super.getBalance() >= momey){
-//            super.setBalance(super.getBalance()-momey);
-//        }
-//    }
     @Override
     public String toString() {
         return "SavingAccount <-> balance: " + getBalance();
