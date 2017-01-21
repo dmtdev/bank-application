@@ -43,10 +43,10 @@ public class BankCommander {
         AccountService accountService = new AccountServiceImpl();
         BankReportService bankReportService = new BankReportServiceImpl();
 
-        Client cl0 = new Client("Dima", Sex.MALE);
-        Client cl1 = new Client("Misha", Sex.MALE);
-        Client cl2 = new Client("Masha", Sex.FEMALE);
-        Client cl3 = new Client("Kostya", Sex.MALE);
+        Client cl0 = new Client("Dima", Sex.MALE,"q@w.ww","+358693216","city");
+        Client cl1 = new Client("Misha", Sex.MALE,"q@w.wq","+358691142","city");
+        Client cl2 = new Client("Masha", Sex.FEMALE,"q@eew.ww","+35869221","township");
+        Client cl3 = new Client("Kostya", Sex.MALE,"q@w.wwewe","+35869000","township");
 //        Client cl4 = new Client("Vasya", Sex.MALE);
 
         clientService.saveClient(bank, cl0);

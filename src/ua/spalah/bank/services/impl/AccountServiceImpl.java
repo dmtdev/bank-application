@@ -50,7 +50,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void transfer(Account fromAccount, Account toAccount, double amount){
+    public void transfer(Account fromAccount, Account toAccount, double amount) {
         withdraw(fromAccount, amount);
         deposit(toAccount, amount);
     }

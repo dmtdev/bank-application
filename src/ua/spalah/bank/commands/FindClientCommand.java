@@ -25,6 +25,7 @@ public class FindClientCommand implements Command {
             BankCommander.currentClient = clientService.findClientByName(BankCommander.currentBank,scanner.nextLine());
             System.out.println("Current client set to:");
             System.out.println(BankCommander.currentClient.getClientName());
+            System.out.println(BankCommander.currentBank.toString());
         } catch (ClientNotFoundException e) {
             System.out.println(e.getMessage());
         }

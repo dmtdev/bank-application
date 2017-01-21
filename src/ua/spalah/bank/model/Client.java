@@ -14,7 +14,6 @@ public class Client  {
     private Sex sex;
     private String email;
     private String tel;
-
     private String city;
     private List<Account> accountList = new ArrayList<>();
     private Account activeAccount;

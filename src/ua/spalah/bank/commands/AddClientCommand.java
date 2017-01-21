@@ -44,15 +44,16 @@ public class AddClientCommand implements Command {
             } else if (checkClientData.email == null) {
                 System.out.println("Enter Client email:");
                 String email = scanner.nextLine().trim();
-                if (email.matches("^[a-z0-9-.]{1,250}@[a-z0-9.-]{1,250}.[a-z]{2,4}$si")) {
+                //отмазка.. емейл валидный только после отправки емейла с просьбой подтверждения..
+                if (email.matches("^[a-zA-Z0-9-.]{1,250}@[a-zA-Z0-9.-]{1,250}.[a-zA-Z]{2,4}$")) {
                     checkClientData.email = email;
                 }
-
             } else if (checkClientData.tel == null) {
                 System.out.println("Enter Client phone number(+380123456789):");
                 String tel = scanner.nextLine().trim();
-                // регексп для отмазки.. не учитываем, что не во всех номерах междунарожного формата 12 цифр..
-                if (tel.matches("^+[0-9]{12}$")) {
+                //и это для красоты.. не учитываеется, что не во всех номерах международного формата 12 цифр.. сейчас не вспомню правильный диапазон.
+                //усложнить распознование можно.. но где сейчас в формах нет проверки на стороне клиента..
+                if (tel.matches("^[+]{1}[0-9]{12}$")) {
                     checkClientData.tel = tel;
                 }
             } else if (checkClientData.city == null) {
@@ -70,7 +71,7 @@ public class AddClientCommand implements Command {
                     String[] accountData = userInput.split(":");
                     double balance = Double.parseDouble(accountData[0]);
                     double overdraft = Double.parseDouble(accountData[1]);
-                    Client client = new Client(checkClientData.name, checkClientData.sex,checkClientData.email,checkClientData.tel,checkClientData.city);
+                    Client client = new Client(checkClientData.name, checkClientData.sex, checkClientData.email, checkClientData.tel, checkClientData.city);
                     clientService.saveClient(BankCommander.currentBank, client);
                     BankCommander.currentClient = client;
                     Account account;
