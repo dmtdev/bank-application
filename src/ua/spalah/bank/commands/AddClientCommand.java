@@ -8,6 +8,9 @@ import ua.spalah.bank.services.Account;
 import ua.spalah.bank.services.AccountService;
 import ua.spalah.bank.services.ClientService;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -102,12 +105,23 @@ public class AddClientCommand implements Command {
         Sex sex;
         Account account;
 
+
         public boolean checkData() {
-            if (name != null && sex != null && account != null && email != null && tel != null && city != null) {
-                return true;
+            List<Object> allData = new ArrayList<>();
+            allData.add(name);
+            allData.add(email);
+            allData.add(tel);
+            allData.add(city);
+            allData.add(sex);
+            allData.add(account);
+
+            for (Iterator<Object> iterator = allData.iterator(); iterator.hasNext(); ) {
+                Object next = iterator.next();
+                if (next == null) {
+                    return false;
+                }
             }
-            return false;
+            return true;
         }
     }
-
 }
