@@ -27,7 +27,12 @@ public class SetActiveAccountCommander implements Command {
         accountService.getAccountsInfo(BankCommander.currentClient);
         System.out.println("Enter account number to set active account:");
         Scanner scanner = new Scanner(System.in);
-        int id = Integer.parseInt(scanner.nextLine())-1;
+        int id = 0;
+        try {
+            id = Integer.parseInt(scanner.nextLine())-1;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
         BankCommander.currentClient.setActiveAccount(clientService.getAccountById(BankCommander.currentClient,id));
         System.out.println(BankCommander.currentClient.getActiveAccount().toString()+" is Active account.");
     }

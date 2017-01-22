@@ -53,7 +53,7 @@ public class AddClientCommand implements Command {
             } else if (checkClientData.tel == null) {
                 System.out.println("Enter Client phone number(+380123456789):");
                 String tel = scanner.nextLine().trim();
-                    if (tel.matches("^[+]{1}[0-9]{12}$")) {
+                    if (tel.matches("^[+][0-9]{12}$")) {
                     checkClientData.tel = tel;
                 }
             } else if (checkClientData.city == null) {
@@ -101,7 +101,6 @@ public class AddClientCommand implements Command {
         String city;
         Sex sex;
         Account account;
-
 
         public boolean checkData() {
             List<Object> allData = new ArrayList<>();

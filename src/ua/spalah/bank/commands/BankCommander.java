@@ -78,7 +78,8 @@ public class BankCommander {
                 new RemoveClientCommand(clientService),
                 new GetBankInfoCommand(bankReportService),
                 new ShowMenuCommand(),
-                new ExitCommand()
+                new ExitCommand(),
+               // new ReturnClientsMapCommand(bankReportService)
         };
         currentBank = bank;
         // здесь проводим инициализацию банка начальными данными

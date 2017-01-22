@@ -55,12 +55,7 @@ public class AccountServiceImpl implements AccountService {
         deposit(toAccount, amount);
     }
 
-    @Override
-    public String toString()
 
-    {
-        return "";
-    }
 
     @Override
     public void getAccountsInfo(Client client) {

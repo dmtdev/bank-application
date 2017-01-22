@@ -1,5 +1,6 @@
 package ua.spalah.bank.services.impl;
 
+import ua.spalah.bank.commands.BankCommander;
 import ua.spalah.bank.services.Account;
 import ua.spalah.bank.services.BankReportService;
 import ua.spalah.bank.model.Bank;
@@ -28,7 +29,7 @@ public class BankReportServiceImpl implements BankReportService {
     }
 
     @Override
-    public double getTotalAccountSum(Bank bank,Client client) {
+    public double getTotalAccountSum(Bank bank, Client client) {
         double sum = 0;
         List<Account> accounts = client.getAccountList();
         for (Account account : accounts) {
@@ -51,8 +52,8 @@ public class BankReportServiceImpl implements BankReportService {
     }
 
     @Override
-    public double getBankCreditSum(Bank bank,Client client) {
-        double sum=0;
+    public double getBankCreditSum(Bank bank, Client client) {
+        double sum = 0;
         List<Account> accounts = client.getAccountList();
         for (Account account : accounts) {
             if (account instanceof CheckingAccount) {
@@ -97,6 +98,31 @@ public class BankReportServiceImpl implements BankReportService {
 
     @Override
     public Map<String, List<Client>> getClientsByCity(Bank bank) {
-        return null;
+        Map<String, List<Client>> clients = new HashMap<>();
+        for (Client c : BankCommander.currentBank.getClients()) {
+            if (!clients.containsKey(c.getCity())) {
+                List<Client> cl = new ArrayList<>();
+                cl.add(c);
+                clients.put(c.getCity(),cl);
+            } else {
+                List<Client> cl = (List<Client>) clients.get(c.getCity());
+                cl.add(c);
+            }
+        }
+        System.out.println(clients.size());
+        return clients;
     }
+//    public Map<String, List<Client>> getClientsByCity(Bank bank) {
+//        Map<String, List<Client>> clienMap = new HashMap<>();
+//        for (Client c : bank.getClients()) {
+//            if (clienMap.containsKey(c.getCity())){
+//                clienMap.get(c.getCity()).add(c);
+//            } else {
+//                clienMap.put(c.getCity(), new ArrayList<>());
+//                clienMap.get(c.getCity()).add(c);
+//            }
+//        }
+//        System.out.println(clienMap.size());
+//        return clienMap;
+//    }
 }
