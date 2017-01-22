@@ -67,18 +67,18 @@ public class BankCommander {
         clientService.addAccount(cl3, new CheckingAccount(10000, 500));
 
         commands = new Command[]{
-                new FindClientCommand(clientService), //ready
-                new GetAccountsCommand(accountService),//ready
-                new AddAccountCommand(clientService),//ready
+                new FindClientCommand(clientService), 
+                new GetAccountsCommand(accountService),
+                new AddAccountCommand(clientService),
                 new SetActiveAccountCommander(clientService, accountService),
-                new DepositCommand(accountService), //ready
-                new WithdrawCommand(accountService), //ready
+                new DepositCommand(accountService), 
+                new WithdrawCommand(accountService), 
                 new TransferCommand(clientService,accountService),
-                new AddClientCommand(clientService, accountService),//ready
-                new RemoveClientCommand(clientService),//ready
-                new GetBankInfoCommand(bankReportService),//ready
-                new ShowMenuCommand(),//ready
-                new ExitCommand()//ready
+                new AddClientCommand(clientService, accountService),
+                new RemoveClientCommand(clientService),
+                new GetBankInfoCommand(bankReportService),
+                new ShowMenuCommand(),
+                new ExitCommand()
         };
         currentBank = bank;
         // здесь проводим инициализацию банка начальными данными
@@ -93,7 +93,7 @@ public class BankCommander {
 
     public void run() {
         while (true) {
-            System.out.println("Enter command number (1-10)");
+            System.out.println("Enter command number (1-12)");
             Scanner scanner = new Scanner(System.in);
             try {
                 int command = Integer.parseInt(scanner.nextLine());

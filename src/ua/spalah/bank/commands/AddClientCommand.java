@@ -46,17 +46,14 @@ public class AddClientCommand implements Command {
                 }
             } else if (checkClientData.email == null) {
                 System.out.println("Enter Client email:");
-                String email = scanner.nextLine().trim();
-                //отмазка.. емейл валидный только после отправки емейла с просьбой подтверждения..
-                if (email.matches("^[a-zA-Z0-9-.]{1,250}@[a-zA-Z0-9.-]{1,250}.[a-zA-Z]{2,4}$")) {
+                String email = scanner.nextLine().trim().toLowerCase();
+                if (email.matches("^[a-z0-9-.]{1,250}@[a-z0-9.-]{1,250}.[a-z]{2,4}$")) {
                     checkClientData.email = email;
                 }
             } else if (checkClientData.tel == null) {
                 System.out.println("Enter Client phone number(+380123456789):");
                 String tel = scanner.nextLine().trim();
-                //и это для красоты.. не учитываеется, что не во всех номерах международного формата 12 цифр.. сейчас не вспомню правильный диапазон.
-                //усложнить распознование можно.. но где сейчас в формах нет проверки на стороне клиента..
-                if (tel.matches("^[+]{1}[0-9]{12}$")) {
+                    if (tel.matches("^[+]{1}[0-9]{12}$")) {
                     checkClientData.tel = tel;
                 }
             } else if (checkClientData.city == null) {

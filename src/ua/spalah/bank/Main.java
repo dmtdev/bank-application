@@ -14,21 +14,5 @@ import ua.spalah.bank.services.impl.ClientServiceImpl;
 public class Main {
     public static void main(String[] args) {
 
-        BankServiceImpl bankService = new BankServiceImpl();
-        Bank bank = new Bank();
-
-        ClientServiceImpl clientService = new ClientServiceImpl();
-        Client cl1 = new Client("First Client", Sex.MALE);
-        Client cl2 = new Client("Second Client",Sex.MALE);
-        Client cl3 = new Client("Third Client",Sex.FEMALE);
-
-//        bankService.addListener(bank,new PrintClientListener());
-//        bankService.addListener(bank,new EmailNotificationListener());
-//        bankService.addListener(bank,new RegistrationLoggerListener());
-
-        clientService.saveClient(bank,cl1);
-        clientService.saveClient(bank,cl2);
-        clientService.saveClient(bank,cl3);
-
     }
 }
