@@ -5,6 +5,7 @@ import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.model.SavingAccount;
 import ua.spalah.bank.model.enums.Sex;
+import ua.spalah.bank.services.Account;
 import ua.spalah.bank.services.AccountService;
 import ua.spalah.bank.services.BankReportService;
 import ua.spalah.bank.services.ClientService;
@@ -12,7 +13,13 @@ import ua.spalah.bank.services.impl.AccountServiceImpl;
 import ua.spalah.bank.services.impl.BankReportServiceImpl;
 import ua.spalah.bank.services.impl.ClientServiceImpl;
 
-import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 /**
  * Created by Dmitry on 10.01.2017.
@@ -37,53 +44,91 @@ public class BankCommander {
     }
 
     private void init() {
-
         Bank bank = new Bank();
         ClientService clientService = new ClientServiceImpl();
         AccountService accountService = new AccountServiceImpl();
         BankReportService bankReportService = new BankReportServiceImpl();
+        Map<String, Client> clientMap = new HashMap<>();
 
-        Client cl0 = new Client("Dima", Sex.MALE,"q@w.ww","+358693216","city");
-        Client cl1 = new Client("Misha", Sex.MALE,"q@w.wq","+358691142","city");
-        Client cl2 = new Client("Masha", Sex.FEMALE,"q@eew.ww","+35869221","township");
-        Client cl3 = new Client("Kostya", Sex.MALE,"q@w.wwewe","+35869000","township");
+        List<String> clLines = new ArrayList<>();
+
+        try {
+            clLines = Files.readAllLines(Paths.get("src/ua/spalah/bank/resources/clients.txt"), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < clLines.size(); i++) {
+            String[] clientData = clLines.get(i).split("::");
+            clientMap.put(clientData[0], new Client(clientData[0], (clientData[1].equals("Male") ? Sex.MALE : Sex.FEMALE), clientData[2], clientData[3], clientData[4]));
+        }
+
+        List<String> accLines = new ArrayList<>();
+        try {
+            accLines = Files.readAllLines(Paths.get("src/ua/spalah/bank/resources/accounts.txt"), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < accLines.size(); i++) {
+            String[] clientData = accLines.get(i).split("::");
+            if (clientMap.containsKey(clientData[0])) {
+                if (clientData[1].equals("SA")) {
+                    clientService.addAccount(clientMap.get(clientData[0]), new SavingAccount(Double.parseDouble(clientData[2])));
+                }
+                if (clientData[1].equals("CA")) {
+                    clientService.addAccount(clientMap.get(clientData[0]), new CheckingAccount(Double.parseDouble(clientData[2]), Double.parseDouble(clientData[2])));
+                }
+
+            }
+        }
+        for (Map.Entry<String, Client> entry : clientMap.entrySet()) {
+            Client client = entry.getValue();
+            System.out.println(client.toString());
+            clientService.saveClient(bank, client);
+        }
+
+
+        //Client cl0 = new Client("Dima", Sex.MALE, "q@w.ww", "+358693216", "city");
+        //Client cl1 = new Client("Misha", Sex.MALE, "q@w.wq", "+358691142", "city");
+        //Client cl2 = new Client("Masha", Sex.FEMALE, "q@eew.ww", "+35869221", "township");
+        //Client cl3 = new Client("Kostya", Sex.MALE, "q@w.wwewe", "+35869000", "township");
 //        Client cl4 = new Client("Vasya", Sex.MALE);
 
-        clientService.saveClient(bank, cl0);
-        clientService.saveClient(bank, cl1);
-        clientService.saveClient(bank, cl2);
-        clientService.saveClient(bank, cl3);
+//        clientService.saveClient(bank, cl0);
+//        clientService.saveClient(bank, cl1);
+//        clientService.saveClient(bank, cl2);
+//        clientService.saveClient(bank, cl3);
 //        clientService.saveClient(bank, cl4);
 
-        clientService.addAccount(cl0, new SavingAccount(100));
-        clientService.addAccount(cl0, new CheckingAccount(100, 50));
-        clientService.addAccount(cl1, new SavingAccount(1000));
-
-        clientService.addAccount(cl2, new SavingAccount(100));
-        clientService.addAccount(cl2, new SavingAccount(10000));
-        clientService.addAccount(cl2, new CheckingAccount(10000, 500));
-
-        clientService.addAccount(cl3, new SavingAccount(100));
-        clientService.addAccount(cl3, new CheckingAccount(10000, 500));
+//        clientService.addAccount(cl0, new SavingAccount(100));
+//        clientService.addAccount(cl0, new CheckingAccount(100, 50));
+//        clientService.addAccount(cl1, new SavingAccount(1000));
+//
+//        clientService.addAccount(cl2, new SavingAccount(100));
+//        clientService.addAccount(cl2, new SavingAccount(10000));
+//        clientService.addAccount(cl2, new CheckingAccount(10000, 500));
+//
+//        clientService.addAccount(cl3, new SavingAccount(100));
+//        clientService.addAccount(cl3, new CheckingAccount(10000, 500));
 
         commands = new Command[]{
-                new FindClientCommand(clientService), 
+                new FindClientCommand(clientService),
                 new GetAccountsCommand(accountService),
                 new AddAccountCommand(clientService),
                 new SetActiveAccountCommander(clientService, accountService),
-                new DepositCommand(accountService), 
-                new WithdrawCommand(accountService), 
-                new TransferCommand(clientService,accountService),
+                new DepositCommand(accountService),
+                new WithdrawCommand(accountService),
+                new TransferCommand(clientService, accountService),
                 new AddClientCommand(clientService, accountService),
                 new RemoveClientCommand(clientService),
                 new GetBankInfoCommand(bankReportService),
                 new ShowMenuCommand(),
                 new ExitCommand(),
-               // new ReturnClientsMapCommand(bankReportService)
+                //new ReturnClientsMapCommand(bankReportService)
         };
         currentBank = bank;
-        // здесь проводим инициализацию банка начальными данными
-        // а также создаем все необходимые объекты команд
+
     }
 
     public static void showMenu() {
@@ -106,16 +151,10 @@ public class BankCommander {
                 System.out.println("Wrong account number");
             } catch (NumberFormatException e) {
                 System.out.println("This is not a number");
-           }
+            }
         }
-        // запускаем наше приложение
-        // выводим в цикле доступные команды
-        // ждем от пользователя выбора
-        // после выбора команды передаем управление ей
-        // вызываем ее метод execute
     }
 
-    // запуск нашего приложения
     public static void main(String[] args) {
         BankCommander bankCommander = new BankCommander();
         bankCommander.run();

@@ -22,7 +22,4 @@ public class Bank {
         return clients;
     }
 
-    //public List<ClientRegistrationListener> getListeners() {
-       //return listeners;
-    //}
 }

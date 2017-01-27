@@ -1,0 +1,8 @@
+Dima::SA::100
+Dima::CA::100::50
+Misha::SA::1000
+Masha::SA::100
+Masha::SA::10000
+Masha::CA::10000::500
+Kostya::SA::100
+Kostya::CA::10000::500

@@ -1,0 +1,4 @@
+Dima::MALE::q@w.ww::+358693216::city
+Misha::MALE::q@w.wq::+358691142::city
+Masha::FEMALE::q@eew.ww::+35869221::township
+Kostya::MALE::q@w.wwewe::+35869000::township
