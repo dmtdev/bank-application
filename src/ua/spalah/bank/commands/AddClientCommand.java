@@ -1,5 +1,6 @@
 package ua.spalah.bank.commands;
 
+import ua.spalah.bank.exceptions.ClientAlreadyExistsException;
 import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.model.SavingAccount;
@@ -72,7 +73,13 @@ public class AddClientCommand implements Command {
                     double balance = Double.parseDouble(accountData[0]);
                     double overdraft = Double.parseDouble(accountData[1]);
                     Client client = new Client(checkClientData.name, checkClientData.sex, checkClientData.email, checkClientData.tel, checkClientData.city);
-                    clientService.saveClient(BankCommander.currentBank, client);
+
+                    try {
+                        clientService.saveClient(BankCommander.currentBank, client);
+                    } catch (ClientAlreadyExistsException e) {
+                        System.out.println(e.getMessage());
+                    }
+
                     BankCommander.currentClient = client;
                     Account account;
                     if (overdraft == 0) {

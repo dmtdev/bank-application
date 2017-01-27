@@ -14,9 +14,9 @@ import java.util.Map;
         int getNumberOfClients(Bank bank); // общее количество клиентов
         int getNumberOfAccounts(Bank bank); // общее количество счетов
         double getTotalAccountSum(Bank bank); // общая сумма по всем счетам
-        double getTotalAccountSum(Bank bank, Client client); // общая сумма по всем счетам
+        //double getTotalAccountSum(Bank bank, Client client); // общая сумма по всем счетам
         double getBankCreditSum(Bank bank); // возвращает сумму отрицательных балансов по всем счетам
-        double getBankCreditSum(Bank bank, Client client); // возвращает сумму отрицательных балансов по всем счетам
-        List<Client> getClientsSortedByName(Bank bank); // Возвращает список клиентов отсортированных по имени
+        //double getBankCreditSum(Bank bank, Client client); // возвращает сумму отрицательных балансов по всем счетам
+        Map<String, Client> getClientsSortedByName(Bank bank); // Возвращает список клиентов отсортированных по имени
         Map<String, List<Client>> getClientsByCity(Bank bank);
     }

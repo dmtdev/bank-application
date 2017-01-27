@@ -1,5 +1,6 @@
 package ua.spalah.bank.commands;
 
+import ua.spalah.bank.exceptions.ClientAlreadyExistsException;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.model.Client;
@@ -31,7 +32,6 @@ public class BankCommander {
     // хранит в себе клиента с которым мы работаем в данный момент
     public static Client currentClient;
 
-    // Список команд которые мы можем выполнять
     private static Command[] commands;
 
     public static Command[] getCommands() {
@@ -49,6 +49,7 @@ public class BankCommander {
         AccountService accountService = new AccountServiceImpl();
         BankReportService bankReportService = new BankReportServiceImpl();
         Map<String, Client> clientMap = new HashMap<>();
+        List<Client> clientList = new ArrayList<>();
 
         List<String> clLines = new ArrayList<>();
 
@@ -84,9 +85,15 @@ public class BankCommander {
         }
         for (Map.Entry<String, Client> entry : clientMap.entrySet()) {
             Client client = entry.getValue();
-            System.out.println(client.toString());
-            clientService.saveClient(bank, client);
+            //System.out.println(client.toString());
+            try {
+                clientService.saveClient(bank, client);
+            } catch (ClientAlreadyExistsException e) {
+                e.printStackTrace();
+            }
+            //clientList.add(client);
         }
+        bank.setAllClients(clientMap);
 
 
         //Client cl0 = new Client("Dima", Sex.MALE, "q@w.ww", "+358693216", "city");
@@ -144,7 +151,11 @@ public class BankCommander {
             try {
                 int command = Integer.parseInt(scanner.nextLine());
                 System.out.println("> " + commands[command - 1].getCommandInfo());
-                commands[command - 1].execute();
+                try {
+                    commands[command - 1].execute();
+                } catch (ClientAlreadyExistsException e) {
+                    e.printStackTrace();
+                }
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Wrong command number");
             } catch (IndexOutOfBoundsException e) {

@@ -15,14 +15,14 @@ public class ReturnClientsMapCommand implements Command {
 
     @Override
     public void execute() {
-        for (Client c : BankCommander.currentBank.getClients() ) {
-            //System.out.println(c.getCity()+" "+c.toString());
-        }
-        bankReportService.getClientsByCity(BankCommander.currentBank);
+//        for (Client c : BankCommander.currentBank.getClients() ) {
+//            //System.out.println(c.getCity()+" "+c.toString());
+//        }
+//        bankReportService.getClientsByCity(BankCommander.currentBank);
     }
 
     @Override
     public String getCommandInfo() {
-        return "Clients by city";
+        return "Clients map";
     }
 }
