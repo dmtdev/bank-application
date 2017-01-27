@@ -1,9 +1,10 @@
 package ua.spalah.bank.services;
 
 import junit.framework.TestCase;
-//import junit.framework.
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import ua.spalah.bank.exceptions.ClientNotFoundException;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.model.Client;
@@ -20,7 +21,7 @@ import static org.junit.Assert.*;
 /**
  * Created by root on 27.01.2017.
  */
-public class ClientServiceTest {
+public class ClientServiceTest extends Assert {
 
     Bank bank = new Bank();
     ClientService clientService = new ClientServiceImpl();
@@ -51,11 +52,31 @@ public class ClientServiceTest {
         clientService.addAccount(cl3, new CheckingAccount(10000, 500));
     }
 
-    @Test
-    public void testfindClientByName() throws Exception {
+    @Test(expected = ClientNotFoundException.class)
+    public void testFindClientByName() throws Exception {
         List<Client> clients = bank.getClients();
         Client client = clientService.findClientByName(bank, "Kostya");
-        assertNotNull("Client is not null", client);
+        assertNotNull("Client is found", client);
+        assertEquals(client.getClientName(),"Kostya");
+        assertEquals(client.getCity(),"township");
+        assertEquals(client.getEmail(),"q@w.wwewe");
+        client =  clientService.findClientByName(bank,"asdasd");
+        assertNull("Client mot found",client);
     }
 
+    @Test
+    public void testFindfAllClients() throws Exception {
+        List<Client> clients0 = bank.getClients();
+        List<Client> clients1 = clientService.findAllClients(bank);
+        assertEquals(clients0.get(0).getEmail(),clients1.get(0).getEmail());
+        assertEquals(clients0.get(0).getTel(),clients1.get(0).getTel());
+    }
+
+    @Test
+    public void testSaveClient() throws Exception {
+        Client client0 = new Client("Test Name",Sex.MALE);
+        Client client1 = clientService.saveClient(bank,client0);
+        assertEquals(client0.getSex(),client1.getSex());
+        assertEquals(client0.getClientName(),client1.getClientName());
+    }
 }
