@@ -71,6 +71,7 @@ public class ClientServiceTest extends Assert {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+        ///
         Scanner scanner = new Scanner(ClassLoader.getSystemResourceAsStream("clients.txt"));
         while(scanner.hasNext())
         {
