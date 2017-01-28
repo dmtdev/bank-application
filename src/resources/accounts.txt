@@ -6,3 +6,4 @@ Masha::SA::10000
 Masha::CA::10000::500
 Kostya::SA::100
 Kostya::CA::10000::500
+Kostya::CA::10000::500
