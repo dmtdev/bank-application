@@ -70,14 +70,14 @@ public class ClientServiceImpl implements ClientService {
         for (Map.Entry<String, Client> entry : clientMap.entrySet()) {
             if (entry.getKey().equals(client.getClientName())) {
                 existsClient = entry.getValue();
+                throw new ClientAlreadyExistsException(client.getClientName());
             }
         }
         if (existsClient == null) {
-            bank.getAllClients().put(client.getClientName(),client);
+            bank.getAllClients().put(client.getClientName(), client);
             return client;
-        } else {
-            throw new ClientAlreadyExistsException(client.getClientName());
         }
+        return existsClient;
     }
 
     @Override

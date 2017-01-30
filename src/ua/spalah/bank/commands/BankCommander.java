@@ -49,35 +49,31 @@ public class BankCommander {
         AccountService accountService = new AccountServiceImpl();
         BankReportService bankReportService = new BankReportServiceImpl();
         Map<String, Client> clientMap = new HashMap<>();
-        List<Client> clientList = new ArrayList<>();
 
-        List<String> clLines = new ArrayList<>();
-
-        try {
-            clLines = Files.readAllLines(Paths.get("src/ua/spalah/bank/resources/clients.txt"), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
+        Scanner scanner = new Scanner(ClassLoader.getSystemResourceAsStream("clients.txt"));
+        List<String> clientsFile = new ArrayList<>();
+        while (scanner.hasNext()) {
+            clientsFile.add(scanner.nextLine());
         }
 
-        for (int i = 0; i < clLines.size(); i++) {
-            String[] clientData = clLines.get(i).split("::");
-            clientMap.put(clientData[0], new Client(clientData[0], (clientData[1].equals("Male") ? Sex.MALE : Sex.FEMALE), clientData[2], clientData[3], clientData[4]));
+        for (int i = 0; i < clientsFile.size(); i++) {
+            String[] clientData = clientsFile.get(i).split("::");
+            clientMap.put(clientData[0], new Client(clientData[0], (clientData[1].equals("MALE") ? Sex.MALE : Sex.FEMALE), clientData[2], clientData[3], clientData[4]));
         }
 
-        List<String> accLines = new ArrayList<>();
-        try {
-            accLines = Files.readAllLines(Paths.get("src/ua/spalah/bank/resources/accounts.txt"), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
+        scanner = new Scanner(ClassLoader.getSystemResourceAsStream("accounts.txt"));
+        List<String> accountsFile = new ArrayList<>();
+        while (scanner.hasNext()) {
+            accountsFile.add(scanner.nextLine());
         }
 
-        for (int i = 0; i < accLines.size(); i++) {
-            String[] clientData = accLines.get(i).split("::");
+        for (int i = 0; i < accountsFile.size(); i++) {
+            String[] clientData = accountsFile.get(i).split("::");
             if (clientMap.containsKey(clientData[0])) {
                 if (clientData[1].equals("SA")) {
                     clientService.addAccount(clientMap.get(clientData[0]), new SavingAccount(Double.parseDouble(clientData[2])));
                 }
-                if (clientData[1].equals("CA")) {
+                else if (clientData[1].equals("CA")) {
                     clientService.addAccount(clientMap.get(clientData[0]), new CheckingAccount(Double.parseDouble(clientData[2]), Double.parseDouble(clientData[2])));
                 }
 
@@ -85,40 +81,12 @@ public class BankCommander {
         }
         for (Map.Entry<String, Client> entry : clientMap.entrySet()) {
             Client client = entry.getValue();
-            //System.out.println(client.toString());
             try {
                 clientService.saveClient(bank, client);
             } catch (ClientAlreadyExistsException e) {
                 e.printStackTrace();
             }
-            //clientList.add(client);
         }
-        bank.setAllClients(clientMap);
-
-
-        //Client cl0 = new Client("Dima", Sex.MALE, "q@w.ww", "+358693216", "city");
-        //Client cl1 = new Client("Misha", Sex.MALE, "q@w.wq", "+358691142", "city");
-        //Client cl2 = new Client("Masha", Sex.FEMALE, "q@eew.ww", "+35869221", "township");
-        //Client cl3 = new Client("Kostya", Sex.MALE, "q@w.wwewe", "+35869000", "township");
-//        Client cl4 = new Client("Vasya", Sex.MALE);
-
-//        clientService.saveClient(bank, cl0);
-//        clientService.saveClient(bank, cl1);
-//        clientService.saveClient(bank, cl2);
-//        clientService.saveClient(bank, cl3);
-//        clientService.saveClient(bank, cl4);
-
-//        clientService.addAccount(cl0, new SavingAccount(100));
-//        clientService.addAccount(cl0, new CheckingAccount(100, 50));
-//        clientService.addAccount(cl1, new SavingAccount(1000));
-//
-//        clientService.addAccount(cl2, new SavingAccount(100));
-//        clientService.addAccount(cl2, new SavingAccount(10000));
-//        clientService.addAccount(cl2, new CheckingAccount(10000, 500));
-//
-//        clientService.addAccount(cl3, new SavingAccount(100));
-//        clientService.addAccount(cl3, new CheckingAccount(10000, 500));
-
         commands = new Command[]{
                 new FindClientCommand(clientService),
                 new GetAccountsCommand(accountService),
@@ -134,10 +102,16 @@ public class BankCommander {
                 new ExitCommand(),
                 //new ReturnClientsMapCommand(bankReportService)
         };
+        bank.setAllClients(clientMap);
+        initCommands();
+
+
         currentBank = bank;
 
     }
+    public static void initCommands(){
 
+    }
     public static void showMenu() {
         for (int i = 0; i < commands.length; i++) {
             System.out.println((i + 1) + ". " + commands[i].getCommandInfo());

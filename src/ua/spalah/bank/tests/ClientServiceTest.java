@@ -64,33 +64,32 @@ public class ClientServiceTest extends Assert {
 //        clientService.addAccount(cl3, new SavingAccount(100));
 //        clientService.addAccount(cl3, new CheckingAccount(10000, 500));
 
-
-//        try {
-//            //System.out.println(String.valueOf(ClassLoader.getSystemResource("clients.txt")));
-//            //clLines = Files.readAllLines(Paths.get(String.valueOf(ClassLoader.getSystemResource("clients.txt"))), StandardCharsets.UTF_8);
-//        } catch (IOException e) {
-//            e.printStackTrace();
+//        Scanner scanner = new Scanner(ClassLoader.getSystemResourceAsStream("clients.txt"));
+//        while(scanner.hasNext())
+//        {
+//            System.out.println(scanner.nextLine());
 //        }
-        ///
+
+
         Scanner scanner = new Scanner(ClassLoader.getSystemResourceAsStream("clients.txt"));
-        while(scanner.hasNext())
-        {
-            System.out.println(scanner.nextLine());
+        List<String> clientsFile = new ArrayList<>();
+        while (scanner.hasNext()) {
+            clientsFile.add(scanner.nextLine());
         }
-        for (int i = 0; i < clLines.size(); i++) {
-            String[] clientData = clLines.get(i).split("::");
+
+        for (int i = 0; i < clientsFile.size(); i++) {
+            String[] clientData = clientsFile.get(i).split("::");
             clientMap.put(clientData[0], new Client(clientData[0], (clientData[1].equals("Male") ? Sex.MALE : Sex.FEMALE), clientData[2], clientData[3], clientData[4]));
         }
 
-        List<String> accLines = new ArrayList<>();
-        try {
-            accLines = Files.readAllLines(Paths.get(String.valueOf(ClassLoader.getSystemResource("accounts.txt"))), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
+        scanner = new Scanner(ClassLoader.getSystemResourceAsStream("accounts.txt"));
+        List<String> accountsFile = new ArrayList<>();
+        while (scanner.hasNext()) {
+            accountsFile.add(scanner.nextLine());
         }
 
-        for (int i = 0; i < accLines.size(); i++) {
-            String[] clientData = accLines.get(i).split("::");
+        for (int i = 0; i < accountsFile.size(); i++) {
+            String[] clientData = accountsFile.get(i).split("::");
             if (clientMap.containsKey(clientData[0])) {
                 if (clientData[1].equals("SA")) {
                     clientService.addAccount(clientMap.get(clientData[0]), new SavingAccount(Double.parseDouble(clientData[2])));
@@ -102,15 +101,25 @@ public class ClientServiceTest extends Assert {
             }
         }
 
+        for (Map.Entry<String, Client> entry : clientMap.entrySet()) {
+            Client client = entry.getValue();
+            try {
+                clientService.saveClient(bank, client);
+            } catch (ClientAlreadyExistsException e) {
+                e.printStackTrace();
+            }
+        }
+
         bank.setAllClients(clientMap);
+
     }
 
-//    @After
-//    public void clear() {
-//        bank.getAllClients().clear();
-//    }
+    @After
+    public void clear() {
+        bank.getAllClients().clear();
+    }
 
-    @Test //(expected = ClientNotFoundException.class)
+    @Test(expected = ClientNotFoundException.class)
     public void testFindClientByName() throws Exception {
         Client client = clientService.findClientByName(bank, "Kostya");
         assertNotNull("Client is found", client);
@@ -118,17 +127,17 @@ public class ClientServiceTest extends Assert {
         assertEquals(client.getCity(), "township");
         assertEquals(client.getEmail(), "q@w.wwewe");
     }
+
     @Test(expected = ClientNotFoundException.class)
     public void testFindClientByNameClientNotFound() throws Exception {
         Client client = clientService.findClientByName(bank, "NotClient");
-        //assert("Client not found", client);
     }
 
 
     @Test
     public void testFindAllClients() throws Exception {
-        Map<String,Client> clientMap0 = bank.getAllClients();
-        Map<String,Client> clientMap1 = clientService.findAllClients(bank);
+        Map<String, Client> clientMap0 = bank.getAllClients();
+        Map<String, Client> clientMap1 = clientService.findAllClients(bank);
         assertEquals(clientMap0, clientMap1);
     }
 
@@ -136,20 +145,23 @@ public class ClientServiceTest extends Assert {
     public void testSaveClientClientAlreadyExists() throws Exception {
         Client client0 = new Client("Kostya", Sex.MALE);
         clientService.saveClient(bank, client0);
+        //assertNull(client0);
     }
 
     @Test
     public void testSaveClientNewClient() throws Exception {
         Client client0 = new Client("NewClient", Sex.MALE);
         Client client1 = clientService.saveClient(bank, client0);
-        assertEquals(client0,client1);
+        assertEquals(client0, client1);
     }
-    @Test(expected=NullPointerException.class)
+
+    @Test(expected = NullPointerException.class)
     public void testSaveClientClientIsNull() throws Exception {
         Client client0 = null;
         clientService.saveClient(bank, client0);
     }
-    @Test(expected=NullPointerException.class)
+
+    @Test(expected = NullPointerException.class)
     public void testSaveClientBankIsNull() throws Exception {
         Client client0 = new Client("NewClient", Sex.MALE);
         clientService.saveClient(null, client0);
