@@ -29,6 +29,12 @@ public class BankCommander {
     // хранит в себе банк с кототорым мы работаем
     public static Bank currentBank;
 
+    private Bank bank = new Bank();
+    private ClientService clientService = new ClientServiceImpl();
+    private AccountService accountService = new AccountServiceImpl();
+    private BankReportService bankReportService = new BankReportServiceImpl();
+    private Map<String, Client> clientMap = new HashMap<>();
+
     // хранит в себе клиента с которым мы работаем в данный момент
     public static Client currentClient;
 
@@ -43,32 +49,39 @@ public class BankCommander {
         showMenu();
     }
 
-    private void init() {
-        Bank bank = new Bank();
-        ClientService clientService = new ClientServiceImpl();
-        AccountService accountService = new AccountServiceImpl();
-        BankReportService bankReportService = new BankReportServiceImpl();
-        Map<String, Client> clientMap = new HashMap<>();
+    private void initCommands(){
+        commands = new Command[]{
+                new FindClientCommand(clientService),
+                new GetAccountsCommand(accountService),
+                new AddAccountCommand(clientService),
+                new SetActiveAccountCommander(clientService, accountService),
+                new DepositCommand(accountService),
+                new WithdrawCommand(accountService),
+                new TransferCommand(clientService, accountService),
+                new AddClientCommand(clientService, accountService),
+                new RemoveClientCommand(clientService),
+                new GetBankInfoCommand(bankReportService),
+                new ShowMenuCommand(),
+                new ExitCommand(),
+                //new ReturnClientsMapCommand(bankReportService)
+        };
+    }
 
-        Scanner scanner = new Scanner(ClassLoader.getSystemResourceAsStream("clients.txt"));
-        List<String> clientsFile = new ArrayList<>();
-        while (scanner.hasNext()) {
-            clientsFile.add(scanner.nextLine());
+    public static void showMenu() {
+        for (int i = 0; i < commands.length; i++) {
+            System.out.println((i + 1) + ". " + commands[i].getCommandInfo());
         }
+    }
 
-        for (int i = 0; i < clientsFile.size(); i++) {
-            String[] clientData = clientsFile.get(i).split("::");
+    private void init() {
+        Scanner scanner = new Scanner(ClassLoader.getSystemResourceAsStream("clients.txt"));
+        while (scanner.hasNext()) {
+            String[] clientData = scanner.nextLine().split("::");
             clientMap.put(clientData[0], new Client(clientData[0], (clientData[1].equals("MALE") ? Sex.MALE : Sex.FEMALE), clientData[2], clientData[3], clientData[4]));
         }
-
         scanner = new Scanner(ClassLoader.getSystemResourceAsStream("accounts.txt"));
-        List<String> accountsFile = new ArrayList<>();
         while (scanner.hasNext()) {
-            accountsFile.add(scanner.nextLine());
-        }
-
-        for (int i = 0; i < accountsFile.size(); i++) {
-            String[] clientData = accountsFile.get(i).split("::");
+            String[] clientData = scanner.nextLine().split("::");
             if (clientMap.containsKey(clientData[0])) {
                 if (clientData[1].equals("SA")) {
                     clientService.addAccount(clientMap.get(clientData[0]), new SavingAccount(Double.parseDouble(clientData[2])));
@@ -87,36 +100,12 @@ public class BankCommander {
                 e.printStackTrace();
             }
         }
-        commands = new Command[]{
-                new FindClientCommand(clientService),
-                new GetAccountsCommand(accountService),
-                new AddAccountCommand(clientService),
-                new SetActiveAccountCommander(clientService, accountService),
-                new DepositCommand(accountService),
-                new WithdrawCommand(accountService),
-                new TransferCommand(clientService, accountService),
-                new AddClientCommand(clientService, accountService),
-                new RemoveClientCommand(clientService),
-                new GetBankInfoCommand(bankReportService),
-                new ShowMenuCommand(),
-                new ExitCommand(),
-                //new ReturnClientsMapCommand(bankReportService)
-        };
         bank.setAllClients(clientMap);
         initCommands();
-
-
         currentBank = bank;
+  }
 
-    }
-    public static void initCommands(){
 
-    }
-    public static void showMenu() {
-        for (int i = 0; i < commands.length; i++) {
-            System.out.println((i + 1) + ". " + commands[i].getCommandInfo());
-        }
-    }
 
     public void run() {
         while (true) {
