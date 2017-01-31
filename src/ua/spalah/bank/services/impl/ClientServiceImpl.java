@@ -42,12 +42,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client findClientByName(Bank bank, String name) throws ClientNotFoundException {
-//        List<Client> clientList = bank.getClients();
-//        for (Client client : clientList) {
-//            if (client.getClientName().equals(name)) {
-//                return client;
-//            }
-//        }
         Map<String, Client> clientMap = bank.getAllClients();
         for (Map.Entry<String, Client> entry : clientMap.entrySet()) {
             if (entry.getKey().equals(name)) {

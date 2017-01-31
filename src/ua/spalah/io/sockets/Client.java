@@ -38,7 +38,7 @@ public class Client {
                 out.writeUTF(line); // отсылаем введенную строку текста серверу.
                 out.flush(); // заставляем поток закончить передачу данных.
                 line = in.readUTF(); // ждем пока сервер отошлет строку текста.
-                System.out.println("The server sent me this: " + line);
+                System.out.println(line);
                 System.out.println("\nGo ahead and enter more lines.");
             }
         } catch (Exception e) {

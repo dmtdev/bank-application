@@ -19,7 +19,7 @@ public class FindClientCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Enter client name:");
+        //System.out.println("Enter client name:");
         Scanner scanner = new Scanner(System.in);
         try{
             BankCommander.currentClient = clientService.findClientByName(BankCommander.currentBank,scanner.nextLine());

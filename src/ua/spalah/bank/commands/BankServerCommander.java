@@ -28,6 +28,14 @@ public class BankServerCommander {
     // хранит в себе банк с кототорым мы работаем
     public static Bank currentBank;
 
+    public static String serverAnswer;
+
+    private Bank bank = new Bank();
+    private ClientService clientService = new ClientServiceImpl();
+    private AccountService accountService = new AccountServiceImpl();
+    private BankReportService bankReportService = new BankReportServiceImpl();
+    private Map<String, Client> clientMap = new HashMap<>();
+
     // хранит в себе клиента с которым мы работаем в данный момент
     public static Client currentClient;
 
@@ -39,57 +47,10 @@ public class BankServerCommander {
 
     public BankServerCommander() {
         init();
-        showMenu();
-    }
-    private void initServer(){
-
+        //showMenu();
     }
 
-
-    private void init() {
-        Bank bank = new Bank();
-        ClientService clientService = new ClientServiceImpl();
-        AccountService accountService = new AccountServiceImpl();
-        BankReportService bankReportService = new BankReportServiceImpl();
-        Map<String, Client> clientMap = new HashMap<>();
-
-        Scanner scanner = new Scanner(ClassLoader.getSystemResourceAsStream("clients.txt"));
-        List<String> clientsFile = new ArrayList<>();
-        while (scanner.hasNext()) {
-            clientsFile.add(scanner.nextLine());
-        }
-
-        for (int i = 0; i < clientsFile.size(); i++) {
-            String[] clientData = clientsFile.get(i).split("::");
-            clientMap.put(clientData[0], new Client(clientData[0], (clientData[1].equals("MALE") ? Sex.MALE : Sex.FEMALE), clientData[2], clientData[3], clientData[4]));
-        }
-
-        scanner = new Scanner(ClassLoader.getSystemResourceAsStream("accounts.txt"));
-        List<String> accountsFile = new ArrayList<>();
-        while (scanner.hasNext()) {
-            accountsFile.add(scanner.nextLine());
-        }
-
-        for (int i = 0; i < accountsFile.size(); i++) {
-            String[] clientData = accountsFile.get(i).split("::");
-            if (clientMap.containsKey(clientData[0])) {
-                if (clientData[1].equals("SA")) {
-                    clientService.addAccount(clientMap.get(clientData[0]), new SavingAccount(Double.parseDouble(clientData[2])));
-                }
-                else if (clientData[1].equals("CA")) {
-                    clientService.addAccount(clientMap.get(clientData[0]), new CheckingAccount(Double.parseDouble(clientData[2]), Double.parseDouble(clientData[2])));
-                }
-
-            }
-        }
-        for (Map.Entry<String, Client> entry : clientMap.entrySet()) {
-            Client client = entry.getValue();
-            try {
-                clientService.saveClient(bank, client);
-            } catch (ClientAlreadyExistsException e) {
-                e.printStackTrace();
-            }
-        }
+    private void initCommands(){
         commands = new Command[]{
                 new FindClientCommand(clientService),
                 new GetAccountsCommand(accountService),
@@ -103,31 +64,60 @@ public class BankServerCommander {
                 new GetBankInfoCommand(bankReportService),
                 new ShowMenuCommand(),
                 new ExitCommand(),
-                //new ReturnClientsMapCommand(bankReportService)
         };
+    }
+
+    public static String[] showMenu() {
+
+        String[] menu = new String[commands.length];
+        for (int i = 0; i < commands.length; i++) {
+            menu[i] = (i + 1) + ". " + commands[i].getCommandInfo();
+        }
+        return menu;
+    }
+
+    private void init() {
+        Scanner scanner = new Scanner(ClassLoader.getSystemResourceAsStream("clients.txt"));
+        while (scanner.hasNext()) {
+            String[] clientData = scanner.nextLine().split("::");
+            clientMap.put(clientData[0], new Client(clientData[0], (clientData[1].equals("MALE") ? Sex.MALE : Sex.FEMALE), clientData[2], clientData[3], clientData[4]));
+        }
+
+        scanner = new Scanner(ClassLoader.getSystemResourceAsStream("accounts.txt"));
+        while (scanner.hasNext()) {
+            String[] clientData = scanner.nextLine().split("::");
+            if (clientMap.containsKey(clientData[0])) {
+                if (clientData[1].equals("SA")) {
+                    clientService.addAccount(clientMap.get(clientData[0]), new SavingAccount(Double.parseDouble(clientData[2])));
+                }
+                else if (clientData[1].equals("CA")) {
+                    clientService.addAccount(clientMap.get(clientData[0]), new CheckingAccount(Double.parseDouble(clientData[2]), Double.parseDouble(clientData[2])));
+                }
+
+            }
+        }
+
+        for (Map.Entry<String, Client> entry : clientMap.entrySet()) {
+            Client client = entry.getValue();
+            try {
+                clientService.saveClient(bank, client);
+            } catch (ClientAlreadyExistsException e) {
+                e.printStackTrace();
+            }
+        }
         bank.setAllClients(clientMap);
         initCommands();
-
-
         currentBank = bank;
+        System.out.println(currentBank);
+    }
 
-    }
-    public static void initCommands(){
 
-    }
-    public static void showMenu() {
-        for (int i = 0; i < commands.length; i++) {
-            System.out.println((i + 1) + ". " + commands[i].getCommandInfo());
-        }
-    }
 
     public void run() {
-
         int port = 5050; // случайный порт (может быть любое число от 1025 до 65535)
         try {
             ServerSocket ss = new ServerSocket(port); // создаем сокет сервера и привязываем его к вышеуказанному порту
             System.out.println("Waiting for a client...");
-
             Socket socket = ss.accept(); // заставляем сервер ждать подключений и выводим сообщение, когда кто-то связался с сервером
             System.out.println("Got a client :) Finally, someone saw me!\n");
 
@@ -142,41 +132,44 @@ public class BankServerCommander {
 
             String line;
             while (true) {
-                line = in.readUTF(); // ожидаем пока клиент пришлет строку текста.
-                System.out.println("The client just sent me this line : " + line);
-                System.out.println("I'm sending it back...\n");
-                out.writeUTF(line); // отсылаем клиенту обратно ту самую строку текста.
+                String[] menu = showMenu();
+                line = String.join("\n",menu);
+                //line = in.readUTF(); // ожидаем пока клиент пришлет строку текста.
+                //System.out.println("The client just sent me this line : " + line);
+                //System.out.println("I'm sending it back...\n");
+                String input = in.readUTF();
+                try {
+                    int command = Integer.parseInt(input);
+                    //if(input)
+                    System.out.println("> " + commands[command - 1].getCommandInfo());
+                    try {
+                        commands[command - 1].execute();
+                    } catch (ClientAlreadyExistsException e) {
+                        e.printStackTrace();
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Wrong command number");
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Wrong account number");
+                } catch (NumberFormatException e) {
+                    System.out.println("This is not a number");
+                }
+                //out.writeUTF(line);
+                out.writeUTF(serverAnswer); // отсылаем клиенту обратно ту самую строку текста.
+                BankServerCommander.serverAnswer = "";
                 out.flush(); // заставляем поток закончить передачу данных.
-                System.out.println("Waiting for the next line...");
+                //System.out.println("Waiting for the next line...");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
-        while (true) {
-            System.out.println("Enter command number (1-12)");
-            Scanner scanner = new Scanner(System.in);
-            try {
-                int command = Integer.parseInt(scanner.nextLine());
-                System.out.println("> " + commands[command - 1].getCommandInfo());
-                try {
-                    commands[command - 1].execute();
-                } catch (ClientAlreadyExistsException e) {
-                    e.printStackTrace();
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Wrong command number");
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Wrong account number");
-            } catch (NumberFormatException e) {
-                System.out.println("This is not a number");
-            }
-        }
     }
 
+
+
     public static void main(String[] args) {
-        BankServerCommander bankCommander = new BankServerCommander();
-        bankCommander.run();
+        BankServerCommander bankServerCommander = new BankServerCommander();
+        bankServerCommander.run();
     }
 }

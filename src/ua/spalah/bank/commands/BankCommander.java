@@ -6,7 +6,6 @@ import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.model.SavingAccount;
 import ua.spalah.bank.model.enums.Sex;
-import ua.spalah.bank.services.Account;
 import ua.spalah.bank.services.AccountService;
 import ua.spalah.bank.services.BankReportService;
 import ua.spalah.bank.services.ClientService;
@@ -14,12 +13,6 @@ import ua.spalah.bank.services.impl.AccountServiceImpl;
 import ua.spalah.bank.services.impl.BankReportServiceImpl;
 import ua.spalah.bank.services.impl.ClientServiceImpl;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -63,7 +56,6 @@ public class BankCommander {
                 new GetBankInfoCommand(bankReportService),
                 new ShowMenuCommand(),
                 new ExitCommand(),
-                //new ReturnClientsMapCommand(bankReportService)
         };
     }
 
@@ -79,6 +71,7 @@ public class BankCommander {
             String[] clientData = scanner.nextLine().split("::");
             clientMap.put(clientData[0], new Client(clientData[0], (clientData[1].equals("MALE") ? Sex.MALE : Sex.FEMALE), clientData[2], clientData[3], clientData[4]));
         }
+
         scanner = new Scanner(ClassLoader.getSystemResourceAsStream("accounts.txt"));
         while (scanner.hasNext()) {
             String[] clientData = scanner.nextLine().split("::");
@@ -92,6 +85,7 @@ public class BankCommander {
 
             }
         }
+
         for (Map.Entry<String, Client> entry : clientMap.entrySet()) {
             Client client = entry.getValue();
             try {

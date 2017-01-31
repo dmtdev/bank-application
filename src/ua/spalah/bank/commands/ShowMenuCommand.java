@@ -6,7 +6,9 @@ package ua.spalah.bank.commands;
 public class ShowMenuCommand implements Command {
     @Override
     public void execute() {
-        BankCommander.showMenu();
+        //BankCommander.showMenu();
+        BankServerCommander.serverAnswer = String.join("\n",BankServerCommander.showMenu());
+
     }
 
     @Override
