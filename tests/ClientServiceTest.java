@@ -1,5 +1,3 @@
-package ua.spalah.bank.tests;
-
 import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Assert;
@@ -119,7 +117,7 @@ public class ClientServiceTest extends Assert {
         bank.getAllClients().clear();
     }
 
-    @Test(expected = ClientNotFoundException.class)
+    @Test
     public void testFindClientByName() throws Exception {
         Client client = clientService.findClientByName(bank, "Kostya");
         assertNotNull("Client is found", client);

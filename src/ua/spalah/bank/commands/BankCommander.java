@@ -82,7 +82,6 @@ public class BankCommander {
                 else if (clientData[1].equals("CA")) {
                     clientService.addAccount(clientMap.get(clientData[0]), new CheckingAccount(Double.parseDouble(clientData[2]), Double.parseDouble(clientData[2])));
                 }
-
             }
         }
 

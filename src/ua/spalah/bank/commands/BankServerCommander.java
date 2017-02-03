@@ -47,7 +47,6 @@ public class BankServerCommander {
 
     public BankServerCommander() {
         init();
-        //showMenu();
     }
 
     private void initCommands(){
@@ -77,6 +76,7 @@ public class BankServerCommander {
     }
 
     private void init() {
+
         Scanner scanner = new Scanner(ClassLoader.getSystemResourceAsStream("clients.txt"));
         while (scanner.hasNext()) {
             String[] clientData = scanner.nextLine().split("::");
@@ -93,7 +93,6 @@ public class BankServerCommander {
                 else if (clientData[1].equals("CA")) {
                     clientService.addAccount(clientMap.get(clientData[0]), new CheckingAccount(Double.parseDouble(clientData[2]), Double.parseDouble(clientData[2])));
                 }
-
             }
         }
 
@@ -102,13 +101,12 @@ public class BankServerCommander {
             try {
                 clientService.saveClient(bank, client);
             } catch (ClientAlreadyExistsException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
         bank.setAllClients(clientMap);
         initCommands();
         currentBank = bank;
-        System.out.println(currentBank);
     }
 
 
