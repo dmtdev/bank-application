@@ -1,4 +1,4 @@
-package ua.spalah.bank.services;
+package ua.spalah.bank.io.sockets;
 
 /**
  * Created by dd on 27.01.2017.

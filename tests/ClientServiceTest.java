@@ -1,9 +1,7 @@
-import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ua.spalah.bank.commands.BankCommander;
 import ua.spalah.bank.exceptions.ClientAlreadyExistsException;
 import ua.spalah.bank.exceptions.ClientNotFoundException;
 import ua.spalah.bank.model.Bank;
@@ -18,13 +16,8 @@ import ua.spalah.bank.services.impl.AccountServiceImpl;
 import ua.spalah.bank.services.impl.BankReportServiceImpl;
 import ua.spalah.bank.services.impl.ClientServiceImpl;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
-import static org.junit.Assert.*;
 
 /**
  * Created by root on 27.01.2017.

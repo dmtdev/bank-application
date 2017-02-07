@@ -1,4 +1,4 @@
-package ua.spalah.io.sockets;
+package ua.spalah.bank.io.sockets;
 
         import java.io.BufferedReader;
         import java.io.DataInputStream;
