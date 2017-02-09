@@ -16,16 +16,16 @@ public class TestConnection {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        try(Connection conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test","sa","")) {
+        try(Connection conn = DriverManager.getConnection("jdbc:h2:~/test","sa","")) {
             Statement st = null;
             st = conn.createStatement();
-            ResultSet resultSet = st.executeQuery("select * from clients ");
+            ResultSet resultSet = st.executeQuery("select * from cities");
 
             while (resultSet.next()) {
 
-                Array row = resultSet.getArray(2);
-//            System.out.println(resultSet.getString(1));
-//            System.out.println(resultSet.getString(2));
+                //Array row = resultSet.getArray(2);
+            System.out.println(resultSet.getString(1));
+            System.out.println(resultSet.getString(2));
 //            System.out.println(resultSet.getString(3));
 //            System.out.println(resultSet.getString(4));
 //            System.out.println(resultSet.getString(5));
