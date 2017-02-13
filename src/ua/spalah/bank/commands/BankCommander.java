@@ -44,18 +44,18 @@ public class BankCommander {
 
     private void initCommands(){
         commands = new Command[]{
-                new FindClientCommand(clientService),
-                new GetAccountsCommand(accountService),
-                new AddAccountCommand(clientService),
-                new SetActiveAccountCommander(clientService, accountService),
-                new DepositCommand(accountService),
-                new WithdrawCommand(accountService),
-                new TransferCommand(clientService, accountService),
-                new AddClientCommand(clientService, accountService),
-                new RemoveClientCommand(clientService),
-                new GetBankInfoCommand(bankReportService),
-                new ShowMenuCommand(),
-                new ExitCommand(),
+//                new FindClientCommand(clientService),
+//                new GetAccountsCommand(accountService),
+//                new AddAccountCommand(clientService),
+//                new SetActiveAccountCommander(clientService, accountService),
+//                new DepositCommand(accountService),
+//                new WithdrawCommand(accountService),
+//                new TransferCommand(clientService, accountService),
+//                new AddClientCommand(clientService, accountService),
+//                new RemoveClientCommand(clientService),
+//                new GetBankInfoCommand(bankReportService),
+//                new ShowMenuCommand(io),
+//                new ExitCommand(),
         };
     }
 

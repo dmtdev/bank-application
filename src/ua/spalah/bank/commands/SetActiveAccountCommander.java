@@ -1,5 +1,6 @@
 package ua.spalah.bank.commands;
 
+import ua.spalah.bank.io.sockets.IO;
 import ua.spalah.bank.services.AccountService;
 import ua.spalah.bank.services.ClientService;
 
@@ -8,12 +9,13 @@ import java.util.Scanner;
 /**
  * Created by root on 13.01.2017.
  */
-public class SetActiveAccountCommander implements Command {
+public class SetActiveAccountCommander extends AbstractCommand  {
 
     private ClientService clientService;
     private AccountService accountService;
 
-    public SetActiveAccountCommander(ClientService clientService, AccountService accountService) {
+    public SetActiveAccountCommander(ClientService clientService, AccountService accountService,IO io) {
+        super(io);
         this.clientService = clientService;
         this.accountService = accountService;
     }

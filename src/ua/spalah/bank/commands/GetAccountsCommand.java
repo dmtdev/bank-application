@@ -1,16 +1,19 @@
 package ua.spalah.bank.commands;
 
+import ua.spalah.bank.io.sockets.IO;
 import ua.spalah.bank.services.AccountService;
 
 
 /**
  * Created by root on 12.01.2017.
  */
-public class GetAccountsCommand implements Command {
+public class GetAccountsCommand extends AbstractCommand {
 
     private AccountService accountService;
 
-    public GetAccountsCommand(AccountService accountService) {
+    public GetAccountsCommand(AccountService accountService,IO io) {
+
+        super(io);
         this.accountService = accountService;
     }
 

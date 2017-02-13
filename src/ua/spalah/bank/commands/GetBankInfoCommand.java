@@ -1,15 +1,17 @@
 package ua.spalah.bank.commands;
 
+import ua.spalah.bank.io.sockets.IO;
 import ua.spalah.bank.services.BankReportService;
 
 /**
  * Created by root on 12.01.2017.
  */
-public class GetBankInfoCommand implements Command {
+public class GetBankInfoCommand extends AbstractCommand  {
 
     private BankReportService bankReportService;
 
-    public GetBankInfoCommand(BankReportService bankReportService) {
+    public GetBankInfoCommand(BankReportService bankReportService,IO io) {
+        super(io);
         this.bankReportService = bankReportService;
     }
 

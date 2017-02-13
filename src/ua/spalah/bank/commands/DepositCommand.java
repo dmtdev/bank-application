@@ -1,5 +1,6 @@
 package ua.spalah.bank.commands;
 
+import ua.spalah.bank.io.sockets.IO;
 import ua.spalah.bank.services.AccountService;
 
 import java.util.Scanner;
@@ -7,10 +8,11 @@ import java.util.Scanner;
 /**
  * Created by root on 12.01.2017.
  */
-public class DepositCommand implements Command {
+public class DepositCommand extends AbstractCommand  {
 
     private AccountService accountService;
-    public DepositCommand(AccountService accountService) {
+    public DepositCommand(AccountService accountService,IO io) {
+        super(io);
         this.accountService=accountService;
     }
 

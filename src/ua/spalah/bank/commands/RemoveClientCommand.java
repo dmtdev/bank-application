@@ -1,6 +1,7 @@
 package ua.spalah.bank.commands;
 
 import ua.spalah.bank.exceptions.ClientNotFoundException;
+import ua.spalah.bank.io.sockets.IO;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.services.ClientService;
 
@@ -9,10 +10,11 @@ import java.util.Scanner;
 /**
  * Created by root on 12.01.2017.
  */
-public class RemoveClientCommand implements Command {
+public class RemoveClientCommand extends AbstractCommand  {
     private ClientService clientService;
 
-    public RemoveClientCommand(ClientService clientService) {
+    public RemoveClientCommand(ClientService clientService,IO io) {
+        super(io);
         this.clientService = clientService;
     }
 

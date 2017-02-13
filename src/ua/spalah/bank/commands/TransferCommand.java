@@ -2,6 +2,7 @@ package ua.spalah.bank.commands;
 
 import ua.spalah.bank.exceptions.ClientNotFoundException;
 import ua.spalah.bank.exceptions.NotEnoughFundsException;
+import ua.spalah.bank.io.sockets.IO;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.services.AccountService;
 import ua.spalah.bank.services.ClientService;
@@ -11,12 +12,13 @@ import java.util.Scanner;
 /**
  * Created by root on 12.01.2017.
  */
-public class TransferCommand implements Command {
+public class TransferCommand extends AbstractCommand {
 
     private AccountService accountService;
     private ClientService clientService;
 
-    public TransferCommand(ClientService clientService, AccountService accountService) {
+    public TransferCommand(ClientService clientService, AccountService accountService, IO io) {
+        super(io);
         this.accountService = accountService;
         this.clientService = clientService;
     }

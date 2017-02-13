@@ -23,13 +23,12 @@ public class TestConnection {
 
             while (resultSet.next()) {
 
-                //Array row = resultSet.getArray(2);
             System.out.println(resultSet.getString(1));
             System.out.println(resultSet.getString(2));
-//            System.out.println(resultSet.getString(3));
-//            System.out.println(resultSet.getString(4));
-//            System.out.println(resultSet.getString(5));
+
             }
+            conn.close();
         }
+
     }
 }

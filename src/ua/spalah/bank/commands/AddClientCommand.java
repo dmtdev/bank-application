@@ -1,6 +1,7 @@
 package ua.spalah.bank.commands;
 
 import ua.spalah.bank.exceptions.ClientAlreadyExistsException;
+import ua.spalah.bank.io.sockets.IO;
 import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.model.SavingAccount;
@@ -19,11 +20,12 @@ import java.util.regex.Pattern;
 /**
  * Created by root on 12.01.2017.
  */
-public class AddClientCommand implements Command {
+public class AddClientCommand extends AbstractCommand  {
     private ClientService clientService;
     private AccountService accountService;
 
-    public AddClientCommand(ClientService clientService, AccountService accountService) {
+    public AddClientCommand(ClientService clientService, AccountService accountService,IO io) {
+        super(io);
         this.clientService = clientService;
         this.accountService = accountService;
     }

@@ -1,5 +1,7 @@
 package ua.spalah.bank.io.sockets;
 
+import java.net.Socket;
+
 /**
  * Created by dd on 27.01.2017.
  */

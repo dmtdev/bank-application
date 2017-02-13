@@ -2,6 +2,7 @@ package ua.spalah.bank.commands;
 
 import ua.spalah.bank.exceptions.CurrentClientNotSetException;
 import ua.spalah.bank.exceptions.NotEnoughFundsException;
+import ua.spalah.bank.io.sockets.IO;
 import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.model.SavingAccount;
@@ -15,11 +16,12 @@ import java.util.regex.Pattern;
 /**
  * Created by root on 13.01.2017.
  */
-public class AddAccountCommand implements Command {
+public class AddAccountCommand extends AbstractCommand {
 
     private ClientService clientService;
 
-    public AddAccountCommand(ClientService clientService) {
+    public AddAccountCommand(ClientService clientService, IO io) {
+        super(io);
         this.clientService = clientService;
     }
 

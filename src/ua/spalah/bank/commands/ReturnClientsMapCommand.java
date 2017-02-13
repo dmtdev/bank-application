@@ -1,15 +1,17 @@
 package ua.spalah.bank.commands;
 
+import ua.spalah.bank.io.sockets.IO;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.services.BankReportService;
 
 /**
  * Created by dd on 22.01.2017.
  */
-public class ReturnClientsMapCommand implements Command {
+public class ReturnClientsMapCommand extends AbstractCommand  {
     private BankReportService bankReportService;
 
-    public ReturnClientsMapCommand(BankReportService bankReportService) {
+    public ReturnClientsMapCommand(BankReportService bankReportService,IO io) {
+        super(io);
         this.bankReportService = bankReportService;
     }
 

@@ -1,6 +1,10 @@
 package ua.spalah.bank.commands;
 
 import ua.spalah.bank.exceptions.ClientAlreadyExistsException;
+import ua.spalah.bank.exceptions.NetworkException;
+import ua.spalah.bank.io.sockets.ConsoleIO;
+import ua.spalah.bank.io.sockets.IO;
+import ua.spalah.bank.io.sockets.SocketIO;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.model.Client;
@@ -13,10 +17,7 @@ import ua.spalah.bank.services.impl.AccountServiceImpl;
 import ua.spalah.bank.services.impl.BankReportServiceImpl;
 import ua.spalah.bank.services.impl.ClientServiceImpl;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
@@ -29,6 +30,8 @@ public class BankServerCommander {
     public static Bank currentBank;
 
     public static String serverAnswer;
+    private final IO io;
+    private final SocketIO socketIO;
 
     private Bank bank = new Bank();
     private ClientService clientService = new ClientServiceImpl();
@@ -45,23 +48,26 @@ public class BankServerCommander {
         return commands;
     }
 
-    public BankServerCommander() {
+    public BankServerCommander(SocketIO socketIO) {
+
+        this.io = socketIO;
+        this.socketIO=socketIO;
         init();
     }
 
     private void initCommands(){
         commands = new Command[]{
-                new FindClientCommand(clientService),
-                new GetAccountsCommand(accountService),
-                new AddAccountCommand(clientService),
-                new SetActiveAccountCommander(clientService, accountService),
-                new DepositCommand(accountService),
-                new WithdrawCommand(accountService),
-                new TransferCommand(clientService, accountService),
-                new AddClientCommand(clientService, accountService),
-                new RemoveClientCommand(clientService),
-                new GetBankInfoCommand(bankReportService),
-                new ShowMenuCommand(),
+                new FindClientCommand(clientService, socketIO),
+                new GetAccountsCommand(accountService,socketIO),
+                new AddAccountCommand(clientService,socketIO),
+                new SetActiveAccountCommander(clientService, accountService, io),
+                new DepositCommand(accountService, io),
+                new WithdrawCommand(accountService, io),
+                new TransferCommand(clientService, accountService, io),
+                new AddClientCommand(clientService, accountService, io),
+                new RemoveClientCommand(clientService, io),
+                new GetBankInfoCommand(bankReportService, io),
+                new ShowMenuCommand(io),
                 new ExitCommand(),
         };
     }
@@ -105,69 +111,56 @@ public class BankServerCommander {
             }
         }
         bank.setAllClients(clientMap);
-        initCommands();
         currentBank = bank;
     }
 
 
 
     public void run() {
-        int port = 5050; // случайный порт (может быть любое число от 1025 до 65535)
+
+        boolean exit = false;
+
         try {
-            ServerSocket ss = new ServerSocket(port); // создаем сокет сервера и привязываем его к вышеуказанному порту
+            ServerSocket ss = new ServerSocket(5050);
             System.out.println("Waiting for a client...");
-            Socket socket = ss.accept(); // заставляем сервер ждать подключений и выводим сообщение, когда кто-то связался с сервером
-            System.out.println("Got a client :) Finally, someone saw me!\n");
-
-            // Берем входной и выходной потоки сокета, теперь можем получать и отсылать данные клиенту.
-            InputStream sin = socket.getInputStream();
-            OutputStream sout = socket.getOutputStream();
-
-            // Конвертируем потоки в другой тип, чтоб легче обрабатывать текстовые сообщения.
-            DataInputStream in = new DataInputStream(sin);
-            DataOutputStream out = new DataOutputStream(sout);
-            out.flush(); // делаем flush, чтобы убедиться, что поток работает
-
-            String line;
-            while (true) {
-                String[] menu = showMenu();
-                line = String.join("\n",menu);
-                //line = in.readUTF(); // ожидаем пока клиент пришлет строку текста.
-                //System.out.println("The client just sent me this line : " + line);
-                //System.out.println("I'm sending it back...\n");
-                String input = in.readUTF();
-                try {
-                    int command = Integer.parseInt(input);
-                    //if(input)
-                    System.out.println("> " + commands[command - 1].getCommandInfo());
-                    try {
-                        commands[command - 1].execute();
-                    } catch (ClientAlreadyExistsException e) {
-                        e.printStackTrace();
-                    }
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("Wrong command number");
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("Wrong account number");
-                } catch (NumberFormatException e) {
-                    System.out.println("This is not a number");
-                }
-                //out.writeUTF(line);
-                out.writeUTF(serverAnswer); // отсылаем клиенту обратно ту самую строку текста.
-                BankServerCommander.serverAnswer = "";
-                out.flush(); // заставляем поток закончить передачу данных.
-                //System.out.println("Waiting for the next line...");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            Socket socket = ss.accept();
+            socketIO.init(socket);
+            System.out.println("Got a client. Run bank!");
+        } catch (IOException e) {
+            new NetworkException("Some problems with network");
         }
+        initCommands();
+
+        socketIO.write("Enter command number (1-12)");
+        socketIO.write(String.join("\n",showMenu())+"\n");
+        //Scanner scanner = new Scanner(System.in);
+        do{
+
+            io.read();
+            //Scanner scanner = new Scanner(System.in);
+            try {
+                int command = Integer.parseInt(io.read());
+                socketIO.write("> " + commands[command - 1].getCommandInfo());
+                try {
+                    commands[command - 1].execute();
+                } catch (ClientAlreadyExistsException e) {
+                    e.printStackTrace();
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                socketIO.write("Wrong command number");
+            } catch (IndexOutOfBoundsException e) {
+                socketIO.write("Wrong account number");
+            } catch (NumberFormatException e) {
+                socketIO.write("This is not a number");
+            }
+            socketIO.read();
+        }
+        while(!exit);
 
     }
 
-
-
     public static void main(String[] args) {
-        BankServerCommander bankServerCommander = new BankServerCommander();
+        BankServerCommander bankServerCommander = new BankServerCommander(new SocketIO());
         bankServerCommander.run();
     }
 }
