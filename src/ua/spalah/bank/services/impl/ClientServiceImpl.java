@@ -51,7 +51,7 @@ public class ClientServiceImpl implements ClientService {
         throw new ClientNotFoundException(name);
 
     }
-
+//
     @Override
     public Map<String, Client> findAllClients(Bank bank) {
         return bank.getAllClients();
