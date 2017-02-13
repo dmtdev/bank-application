@@ -1,13 +1,18 @@
 package ua.spalah.bank.commands;
 
+import ua.spalah.bank.io.sockets.IO;
+
 /**
  * Created by root on 12.01.2017.
  */
-public class ExitCommand implements Command {
+public class ExitCommand extends AbstractCommand {
+    public ExitCommand(IO io) {
+        super(io);
+    }
+
     @Override
     public void execute() {
-        System.out.println("Goodbye");
-        System.exit(0);
+        write("Goodbye");
     }
 
     @Override

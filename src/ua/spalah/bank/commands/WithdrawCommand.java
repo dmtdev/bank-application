@@ -20,16 +20,16 @@ public class WithdrawCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        if (BankCommander.currentClient == null) {
-            System.out.println("Current client not set. Please find client by name to set current client.");
+        if (BankServerCommander.currentClient == null) {
+            write("Current client not set. Please find client by name to set current client.");
             return;
         }
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter withdraw sum for " + BankCommander.currentClient.getClientName() + ":");
+
+        write("Enter withdraw sum for " + BankServerCommander.currentClient.getClientName() + ":");
         try {
-            accountService.withdraw(BankCommander.currentClient.getActiveAccount(), Double.parseDouble(scanner.nextLine()));
+            accountService.withdraw(BankServerCommander.currentClient.getActiveAccount(), Double.parseDouble(read()));
         } catch (NotEnoughFundsException e) {
-            System.out.println(e.getMessage());
+            write(e.getMessage());
         }
     }
 

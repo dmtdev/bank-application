@@ -18,14 +18,14 @@ public class DepositCommand extends AbstractCommand  {
 
     @Override
     public void execute(){
-        if(BankCommander.currentClient==null)
+        if(BankServerCommander.currentClient==null)
         {
-            System.out.println("Current client not set. Please find client by name to set current client.");
+            write("Current client not set. Please find client by name to set current client.");
             return;
         }
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter deposit sum for "+BankCommander.currentClient.getClientName()+ ":");
-        accountService.deposit(BankCommander.currentClient.getActiveAccount(),Double.parseDouble(scanner.nextLine()));
+        write("Enter deposit sum for "+BankServerCommander.currentClient.getClientName()+ ":");
+        accountService.deposit(BankServerCommander.currentClient.getActiveAccount(),Double.parseDouble(read()));
     }
 
     @Override

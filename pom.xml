@@ -3,18 +3,6 @@
     <groupId>ua.spalah.bank</groupId>
     <artifactId>bank</artifactId>
     <version>1.0</version>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -32,7 +20,17 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.193</version>
-            <scope>database</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
+    <build>
+        <outputDirectory>target</outputDirectory>
+        <finalName>ROOT</finalName>
+        <sourceDirectory>src</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>${basedir}/resources</directory>
+            </resource>
+        </resources>
+    </build>
 </project>

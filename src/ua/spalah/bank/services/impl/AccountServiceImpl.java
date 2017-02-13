@@ -58,14 +58,16 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Override
-    public void getAccountsInfo(Client client) {
+    public String getAccountsInfo(Client client) {
         List<Account> accountList = client.getAccountList();
-        System.out.println(client.getClientName() + "'s accounts:");
+        StringBuffer sb = new StringBuffer(client.getClientName() + "'s accounts:\n");
+        //write();
 
         for (int i = 0; i < accountList.size(); i++) {
             Account account = accountList.get(i);
-            System.out.println((i + 1) + ". " + account.toString() + " " + (client.getActiveAccount() == account ? ",Active account" : ""));
+            sb.append((i + 1) + ". " + account.toString() + " " + (client.getActiveAccount() == account ? ",Active account" : "")+"\n");
         }
+        return sb.toString();
     }
 
 }

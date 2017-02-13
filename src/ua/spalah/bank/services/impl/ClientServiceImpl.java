@@ -37,7 +37,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Account getAccountById(Client client, int id) {
-        return client.getAccountList().get((id));
+        return client.getAccountList().get(id);
     }
 
     @Override

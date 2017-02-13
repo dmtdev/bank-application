@@ -26,26 +26,26 @@ public class TransferCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        if (BankCommander.currentClient == null) {
-            System.out.println("Current client not set. Please find client by name to set current client.");
+        if (BankServerCommander.currentClient == null) {
+            write("Current client not set. Please find client by name to set current client.");
             return;
         }
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter client name for transit operation:");
+
+        write("Enter client name for transit operation:");
         Client client = null;
         try {
-            client = clientService.findClientByName(BankCommander.currentBank, scanner.nextLine());
+            client = clientService.findClientByName(BankServerCommander.currentBank, read());
         } catch (ClientNotFoundException e) {
             System.out.println(e.getMessage());
         }
         System.out.println("Enter transfer sum:");
-        double sum = Double.parseDouble(scanner.nextLine());
+        double sum = Double.parseDouble(read());
         try {
-            accountService.transfer(BankCommander.currentClient.getActiveAccount(), client.getActiveAccount(), sum);
+            accountService.transfer(BankServerCommander.currentClient.getActiveAccount(), client.getActiveAccount(), sum);
         } catch (NotEnoughFundsException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("$" + sum + " send from " + BankCommander.currentClient.getClientName() + " to " + client.getClientName());
+        write("$" + sum + " send from " + BankServerCommander.currentClient.getClientName() + " to " + client.getClientName());
 
     }
 

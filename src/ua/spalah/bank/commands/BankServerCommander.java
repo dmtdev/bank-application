@@ -57,9 +57,9 @@ public class BankServerCommander {
 
     private void initCommands(){
         commands = new Command[]{
-                new FindClientCommand(clientService, socketIO),
-                new GetAccountsCommand(accountService,socketIO),
-                new AddAccountCommand(clientService,socketIO),
+                new FindClientCommand(clientService, io),
+                new GetAccountsCommand(accountService,io),
+                new AddAccountCommand(clientService,io),
                 new SetActiveAccountCommander(clientService, accountService, io),
                 new DepositCommand(accountService, io),
                 new WithdrawCommand(accountService, io),
@@ -68,7 +68,7 @@ public class BankServerCommander {
                 new RemoveClientCommand(clientService, io),
                 new GetBankInfoCommand(bankReportService, io),
                 new ShowMenuCommand(io),
-                new ExitCommand(),
+                new ExitCommand(io),
         };
     }
 
@@ -132,12 +132,9 @@ public class BankServerCommander {
         initCommands();
 
         socketIO.write("Enter command number (1-12)");
-        socketIO.write(String.join("\n",showMenu())+"\n");
+        socketIO.write(String.join("\n",showMenu()));
         //Scanner scanner = new Scanner(System.in);
         do{
-
-            io.read();
-            //Scanner scanner = new Scanner(System.in);
             try {
                 int command = Integer.parseInt(io.read());
                 socketIO.write("> " + commands[command - 1].getCommandInfo());
@@ -153,7 +150,7 @@ public class BankServerCommander {
             } catch (NumberFormatException e) {
                 socketIO.write("This is not a number");
             }
-            socketIO.read();
+            //io.read();
         }
         while(!exit);
 

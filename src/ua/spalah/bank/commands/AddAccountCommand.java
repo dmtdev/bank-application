@@ -27,15 +27,15 @@ public class AddAccountCommand extends AbstractCommand {
 
     @Override
     public void execute()  {
-        if(BankCommander.currentClient==null)
+        if(BankServerCommander.currentClient==null)
         {
             System.out.println("Current client not set. Please find client by name to set current client.");
             return;
         }
         Pattern pattern = Pattern.compile("^[0-9]{0,10}.[0-9]{0,2}:[0-9]{0,10}.[0-9]{0,2}$");
-        System.out.println("Enter client account like \"100.01:10\"(balance:overdraft(overdraft = 0 if you want create Saving account))");
-        Scanner scanner = new Scanner(System.in);
-        String userInput = scanner.nextLine().trim();
+        write("Enter client account like \"100.01:10\"(balance:overdraft(overdraft = 0 if you want create Saving account))");
+        //Scanner scanner = new Scanner(System.in);
+        String userInput = read().trim();
         Matcher matcher = pattern.matcher(userInput);
         if (matcher.matches()) {
             String[] accountData = userInput.split(":");
@@ -47,8 +47,8 @@ public class AddAccountCommand extends AbstractCommand {
             } else {
                 account = new CheckingAccount(balance, overdraft);
             }
-            clientService.addAccount(BankCommander.currentClient, account);
-            System.out.println("Account is added to "+BankCommander.currentClient.getClientName());
+            clientService.addAccount(BankServerCommander.currentClient, account);
+            write("Account is added to "+BankServerCommander.currentClient.getClientName());
         }
     }
 

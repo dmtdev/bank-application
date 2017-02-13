@@ -32,43 +32,43 @@ public class AddClientCommand extends AbstractCommand  {
 
     @Override
     public void execute() {
-        Scanner scanner = new Scanner(System.in);
+
         CheckClientData checkClientData = new CheckClientData();
         while (!checkClientData.checkData()) {
             if (checkClientData.name == null) {
-                System.out.println("Enter Client name:");
-                String name = scanner.nextLine();
+                write("Enter Client name:");
+                String name = read();
                 if (name.length() > 0) {
                     checkClientData.name = name;
                 }
             } else if (checkClientData.sex == null) {
-                System.out.println("Enter Client sex (m(Male) or f(Female)):");
-                String sex = scanner.nextLine().trim().toLowerCase();
+                write("Enter Client sex (m(Male) or f(Female)):");
+                String sex = read().trim().toLowerCase();
                 if (sex.equals("m") || sex.equals("f")) {
                     checkClientData.sex = (sex.equals("m") ? Sex.MALE : Sex.FEMALE);
                 }
             } else if (checkClientData.email == null) {
-                System.out.println("Enter Client email:");
-                String email = scanner.nextLine().trim().toLowerCase();
+                write("Enter Client email:");
+                String email = read().trim().toLowerCase();
                 if (email.matches("^[a-z0-9-.]{1,250}@[a-z0-9.-]{1,250}.[a-z]{2,4}$")) {
                     checkClientData.email = email;
                 }
             } else if (checkClientData.tel == null) {
-                System.out.println("Enter Client phone number(+380123456789):");
-                String tel = scanner.nextLine().trim();
+                write("Enter Client phone number(+380123456789):");
+                String tel = read().trim();
                     if (tel.matches("^[+][0-9]{12}$")) {
                     checkClientData.tel = tel;
                 }
             } else if (checkClientData.city == null) {
                 System.out.println("Enter Client city:");
-                String city = scanner.nextLine().trim();
+                String city = read().trim();
                 if (city.length() > 1) {
                     checkClientData.city = city;
                 }
             } else {
                 Pattern pattern = Pattern.compile("^[0-9]{0,10}.[0-9]{0,2}:[0-9]{0,10}.[0-9]{0,2}$");
-                System.out.println("Enter first client account like \"100.01:10\"(balance:overdraft(overdraft = 0 if you want create Saving account))");
-                String userInput = scanner.nextLine().trim();
+                write("Enter first client account like \"100.01:10\"(balance:overdraft(overdraft = 0 if you want create Saving account))");
+                String userInput = read().trim();
                 Matcher matcher = pattern.matcher(userInput);
                 if (matcher.matches()) {
                     String[] accountData = userInput.split(":");
@@ -77,12 +77,12 @@ public class AddClientCommand extends AbstractCommand  {
                     Client client = new Client(checkClientData.name, checkClientData.sex, checkClientData.email, checkClientData.tel, checkClientData.city);
 
                     try {
-                        clientService.saveClient(BankCommander.currentBank, client);
+                        clientService.saveClient(BankServerCommander.currentBank, client);
                     } catch (ClientAlreadyExistsException e) {
-                        System.out.println(e.getMessage());
+                        write(e.getMessage());
                     }
 
-                    BankCommander.currentClient = client;
+                    BankServerCommander.currentClient = client;
                     Account account;
                     if (overdraft == 0) {
                         account = new SavingAccount(balance);
@@ -91,8 +91,8 @@ public class AddClientCommand extends AbstractCommand  {
                     }
                     checkClientData.account = account;
                     clientService.addAccount(client, account);
-                    System.out.println("Client " + client.getClientName() + " added");
-                    System.out.println("Current client " + client.getClientName());
+                    write("Client " + client.getClientName() + " added");
+                    write("Current client " + client.getClientName());
                 }
             }
         }

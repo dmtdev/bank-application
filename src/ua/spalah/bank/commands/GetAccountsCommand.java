@@ -19,11 +19,11 @@ public class GetAccountsCommand extends AbstractCommand {
 
     @Override
     public void execute()  {
-        if (BankCommander.currentClient == null) {
-            System.out.println("Current client not set. Please find client by name to set current client.");
+        if (BankServerCommander.currentClient == null) {
+            write("Current client not set. Please find client by name to set current client.");
             return;
         }
-        accountService.getAccountsInfo(BankCommander.currentClient);
+        write(accountService.getAccountsInfo(BankServerCommander.currentClient));
     }
 
     @Override

@@ -22,21 +22,21 @@ public class SetActiveAccountCommander extends AbstractCommand  {
 
     @Override
     public void execute() {
-        if (BankCommander.currentClient == null) {
-            System.out.println("Current client not set. Please find client by name to set current client.");
+        if (BankServerCommander.currentClient == null) {
+            write("Current client not set. Please find client by name to set current client.");
             return;
         }
-        accountService.getAccountsInfo(BankCommander.currentClient);
-        System.out.println("Enter account number to set active account:");
-        Scanner scanner = new Scanner(System.in);
+        write(accountService.getAccountsInfo(BankServerCommander.currentClient));
+        write("Enter account number to set active account:");
+        //Scanner scanner = new Scanner(System.in);
         int id = 0;
         try {
-            id = Integer.parseInt(scanner.nextLine())-1;
+            id = Integer.parseInt(read())-1;
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        BankCommander.currentClient.setActiveAccount(clientService.getAccountById(BankCommander.currentClient,id));
-        System.out.println(BankCommander.currentClient.getActiveAccount().toString()+" is Active account.");
+        BankServerCommander.currentClient.setActiveAccount(clientService.getAccountById(BankServerCommander.currentClient,id));
+        write(BankServerCommander.currentClient.getActiveAccount().toString()+" is Active account.");
     }
 
     @Override
