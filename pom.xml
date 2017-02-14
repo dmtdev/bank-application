@@ -32,7 +32,6 @@
                 <directory>${basedir}/resources</directory>
             </resource>
         </resources>
-
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -42,7 +41,6 @@
                         <target>1.8</target>
                     </configuration>
                 </plugin>
-
             </plugins>
     </build>
 </project>
