@@ -1,5 +1,6 @@
 package ua.spalah.bank.model;
 
+import ua.spalah.bank.dao.DbColumn;
 import ua.spalah.bank.services.Account;
 import ua.spalah.bank.model.enums.Sex;
 
@@ -11,13 +12,18 @@ import java.util.List;
  */
 public class Client {
 
+    @DbColumn(columnName = "name")
     private String clientName;
+    @DbColumn(columnName = "gender")
     private Sex sex;
     private String email;
+    @DbColumn(columnName = "phone")
     private String tel;
+    @DbColumn(columnName = "city_name")
     private String city;
     private List<Account> accountList = new ArrayList<>();
     private Account activeAccount;
+    @DbColumn(columnName = "client_id")
     private long clientId;
 
     public long getClientId() {
@@ -39,6 +45,15 @@ public class Client {
         this.email = email;
         this.tel = tel;
         this.city = city;
+    }
+
+    public Client(String clientName, Sex sex, String email, String tel, String city,long clientId) {
+        this.clientName = clientName;
+        this.sex = sex;
+        this.email = email;
+        this.tel = tel;
+        this.city = city;
+        this.clientId = clientId;
     }
 
     public Client() {

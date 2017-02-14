@@ -171,11 +171,14 @@ public class ClientDaoImpl implements ClientDao {
         PreparedStatement preparedStatement = null;
         Connection connection = BankServerCommander.connection;
         try {
-            preparedStatement = connection.prepareStatement("select client_id as clientId, name as clientName, gender as sex, email as email, phone as tel, city_name as city from clients, cities where trim(lower(clients.name)) = ? and cities.city_id=clients.city_id");
+            //preparedStatement = connection.prepareStatement("select client_id as clientId, name as clientName, gender as sex, email as email, phone as tel, city_name as city from clients, cities where trim(lower(clients.name)) = ? and cities.city_id=clients.city_id");
+            preparedStatement = connection.prepareStatement("select client_id, name , gender, email, phone, city_name from clients, cities where trim(lower(clients.name)) = ? and cities.city_id=clients.city_id");
+
             preparedStatement.setString(1, name.toLowerCase().trim());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Client client = BankServerCommander.mapModel(resultSet, new Client().getClass());
+                System.out.println(client.toString());
                 return client;
             }
 
