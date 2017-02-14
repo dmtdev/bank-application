@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ua.spalah.bank</groupId>
     <artifactId>bank</artifactId>
-    <version>1.0</version>
+    <version>1.8</version>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -32,5 +32,15 @@
                 <directory>${basedir}/resources</directory>
             </resource>
         </resources>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+            </plugins>
     </build>
 </project>
