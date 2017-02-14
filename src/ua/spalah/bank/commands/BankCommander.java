@@ -1,20 +1,5 @@
 package ua.spalah.bank.commands;
 
-import ua.spalah.bank.exceptions.ClientAlreadyExistsException;
-import ua.spalah.bank.model.Bank;
-import ua.spalah.bank.model.CheckingAccount;
-import ua.spalah.bank.model.Client;
-import ua.spalah.bank.model.SavingAccount;
-import ua.spalah.bank.model.enums.Sex;
-import ua.spalah.bank.services.AccountService;
-import ua.spalah.bank.services.BankReportService;
-import ua.spalah.bank.services.ClientService;
-import ua.spalah.bank.services.impl.AccountServiceImpl;
-import ua.spalah.bank.services.impl.BankReportServiceImpl;
-import ua.spalah.bank.services.impl.ClientServiceImpl;
-
-import java.util.*;
-
 /**
  * Created by Dmitry on 10.01.2017.
  */

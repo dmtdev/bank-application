@@ -1,9 +1,9 @@
 package ua.spalah.bank.model;
 
-import ua.spalah.bank.listeners.ClientRegistrationListener;
-import ua.spalah.bank.services.Account;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by root on 23.12.2016.

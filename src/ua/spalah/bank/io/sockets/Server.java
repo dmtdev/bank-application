@@ -1,12 +1,5 @@
 package ua.spalah.bank.io.sockets;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
-
 public class Server {
     public static void main(String[] args) {
 //        int port = 5050; // случайный порт (может быть любое число от 1025 до 65535)

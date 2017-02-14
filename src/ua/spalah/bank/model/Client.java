@@ -1,8 +1,8 @@
 package ua.spalah.bank.model;
 
 import ua.spalah.bank.dao.DbColumn;
-import ua.spalah.bank.services.Account;
 import ua.spalah.bank.model.enums.Sex;
+import ua.spalah.bank.services.Account;
 
 import java.util.ArrayList;
 import java.util.List;

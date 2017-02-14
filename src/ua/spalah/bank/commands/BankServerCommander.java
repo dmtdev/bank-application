@@ -6,14 +6,10 @@ import ua.spalah.bank.dao.DbColumn;
 import ua.spalah.bank.dao.impl.ClientDaoImpl;
 import ua.spalah.bank.exceptions.ClientAlreadyExistsException;
 import ua.spalah.bank.exceptions.NetworkException;
-import ua.spalah.bank.io.sockets.ConsoleIO;
 import ua.spalah.bank.io.sockets.IO;
 import ua.spalah.bank.io.sockets.SocketIO;
 import ua.spalah.bank.model.Bank;
-import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.model.Client;
-import ua.spalah.bank.model.SavingAccount;
-import ua.spalah.bank.model.enums.Sex;
 import ua.spalah.bank.services.AccountService;
 import ua.spalah.bank.services.BankReportService;
 import ua.spalah.bank.services.ClientService;
@@ -21,19 +17,16 @@ import ua.spalah.bank.services.impl.AccountServiceImpl;
 import ua.spalah.bank.services.impl.BankReportServiceImpl;
 import ua.spalah.bank.services.impl.ClientServiceImpl;
 
-import java.io.*;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
+import java.io.IOException;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Dmitry on 10.01.2017.

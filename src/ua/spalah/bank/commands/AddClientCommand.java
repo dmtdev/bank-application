@@ -1,22 +1,15 @@
 package ua.spalah.bank.commands;
 
 import ua.spalah.bank.dao.ClientDao;
-import ua.spalah.bank.exceptions.ClientAlreadyExistsException;
 import ua.spalah.bank.io.sockets.IO;
-import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.model.Client;
-import ua.spalah.bank.model.SavingAccount;
 import ua.spalah.bank.model.enums.Sex;
-import ua.spalah.bank.services.Account;
 import ua.spalah.bank.services.AccountService;
 import ua.spalah.bank.services.ClientService;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by root on 12.01.2017.

@@ -1,7 +1,7 @@
 package ua.spalah.bank.io.sockets;
 
-        import java.io.*;
-        import java.net.Socket;
+import java.io.*;
+import java.net.Socket;
 
 public class Client {
     public static void main(String[] args) {

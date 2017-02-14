@@ -2,8 +2,6 @@ package ua.spalah.bank.commands;
 
 import ua.spalah.bank.io.sockets.IO;
 
-import java.lang.reflect.Array;
-
 
 /**
  * Created by root on 12.01.2017.

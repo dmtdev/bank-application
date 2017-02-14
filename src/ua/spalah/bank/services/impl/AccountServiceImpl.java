@@ -1,11 +1,11 @@
 package ua.spalah.bank.services.impl;
 
-import ua.spalah.bank.exceptions.OverdraftLimitExceededException;
-import ua.spalah.bank.model.Client;
-import ua.spalah.bank.services.Account;
-import ua.spalah.bank.model.enums.AccountType;
 import ua.spalah.bank.exceptions.NotEnoughFundsException;
+import ua.spalah.bank.exceptions.OverdraftLimitExceededException;
 import ua.spalah.bank.model.CheckingAccount;
+import ua.spalah.bank.model.Client;
+import ua.spalah.bank.model.enums.AccountType;
+import ua.spalah.bank.services.Account;
 import ua.spalah.bank.services.AccountService;
 
 import java.util.List;

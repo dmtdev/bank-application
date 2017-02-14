@@ -5,7 +5,6 @@ import ua.spalah.bank.exceptions.ClientNotFoundException;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.Client;
 
-import java.util.List;
 import java.util.Map;
 
 /**

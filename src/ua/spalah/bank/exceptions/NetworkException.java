@@ -1,7 +1,5 @@
 package ua.spalah.bank.exceptions;
 
-import java.io.IOException;
-
 /**
  * Created by root on 13.02.2017.
  */

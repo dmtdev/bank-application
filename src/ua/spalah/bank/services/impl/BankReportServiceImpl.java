@@ -1,13 +1,15 @@
 package ua.spalah.bank.services.impl;
 
-import ua.spalah.bank.commands.BankCommander;
-import ua.spalah.bank.services.Account;
-import ua.spalah.bank.services.BankReportService;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.CheckingAccount;
 import ua.spalah.bank.model.Client;
+import ua.spalah.bank.services.Account;
+import ua.spalah.bank.services.BankReportService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by root on 03.01.2017.

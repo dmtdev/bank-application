@@ -4,8 +4,6 @@ import ua.spalah.bank.io.sockets.IO;
 import ua.spalah.bank.services.AccountService;
 import ua.spalah.bank.services.ClientService;
 
-import java.util.Scanner;
-
 /**
  * Created by root on 13.01.2017.
  */

@@ -1,7 +1,6 @@
 package ua.spalah.bank.commands;
 
 import ua.spalah.bank.io.sockets.IO;
-import ua.spalah.bank.model.Client;
 import ua.spalah.bank.services.BankReportService;
 
 /**

@@ -4,8 +4,6 @@ import ua.spalah.bank.exceptions.NotEnoughFundsException;
 import ua.spalah.bank.io.sockets.IO;
 import ua.spalah.bank.services.AccountService;
 
-import java.util.Scanner;
-
 /**
  * Created by root on 12.01.2017.
  */

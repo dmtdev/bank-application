@@ -7,8 +7,6 @@ import ua.spalah.bank.model.Client;
 import ua.spalah.bank.services.AccountService;
 import ua.spalah.bank.services.ClientService;
 
-import java.util.Scanner;
-
 /**
  * Created by root on 12.01.2017.
  */

@@ -1,9 +1,6 @@
 package ua.spalah.bank.tmp;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by root on 07.02.2017.
