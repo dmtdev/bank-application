@@ -1,37 +1,49 @@
 package ua.spalah.bank.commands;
 
+import ua.spalah.bank.dao.ClientDao;
 import ua.spalah.bank.exceptions.ClientNotFoundException;
 import ua.spalah.bank.io.sockets.IO;
+import ua.spalah.bank.model.Client;
 import ua.spalah.bank.services.ClientService;
 
+import java.sql.SQLClientInfoException;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
  * Created by root on 12.01.2017.
  */
 
-public class FindClientCommand extends AbstractCommand implements Command{
+public class FindClientCommand extends AbstractCommand implements Command {
 
     private ClientService clientService;
+    private ClientDao clientDao;
 
-    public FindClientCommand(ClientService clientService, IO io) {
+    public FindClientCommand(ClientService clientService, IO io, ClientDao clientDao) {
         super(io);
         this.clientService = clientService;
+        this.clientDao = clientDao;
+
     }
 
     @Override
     public void execute() {
-        try{
+        try {
             write("Enter client name:");
-            Scanner scanner = new Scanner(System.in);
-            BankServerCommander.currentClient = clientService.findClientByName(BankServerCommander.currentBank,read());
-            write("Current client set to:");
-            write(BankServerCommander.currentClient.getClientName());
-            write(BankServerCommander.currentClient.getActiveAccount().toString());
-        } catch (ClientNotFoundException e) {
+            String clientName = read();
+            Client client = clientDao.findByName(clientName);
+            if (client != null) {
+                BankServerCommander.currentClient = client;
+                write("Current client set to: " + client.getClientName());
+            } else {
+                write("Client " + clientName + " not found");
+            }
+            // TODO: 14.02.2017 Add active account if exists..
+        } catch (Exception e) {
             write(e.getMessage());
         }
- }
+        return;
+    }
 
     @Override
     public String getCommandInfo() {

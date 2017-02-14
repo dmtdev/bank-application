@@ -17,7 +17,7 @@ public class ShowMenuCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        write(BankServerCommander.serverAnswer = String.join("\n",BankServerCommander.showMenu()));
+        write(String.join("\n",BankServerCommander.showMenu()));
 
     }
 

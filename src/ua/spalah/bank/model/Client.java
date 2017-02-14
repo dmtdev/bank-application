@@ -2,13 +2,14 @@ package ua.spalah.bank.model;
 
 import ua.spalah.bank.services.Account;
 import ua.spalah.bank.model.enums.Sex;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by root on 23.12.2016.
  */
-public class Client  {
+public class Client {
 
     private String clientName;
     private Sex sex;
@@ -17,6 +18,15 @@ public class Client  {
     private String city;
     private List<Account> accountList = new ArrayList<>();
     private Account activeAccount;
+    private long clientId;
+
+    public long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
+    }
 
     public Client(String clientName, Sex sex) {
         this.clientName = clientName;
@@ -31,6 +41,10 @@ public class Client  {
         this.city = city;
     }
 
+    public Client() {
+
+    }
+
     public String getEmail() {
         return email;
     }
@@ -40,7 +54,7 @@ public class Client  {
     }
 
     public String getCity() {
-        return city ;
+        return city;
     }
 
     public void setEmail(String email) {
@@ -79,7 +93,8 @@ public class Client  {
     @Override
     public String toString() {
         return "Client{" +
-                "clientName='" + clientName + '\'' +
+                "clientId=" + clientId +
+                ", clientName='" + clientName + '\'' +
                 ", sex=" + sex +
                 ", email='" + email + '\'' +
                 ", tel='" + tel + '\'' +
@@ -98,8 +113,8 @@ public class Client  {
         if (!clientName.equals(client.clientName)) return false;
         if (sex != client.sex) return false;
         if (!email.equals(client.email)) return false;
-        if (!tel.equals(client.tel)) return false;
-        return city.equals(client.city);
+        if (tel.equals(client.tel)) if (city.equals(client.city)) return true;
+        return false;
     }
 
     @Override

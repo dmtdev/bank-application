@@ -1,5 +1,9 @@
 package ua.spalah.bank.commands;
 
+
+import ua.spalah.bank.dao.ClientDao;
+import ua.spalah.bank.dao.DbColumn;
+import ua.spalah.bank.dao.impl.ClientDaoImpl;
 import ua.spalah.bank.exceptions.ClientAlreadyExistsException;
 import ua.spalah.bank.exceptions.NetworkException;
 import ua.spalah.bank.io.sockets.ConsoleIO;
@@ -18,8 +22,17 @@ import ua.spalah.bank.services.impl.BankReportServiceImpl;
 import ua.spalah.bank.services.impl.ClientServiceImpl;
 
 import java.io.*;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -29,17 +42,18 @@ public class BankServerCommander {
     // хранит в себе банк с кототорым мы работаем
     public static Bank currentBank;
 
-    public static String serverAnswer;
     private final IO io;
     private final SocketIO socketIO;
+    public static Connection connection;
+
 
     private Bank bank = new Bank();
     private ClientService clientService = new ClientServiceImpl();
     private AccountService accountService = new AccountServiceImpl();
     private BankReportService bankReportService = new BankReportServiceImpl();
+    private ClientDao clientDao = new ClientDaoImpl();
     private Map<String, Client> clientMap = new HashMap<>();
 
-    // хранит в себе клиента с которым мы работаем в данный момент
     public static Client currentClient;
 
     private static Command[] commands;
@@ -48,8 +62,7 @@ public class BankServerCommander {
         return commands;
     }
 
-    public BankServerCommander(SocketIO socketIO) {
-
+    public BankServerCommander(SocketIO socketIO) throws SQLException, ClassNotFoundException {
         this.io = socketIO;
         this.socketIO=socketIO;
         init();
@@ -57,15 +70,15 @@ public class BankServerCommander {
 
     private void initCommands(){
         commands = new Command[]{
-                new FindClientCommand(clientService, io),
+                new FindClientCommand(clientService, io, clientDao),
                 new GetAccountsCommand(accountService,io),
                 new AddAccountCommand(clientService,io),
                 new SetActiveAccountCommander(clientService, accountService, io),
                 new DepositCommand(accountService, io),
                 new WithdrawCommand(accountService, io),
                 new TransferCommand(clientService, accountService, io),
-                new AddClientCommand(clientService, accountService, io),
-                new RemoveClientCommand(clientService, io),
+                new AddClientCommand(clientService, accountService, io, clientDao),
+                new RemoveClientCommand(clientService, io, clientDao),
                 new GetBankInfoCommand(bankReportService, io),
                 new ShowMenuCommand(io),
                 new ExitCommand(io),
@@ -81,35 +94,40 @@ public class BankServerCommander {
         return menu;
     }
 
-    private void init() {
+    private void init() throws SQLException, ClassNotFoundException {
 
-        Scanner scanner = new Scanner(ClassLoader.getSystemResourceAsStream("clients.txt"));
-        while (scanner.hasNext()) {
-            String[] clientData = scanner.nextLine().split("::");
-            clientMap.put(clientData[0], new Client(clientData[0], (clientData[1].equals("MALE") ? Sex.MALE : Sex.FEMALE), clientData[2], clientData[3], clientData[4]));
-        }
+        Class.forName("org.h2.Driver");
+        String url = "jdbc:h2:tcp://localhost/~/test";
+        Connection connection = DriverManager.getConnection(url, "sa", "");
+        this.connection = connection;
 
-        scanner = new Scanner(ClassLoader.getSystemResourceAsStream("accounts.txt"));
-        while (scanner.hasNext()) {
-            String[] clientData = scanner.nextLine().split("::");
-            if (clientMap.containsKey(clientData[0])) {
-                if (clientData[1].equals("SA")) {
-                    clientService.addAccount(clientMap.get(clientData[0]), new SavingAccount(Double.parseDouble(clientData[2])));
-                }
-                else if (clientData[1].equals("CA")) {
-                    clientService.addAccount(clientMap.get(clientData[0]), new CheckingAccount(Double.parseDouble(clientData[2]), Double.parseDouble(clientData[2])));
-                }
-            }
-        }
-
-        for (Map.Entry<String, Client> entry : clientMap.entrySet()) {
-            Client client = entry.getValue();
-            try {
-                clientService.saveClient(bank, client);
-            } catch (ClientAlreadyExistsException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+//        Scanner scanner = new Scanner(ClassLoader.getSystemResourceAsStream("clients.txt"));
+//        while (scanner.hasNext()) {
+//            String[] clientData = scanner.nextLine().split("::");
+//            clientMap.put(clientData[0], new Client(clientData[0], (clientData[1].equals("MALE") ? Sex.MALE : Sex.FEMALE), clientData[2], clientData[3], clientData[4]));
+//        }
+//
+//        scanner = new Scanner(ClassLoader.getSystemResourceAsStream("accounts.txt"));
+//        while (scanner.hasNext()) {
+//            String[] clientData = scanner.nextLine().split("::");
+//            if (clientMap.containsKey(clientData[0])) {
+//                if (clientData[1].equals("SA")) {
+//                    clientService.addAccount(clientMap.get(clientData[0]), new SavingAccount(Double.parseDouble(clientData[2])));
+//                }
+//                else if (clientData[1].equals("CA")) {
+//                    clientService.addAccount(clientMap.get(clientData[0]), new CheckingAccount(Double.parseDouble(clientData[2]), Double.parseDouble(clientData[2])));
+//                }
+//            }
+//        }
+//
+//        for (Map.Entry<String, Client> entry : clientMap.entrySet()) {
+//            Client client = entry.getValue();
+//            try {
+//                clientService.saveClient(bank, client);
+//            } catch (ClientAlreadyExistsException e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
         bank.setAllClients(clientMap);
         currentBank = bank;
     }
@@ -133,7 +151,6 @@ public class BankServerCommander {
 
         socketIO.write("Enter command number (1-12)");
         socketIO.write(String.join("\n",showMenu()));
-        //Scanner scanner = new Scanner(System.in);
         do{
             try {
                 int command = Integer.parseInt(io.read());
@@ -150,14 +167,50 @@ public class BankServerCommander {
             } catch (NumberFormatException e) {
                 socketIO.write("This is not a number");
             }
-            //io.read();
         }
         while(!exit);
 
     }
 
+    public static <T> T mapModel(ResultSet resultSet, Class<T> classToMap) throws Exception {
+
+        T model = classToMap.newInstance();
+
+        for (Field field : classToMap.getDeclaredFields()) {
+
+            String name = field.getName();
+            if (field.isAnnotationPresent(DbColumn.class)) {
+                DbColumn annotation = field.getAnnotation(DbColumn.class);
+                name = annotation.columnName();
+            }
+
+            Class<?> type = field.getType();
+            field.setAccessible(true);
+
+            if (long.class.isAssignableFrom(type)) {
+                long value = resultSet.getLong(name);
+                field.setLong(model, value);
+            } else if (double.class.isAssignableFrom(type)) {
+                double value = resultSet.getDouble(name);
+                field.setDouble(model, value);
+            } else if (String.class.isAssignableFrom(type)) {
+                String value = resultSet.getString(name);
+                field.set(model, value);
+            }
+        }
+
+        return model;
+    }
+
     public static void main(String[] args) {
-        BankServerCommander bankServerCommander = new BankServerCommander(new SocketIO());
+        BankServerCommander bankServerCommander = null;
+        try {
+            bankServerCommander = new BankServerCommander(new SocketIO());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         bankServerCommander.run();
     }
 }
