@@ -1,5 +1,6 @@
 package ua.spalah.bank.commands;
 
+import ua.spalah.bank.dao.AccountDao;
 import ua.spalah.bank.io.sockets.IO;
 import ua.spalah.bank.services.AccountService;
 
@@ -10,11 +11,12 @@ import ua.spalah.bank.services.AccountService;
 public class GetAccountsCommand extends AbstractCommand {
 
     private AccountService accountService;
+    private AccountDao accountDao;
 
-    public GetAccountsCommand(AccountService accountService,IO io) {
-
+    public GetAccountsCommand(AccountService accountService,IO io, AccountDao accountDao) {
         super(io);
         this.accountService = accountService;
+        this.accountDao = accountDao;
     }
 
     @Override

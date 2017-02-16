@@ -1,8 +1,10 @@
 package ua.spalah.bank.commands;
 
 
+import ua.spalah.bank.dao.AccountDao;
 import ua.spalah.bank.dao.ClientDao;
 import ua.spalah.bank.dao.DbColumn;
+import ua.spalah.bank.dao.impl.AccountDaoImpl;
 import ua.spalah.bank.dao.impl.ClientDaoImpl;
 import ua.spalah.bank.exceptions.ClientAlreadyExistsException;
 import ua.spalah.bank.exceptions.NetworkException;
@@ -45,6 +47,7 @@ public class BankServerCommander {
     private AccountService accountService = new AccountServiceImpl();
     private BankReportService bankReportService = new BankReportServiceImpl();
     private ClientDao clientDao = new ClientDaoImpl();
+    private AccountDao accountDao = new AccountDaoImpl();
     private Map<String, Client> clientMap = new HashMap<>();
 
     public static Client currentClient;
@@ -64,7 +67,7 @@ public class BankServerCommander {
     private void initCommands(){
         commands = new Command[]{
                 new FindClientCommand(clientService, io, clientDao),
-                new GetAccountsCommand(accountService,io),
+                new GetAccountsCommand(accountService,io,accountDao),
                 new AddAccountCommand(clientService,io),
                 new SetActiveAccountCommander(clientService, accountService, io),
                 new DepositCommand(accountService, io),
