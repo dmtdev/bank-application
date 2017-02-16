@@ -3,7 +3,7 @@ package ua.spalah.bank.commands;
 
 import ua.spalah.bank.dao.AccountDao;
 import ua.spalah.bank.dao.ClientDao;
-import ua.spalah.bank.dao.DbColumn;
+import ua.spalah.bank.annotations.DbColumn;
 import ua.spalah.bank.dao.impl.AccountDaoImpl;
 import ua.spalah.bank.dao.impl.ClientDaoImpl;
 import ua.spalah.bank.exceptions.ClientAlreadyExistsException;
