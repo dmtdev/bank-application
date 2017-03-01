@@ -13,19 +13,20 @@ public class TestConnection {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        try(Connection conn = DriverManager.getConnection("jdbc:h2:~/test","sa","")) {
+        try(Connection conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test","sa","")) {
             Statement st = null;
             st = conn.createStatement();
-            ResultSet resultSet = st.executeQuery("select * from cities");
+            ResultSet resultSet = st.executeQuery("select * from clients ");
 
             while (resultSet.next()) {
 
-            System.out.println(resultSet.getString(1));
-            System.out.println(resultSet.getString(2));
+                Array row = resultSet.getArray(2);
+                System.out.println(row.toString());
 
             }
+            Object o = resultSet;
+            Class<?> aClass = o.getClass();
             conn.close();
         }
-
     }
 }
