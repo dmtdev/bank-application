@@ -41,7 +41,7 @@
     <build>
         <outputDirectory>target</outputDirectory>
         <finalName>ROOT</finalName>
-        <sourceDirectory>src</sourceDirectory>
+        <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
             <resource>
                 <directory>${basedir}/resources</directory>
