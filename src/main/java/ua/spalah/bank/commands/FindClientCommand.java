@@ -12,12 +12,10 @@ import ua.spalah.bank.services.ClientService;
 public class FindClientCommand extends AbstractCommand implements Command {
 
     private ClientService clientService;
-    private ClientDao clientDao;
 
-    public FindClientCommand(ClientService clientService, IO io, ClientDao clientDao) {
+    public FindClientCommand(ClientService clientService, IO io) {
         super(io);
         this.clientService = clientService;
-        this.clientDao = clientDao;
 
     }
 
@@ -26,7 +24,7 @@ public class FindClientCommand extends AbstractCommand implements Command {
         try {
             write("Enter client name:");
             String clientName = read();
-            Client client = clientDao.findByName(clientName);
+            Client client = clientService.findClientByName(clientName);
             if (client != null) {
                 BankServerCommander.currentClient = client;
                 write("Current client set to: " + client.getClientName());

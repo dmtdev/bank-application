@@ -13,7 +13,7 @@ public class GetAccountsCommand extends AbstractCommand {
     private AccountService accountService;
     private AccountDao accountDao;
 
-    public GetAccountsCommand(AccountService accountService,IO io, AccountDao accountDao) {
+    public GetAccountsCommand(AccountService accountService,IO io) {
         super(io);
         this.accountService = accountService;
         this.accountDao = accountDao;

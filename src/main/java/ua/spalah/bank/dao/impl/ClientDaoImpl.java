@@ -3,7 +3,9 @@ package ua.spalah.bank.dao.impl;
 import ua.spalah.bank.commands.BankServerCommander;
 import ua.spalah.bank.dao.CityDao;
 import ua.spalah.bank.dao.ClientDao;
+import ua.spalah.bank.exceptions.ClientAlreadyExistsException;
 import ua.spalah.bank.model.Client;
+import ua.spalah.bank.servlets.AbstractServlet;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -50,29 +52,25 @@ public class ClientDaoImpl implements ClientDao {
 //    }
 
     @Override
-    public Client save(Client client) {
+    public Client save(Client client) throws ClientAlreadyExistsException, SQLException {
         Connection connection = BankServerCommander.connection;
-        try {
-            CityDao cityDao = new CityDaoImpl();
-            int city_id = cityDao.checkCityByName(client.getCity());
-            Client c = findByName(client.getClientName());
-            if (c == null) {
-                System.out.println("new client");
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT into clients values(null,?,?,?,?,?,null)");
-                preparedStatement.setString(1, client.getClientName());
-                preparedStatement.setString(2, client.getEmail());
-                preparedStatement.setString(3, client.getTel());
-                preparedStatement.setLong(4, city_id);
-                preparedStatement.setString(5, client.getSex().toString());
-                preparedStatement.executeUpdate();
-                BankServerCommander.currentClient = client;
-                return client;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
 
+        CityDao cityDao = new CityDaoImpl();
+        int city_id = cityDao.checkCityByName(client.getCity());
+        Client c = findByName(client.getClientName());
+        if (c == null) {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT into clients values(null,?,?,?,?,?,null)");
+            preparedStatement.setString(1, client.getClientName());
+            preparedStatement.setString(2, client.getEmail());
+            preparedStatement.setString(3, client.getTel());
+            preparedStatement.setLong(4, city_id);
+            preparedStatement.setString(5, client.getSex().toString());
+            preparedStatement.executeUpdate();
+            BankServerCommander.currentClient = client;
+            return client;
+        } else {
+            throw new ClientAlreadyExistsException(client.getClientName());
+        }
     }
 
     @Override
@@ -87,18 +85,13 @@ public class ClientDaoImpl implements ClientDao {
     }
 
     @Override
-    public boolean delete(long clientId) {
+    public boolean delete(long clientId) throws SQLException {
         PreparedStatement preparedStatement = null;
         Connection connection = BankServerCommander.connection;
-        try {
-            preparedStatement = connection.prepareStatement("delete from clients where client_id=?");
-            preparedStatement.setLong(1,clientId);
-            boolean result = preparedStatement.execute();
-            return result;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
+        preparedStatement = connection.prepareStatement("delete from clients where client_id=?");
+        preparedStatement.setLong(1, clientId);
+        boolean result = preparedStatement.execute();
+        return result;
     }
 
     @Override
@@ -145,14 +138,15 @@ public class ClientDaoImpl implements ClientDao {
     @Override
     public Client findByName(String name) {
         PreparedStatement preparedStatement = null;
-        Connection connection = BankServerCommander.connection;
+        //Connection connection = BankServerCommander.connection;
+        Connection connection = AbstractServlet.connection;
         try {
             preparedStatement = connection.prepareStatement("select client_id, name , gender, email, phone, city_name from clients, cities where trim(lower(clients.name)) = ? and cities.city_id=clients.city_id");
             preparedStatement.setString(1, name.toLowerCase().trim());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Client client = BankServerCommander.mapModel(resultSet, new Client().getClass());
-                System.out.println(client.toString());
+                //System.out.println(client.toString());
                 return client;
             }
         } catch (SQLException e) {

@@ -1,5 +1,6 @@
 package ua.spalah.bank.commands;
 
+import ua.spalah.bank.exceptions.ClientAlreadyExistsException;
 import ua.spalah.bank.io.sockets.IO;
 
 /**
@@ -21,7 +22,7 @@ public abstract class AbstractCommand implements Command {
         io.write(s);
     }
 
-    public abstract void execute();
+    public abstract void execute() throws ClientAlreadyExistsException;
 
     public abstract String getCommandInfo();
 }

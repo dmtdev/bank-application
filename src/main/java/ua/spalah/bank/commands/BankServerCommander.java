@@ -41,13 +41,14 @@ public class BankServerCommander {
     private final SocketIO socketIO;
     public static Connection connection;
 
-
-    private Bank bank = new Bank();
-    private ClientService clientService = new ClientServiceImpl();
-    private AccountService accountService = new AccountServiceImpl();
-    private BankReportService bankReportService = new BankReportServiceImpl();
     private ClientDao clientDao = new ClientDaoImpl();
     private AccountDao accountDao = new AccountDaoImpl();
+
+    private Bank bank = new Bank();
+    private ClientService clientService = new ClientServiceImpl(clientDao,accountDao);
+    private AccountService accountService = new AccountServiceImpl(clientDao,accountDao);
+    //private BankReportService bankReportService = new BankReportServiceImpl();
+
     private Map<String, Client> clientMap = new HashMap<>();
 
     public static Client currentClient;
@@ -66,16 +67,16 @@ public class BankServerCommander {
 
     private void initCommands(){
         commands = new Command[]{
-                new FindClientCommand(clientService, io, clientDao),
-                new GetAccountsCommand(accountService,io,accountDao),
+                new FindClientCommand(clientService, io),
+                new GetAccountsCommand(accountService,io),
                 new AddAccountCommand(clientService,io),
                 new SetActiveAccountCommander(clientService, accountService, io),
                 new DepositCommand(accountService, io),
                 new WithdrawCommand(accountService, io),
                 new TransferCommand(clientService, accountService, io),
-                new AddClientCommand(clientService, accountService, io, clientDao),
-                new RemoveClientCommand(clientService, io, clientDao),
-                new GetBankInfoCommand(bankReportService, io),
+                new AddClientCommand(clientService, accountService, io),
+                new RemoveClientCommand(clientService, io ),
+                //new GetBankInfoCommand(bankReportService, io),
                 new ShowMenuCommand(io),
                 new ExitCommand(io),
         };
@@ -96,34 +97,6 @@ public class BankServerCommander {
         String url = "jdbc:h2:tcp://localhost/~/test";
         Connection connection = DriverManager.getConnection(url, "sa", "");
         this.connection = connection;
-
-//        Scanner scanner = new Scanner(ClassLoader.getSystemResourceAsStream("clients.txt"));
-//        while (scanner.hasNext()) {
-//            String[] clientData = scanner.nextLine().split("::");
-//            clientMap.put(clientData[0], new Client(clientData[0], (clientData[1].equals("MALE") ? Sex.MALE : Sex.FEMALE), clientData[2], clientData[3], clientData[4]));
-//        }
-//
-//        scanner = new Scanner(ClassLoader.getSystemResourceAsStream("accounts.txt"));
-//        while (scanner.hasNext()) {
-//            String[] clientData = scanner.nextLine().split("::");
-//            if (clientMap.containsKey(clientData[0])) {
-//                if (clientData[1].equals("SA")) {
-//                    clientService.addAccount(clientMap.get(clientData[0]), new SavingAccount(Double.parseDouble(clientData[2])));
-//                }
-//                else if (clientData[1].equals("CA")) {
-//                    clientService.addAccount(clientMap.get(clientData[0]), new CheckingAccount(Double.parseDouble(clientData[2]), Double.parseDouble(clientData[2])));
-//                }
-//            }
-//        }
-//
-//        for (Map.Entry<String, Client> entry : clientMap.entrySet()) {
-//            Client client = entry.getValue();
-//            try {
-//                clientService.saveClient(bank, client);
-//            } catch (ClientAlreadyExistsException e) {
-//                System.out.println(e.getMessage());
-//            }
-//        }
         bank.setAllClients(clientMap);
         currentBank = bank;
     }

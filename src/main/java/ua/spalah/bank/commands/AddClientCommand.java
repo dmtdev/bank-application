@@ -1,12 +1,15 @@
 package ua.spalah.bank.commands;
 
 import ua.spalah.bank.dao.ClientDao;
+import ua.spalah.bank.exceptions.ClientAlreadyExistsException;
+import ua.spalah.bank.exceptions.DataBaseException;
 import ua.spalah.bank.io.sockets.IO;
 import ua.spalah.bank.model.Client;
 import ua.spalah.bank.model.enums.Sex;
 import ua.spalah.bank.services.AccountService;
 import ua.spalah.bank.services.ClientService;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -17,17 +20,15 @@ import java.util.List;
 public class AddClientCommand extends AbstractCommand {
     private ClientService clientService;
     private AccountService accountService;
-    private ClientDao clientDao;
 
-    public AddClientCommand(ClientService clientService, AccountService accountService, IO io, ClientDao clientDao) {
+    public AddClientCommand(ClientService clientService, AccountService accountService, IO io) {
         super(io);
         this.clientService = clientService;
         this.accountService = accountService;
-        this.clientDao = clientDao;
     }
 
     @Override
-    public void execute() {
+    public void execute() throws ClientAlreadyExistsException {
 
         CheckClientData checkClientData = new CheckClientData();
         while (!checkClientData.checkData()) {
@@ -94,7 +95,13 @@ public class AddClientCommand extends AbstractCommand {
 //                }
         }
         Client client = new Client(checkClientData.name, checkClientData.sex, checkClientData.email, checkClientData.tel, checkClientData.city);
-        client = clientDao.save(client);
+        try {
+            client = clientService.saveClient(client);
+        } catch (ClientAlreadyExistsException e) {
+            throw new ClientAlreadyExistsException(client.getClientName());
+        } catch (SQLException e) {
+            throw new DataBaseException(e);
+        }
         if(client != null) {
             write("Client " + client.getClientName() + " added");
             write("Current client " + client.getClientName());

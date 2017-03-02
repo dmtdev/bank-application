@@ -1,5 +1,7 @@
 package ua.spalah.bank.services.impl;
 
+import ua.spalah.bank.dao.AccountDao;
+import ua.spalah.bank.dao.ClientDao;
 import ua.spalah.bank.exceptions.NotEnoughFundsException;
 import ua.spalah.bank.exceptions.OverdraftLimitExceededException;
 import ua.spalah.bank.model.CheckingAccount;
@@ -14,6 +16,17 @@ import java.util.List;
  * Created by root on 03.01.2017.
  */
 public class AccountServiceImpl implements AccountService {
+
+    private ClientDao clientDao;
+    private AccountDao accountDao;
+
+    public AccountServiceImpl(ClientDao clientDao,AccountDao accountDao)
+    {
+        this.clientDao=clientDao;
+        this.accountDao=accountDao;
+    }
+
+
     @Override
     public void deposit(Account account, double amount) {
 

@@ -32,7 +32,7 @@ public class TransferCommand extends AbstractCommand {
         write("Enter client name for transit operation:");
         Client client = null;
         try {
-            client = clientService.findClientByName(BankServerCommander.currentBank, read());
+            client = clientService.findClientByName(read());
         } catch (ClientNotFoundException e) {
             System.out.println(e.getMessage());
         }
