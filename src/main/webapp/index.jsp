@@ -1,3 +1,4 @@
+<%@ page import="ua.spalah.bank.model.Client" %>
 <%@ page contentType="text/html; utf-8" language="java" %>
 <html>
 <head>
@@ -17,8 +18,9 @@ ${message}<br>
 ${clientname}<br>
 ${clientcity}<br>
 <%
-    if(request.getParameter("clientname")!=null)
-    {
+    if(request.getAttribute("client")!= null) {
+        Client client = (Client) request.getAttribute("client");
+        out.println(client.toString());
 %>
 <br><br>
 <a href="#">Client's accounts</a><br>

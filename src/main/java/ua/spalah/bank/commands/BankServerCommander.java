@@ -12,6 +12,7 @@ import ua.spalah.bank.io.sockets.IO;
 import ua.spalah.bank.io.sockets.SocketIO;
 import ua.spalah.bank.model.Bank;
 import ua.spalah.bank.model.Client;
+import ua.spalah.bank.model.enums.Sex;
 import ua.spalah.bank.services.AccountService;
 import ua.spalah.bank.services.BankReportService;
 import ua.spalah.bank.services.ClientService;
@@ -165,6 +166,11 @@ public class BankServerCommander {
             } else if (String.class.isAssignableFrom(type)) {
                 String value = resultSet.getString(name);
                 field.set(model, value);
+            }
+            else if(Sex.class.isAssignableFrom(type)){
+                String value = resultSet.getString(name);
+                Sex sex = Sex.valueOf(value);
+                field.set(model,sex);
             }
         }
 

@@ -39,6 +39,7 @@ public class FindClientServlet extends AbstractServlet {
         } else {
             req.setAttribute("clientname", client.getClientName());
             req.setAttribute("clientcity", client.getCity());
+            req.setAttribute("client",client);
 
         }
         req.getRequestDispatcher("index.jsp").forward(req, resp);
