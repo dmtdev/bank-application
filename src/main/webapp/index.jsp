@@ -1,15 +1,17 @@
 <%@ page import="ua.spalah.bank.model.Client" %>
 <%@ page contentType="text/html; utf-8" language="java" %>
+
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>FindClient</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <meta charset="utf-8">
+
 </head>
 <body style="padding: 10px 10px 10px 10px">
 <h4>FindClient:</h4>
-<form method="post" action="/main">
+<form method="post" action="/main" accept-charset="UTF-8">
     <input type="text" name="clientname">
     <input type="submit" value="FindClient">
 </form>

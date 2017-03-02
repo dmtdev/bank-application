@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
@@ -40,6 +41,7 @@ public class AbstractServlet extends HttpServlet {
             Class.forName("org.h2.Driver");
             String url = "jdbc:h2:tcp://localhost/~/test";
             Connection connection = DriverManager.getConnection(url, "sa", "");
+
             this.connection = connection;
         } catch (SQLException e) {
             throw new DataBaseException(e);
