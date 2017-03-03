@@ -13,14 +13,14 @@ ALTER TABLE PUBLIC.ACCOUNTS ADD CONSTRAINT PUBLIC.CONSTRAINT_A PRIMARY KEY(ACCOU
 -- 11 +/- SELECT COUNT(*) FROM PUBLIC.ACCOUNTS;
 INSERT INTO PUBLIC.ACCOUNTS(ACCOUNT_ID, CLIENT_ID, DEPOSIT, ACCOUNT_TYPE, OVERDRAFT) VALUES
   (1, 1, 1000.0, 'SAVING', 0),
-  (2, 1, 500.0, 'CHEKING', 100),
+  (2, 1, 500.0, 'CHECKING', 100),
   (3, 3, 500.0, 'SAVING', NULL),
   (4, 3, 50000.0, 'SAVING', NULL),
-  (5, 4, 1200.0, 'CHEKING', 250),
-  (6, 4, -500.0, 'CHEKING', 600),
+  (5, 4, 1200.0, 'CHECKING', 250),
+  (6, 4, -500.0, 'CHECKING', 600),
   (7, 5, 120.0, 'SAVING', NULL),
   (8, 5, 280.0, 'SAVING', NULL),
-  (9, 6, 800.0, 'CHEKING', 500),
+  (9, 6, 800.0, 'CHECKING', 500),
   (10, 7, 9000.0, 'SAVING', NULL),
   (11, 7, 150.0, 'SAVING', NULL);
 CREATE CACHED TABLE PUBLIC.CITIES(
@@ -51,7 +51,7 @@ INSERT INTO PUBLIC.CLIENTS(CLIENT_ID, NAME, EMAIL, PHONE, CITY_ID, GENDER, ACCOU
   (1, 'Anton', 'anton@gmail.com', '+380661234567', 1, 'MALE', NULL),
   (3, 'Ivan', 'ivan@gmail.com', '+380663216549', 1, 'MALE', NULL),
   (4, 'Vladimir', 'vladimir@gmail.com', '+380668527419', 2, 'MALE', NULL),
-  (5, 'viktoria', 'viktoria@gmail.com', '+380661472583', 2, 'FEMALE', NULL),
+  (5, 'Viktoria', 'viktoria@gmail.com', '+380661472583', 2, 'FEMALE', NULL),
   (6, 'Анна', 'anna@gmail.com', '+380661236547', 3, 'FEMALE', NULL),
   (7, 'Gleb', 'gleb@gmail.com', '+380661597532', 4, 'MALE', NULL),
   (11, 'ClientName', 'email@i.ia', '+380505050505', 5, 'MALE', NULL),

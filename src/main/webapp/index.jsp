@@ -26,7 +26,6 @@ ${message}<br>
     <tr><td>Email </td><td>${client.email}</td></tr>
     <tr><td>Phone </td><td>${client.tel}</td></tr>
 </table>
-проверка utf-8 :(<br>
 <%
         Client client = (Client) request.getAttribute("client");
         out.println(client.toString());
