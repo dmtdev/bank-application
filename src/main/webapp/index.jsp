@@ -1,5 +1,6 @@
 <%@ page import="ua.spalah.bank.model.Client" %>
 <%@ page contentType="text/html; utf-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
