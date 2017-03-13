@@ -27,26 +27,26 @@ import java.sql.SQLException;
  * Created by root on 02.03.2017.
  */
 public class AbstractServlet extends HttpServlet {
-
-    public static Connection connection;
-    protected ClientDao clientDao = new ClientDaoImpl();
-    protected AccountDao accountDao = new AccountDaoImpl();
-    protected ClientService clientService = new ClientServiceImpl(clientDao, accountDao);
-    protected AccountService accountService = new AccountServiceImpl(clientDao, accountDao);
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        try {
-            Class.forName("org.h2.Driver");
-            String url = "jdbc:h2:tcp://localhost/~/test";
-            Connection connection = DriverManager.getConnection(url, "sa", "");
-
-            this.connection = connection;
-        } catch (SQLException e) {
-            throw new DataBaseException(e);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+//
+//    public static Connection connection;
+//    protected ClientDao clientDao = new ClientDaoImpl();
+//    protected AccountDao accountDao = new AccountDaoImpl();
+//    protected ClientService clientService = new ClientServiceImpl(clientDao, accountDao);
+//    protected AccountService accountService = new AccountServiceImpl(clientDao, accountDao);
+//
+//    @Override
+//    public void init() throws ServletException {
+//        super.init();
+//        try {
+//            Class.forName("org.h2.Driver");
+//            String url = "jdbc:h2:tcp://localhost/~/test";
+//            Connection connection = DriverManager.getConnection(url, "sa", "");
+//
+//            this.connection = connection;
+//        } catch (SQLException e) {
+//            throw new DataBaseException(e);
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

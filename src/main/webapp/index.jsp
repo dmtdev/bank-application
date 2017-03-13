@@ -21,8 +21,8 @@ ${message}<br>
     if(request.getAttribute("client")!= null) {
 %>
 <table class="table">
-    <tr><td>Client </td><td><a href="#client_id=${client.clientId}">${clientname}</a></td></tr>
-    <tr><td>City </td><td>${clientcity}</td></tr>
+    <tr><td>Client </td><td><a href="#client_id=${client.clientId}">${client.name}</a></td></tr>
+    <tr><td>City </td><td>${client.phone}</td></tr>
     <tr><td>Email </td><td>${client.email}</td></tr>
     <tr><td>Phone </td><td>${client.tel}</td></tr>
 </table>

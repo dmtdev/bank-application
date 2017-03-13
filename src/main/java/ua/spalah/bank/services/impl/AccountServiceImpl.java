@@ -26,6 +26,10 @@ public class AccountServiceImpl implements AccountService {
         this.accountDao=accountDao;
     }
 
+    public AccountServiceImpl() {
+
+    }
+
 
     @Override
     public void deposit(Account account, double amount) {

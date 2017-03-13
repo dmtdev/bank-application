@@ -1,30 +1,57 @@
 package ua.spalah.bank.model;
 
+
 import ua.spalah.bank.annotations.DbColumn;
 import ua.spalah.bank.model.enums.Sex;
 import ua.spalah.bank.services.Account;
 
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by root on 23.12.2016.
  */
+@Entity
+@Table(name="CLIENTS")
 public class Client {
-
-    @DbColumn(columnName = "name")
-    private String clientName;
-    @DbColumn(columnName = "gender")
-    private Sex sex;
-    private String email;
-    @DbColumn(columnName = "phone")
-    private String tel;
-    @DbColumn(columnName = "city_name")
-    private String city;
-    private List<Account> accountList = new ArrayList<>();
-    private Account activeAccount;
-    @DbColumn(columnName = "client_id")
+    @Id
+    @Column(name = "CLIENT_ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long clientId;
+
+    @Column(name = "NAME")
+    private String clientName;
+    @Column(name = "GENDER")
+    private Sex sex;
+    @Column(name="EMAIL")
+    private String email;
+    @Column(name = "PHONE")
+    private String tel;
+    @Column(name = "CITY_ID")
+    private String city;
+
+    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="CLIENTS")
+    @JoinTable(name = "ACCOUNTS",
+            joinColumns = @JoinColumn(name = "CLIENT_ID"),
+            inverseJoinColumns=@JoinColumn(table = "CLIENTS", name="CLIENT_ID")
+    )
+    private List<Account> accountList = new ArrayList<>();
+//
+    //@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy="CLIENTS")
+    //@Column(name="ACCOUNT_ID")
+    @JoinTable(name = "ACCOUNTS",
+            joinColumns = @JoinColumn(name="ACCOUNT_ID"),
+            inverseJoinColumns=@JoinColumn(table = "ACCOUNTS",name = "ACCOUNT_ID")
+    )
+    private Account activeAccount;
+
+
+
+    public Client() {
+
+    }
 
     public long getClientId() {
         return clientId;
@@ -56,9 +83,7 @@ public class Client {
         this.clientId = clientId;
     }
 
-    public Client() {
 
-    }
 
     public String getEmail() {
         return email;
@@ -114,7 +139,6 @@ public class Client {
                 ", email='" + email + '\'' +
                 ", tel='" + tel + '\'' +
                 ", city='" + city + '\'' +
-                ", activeAccount=" + activeAccount +
                 '}';
     }
 

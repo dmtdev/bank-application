@@ -25,6 +25,10 @@ public class ClientServiceImpl implements ClientService {
         this.accountDao = accountDao;
     }
 
+    public ClientServiceImpl() {
+
+    }
+
     @Override
     public void addAccount(Client client, Account account) {
         if (client.getAccountList().size() == 0) {

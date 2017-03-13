@@ -32,17 +32,20 @@
         </jsp-property-group>
     </jsp-config>
 
-    <filter>
-        <filter-name>CharsetFilter</filter-name>
-        <filter-class>ua.spalah.bank.servlets.CharasterFilter</filter-class>
-        <init-param>
-            <param-name>requestEncoding</param-name>
-            <param-value>UTF-8</param-value>
-        </init-param>
-    </filter>
+    <!--<filter>-->
+        <!--<filter-name>CharsetFilter</filter-name>-->
+        <!--<filter-class>ua.spalah.bank.servlets.CharasterFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>requestEncoding</param-name>-->
+            <!--<param-value>UTF-8</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
 
-    <filter-mapping>
-        <filter-name>CharsetFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    <!--<filter-mapping>-->
+        <!--<filter-name>CharsetFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+    <listener>
+        <listener-class>ua.spalah.bank.servlets.ServletContextInitializer</listener-class>
+    </listener>
 </web-app>
